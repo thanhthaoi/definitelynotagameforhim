@@ -85,7 +85,7 @@ h2.lp{font:800 26px/1.3 'Noto Serif',serif}
 #volbox .vmute{display:none;pointer-events:auto}
 #nt{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 @media(max-width:700px){
-#nav{flex-wrap:wrap;align-items:flex-start;row-gap:4px}
+#nav{flex-wrap:wrap;align-items:flex-start;justify-content:center;row-gap:4px}
 #nav button{box-sizing:border-box;min-width:34px;height:38px;padding:0 6px;font-size:15px}
 #nav #bk,#nav #mu,#nav #rs,#nav #fw{width:34px}
 #nav #nb{min-width:54px;font-size:12px}
@@ -97,6 +97,11 @@ h2.lp{font:800 26px/1.3 'Noto Serif',serif}
 #volbox .vmute{display:block;width:100%;height:36px;border:1px solid #D9B25B;border-radius:8px;background:rgba(255,255,255,.1);color:#FFF3C4;font:700 13px 'Be Vietnam Pro',sans-serif}
 #pn{padding:90px 10px 12px;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 #pn>.cd{box-sizing:border-box;max-height:100%;min-height:0;overflow-y:auto;touch-action:pan-y}
+#pn button.bt{align-self:center;width:min(100%,280px);box-sizing:border-box}
+#pn .ct{align-items:center}
+#pn .ct>.bt{width:min(100%,280px);box-sizing:border-box}
+#pn .bar{width:100%;max-width:280px;justify-content:center}
+#pn .bar button{flex:1 1 0}
 #sub{left:12px;right:12px;bottom:calc(14% + env(safe-area-inset-bottom,0px))}
 #sub b{font-size:20px}
 #sub i{font-size:14px}
@@ -1594,8 +1599,9 @@ if(old)fade(old,0,()=>old.pause());
 if(mu||!kind)return;
 const a=tracks[kind];
 if(!a||a.broken)return fbStart(kind);
-const pr=a.play();if(pr&&pr.catch)pr.catch(()=>{});
-setTimeout(()=>{if(a.broken||(a.readyState===0&&a.networkState===3))fbStart(kind)},900);
+const fallback=()=>{if(cur===kind&&!mu&&(!SQ||SQ.S0!==SONGS[kind]))fbStart(kind)};
+const pr=a.play();if(pr&&pr.catch)pr.catch(fallback);
+setTimeout(()=>{if(a.broken||(a.readyState===0&&a.networkState===3))fallback()},900);
 fade(a,mvol)}
 function musVol(v){mvol=v;const a=tracks[cur];if(a&&!a.broken)a.volume=v;if(MUSB)MUSB.gain.value=v*.9}
 const vs=document.createElement('input');vs.type='range';vs.min=0;vs.max=1;vs.step=.05;vs.value=mvol;vs.id='vol';vs.setAttribute('aria-label','Âm lượng nhạc nền');
