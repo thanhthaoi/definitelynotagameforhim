@@ -355,7 +355,7 @@ creditCast:[['Bác tài xế buýt','Trạm dịch chuyển'],['Đầu bếp','T
 creditThanks:'Ngày 1/1/2026, vì đã bắt đầu.',
 /* rewardImage: dán link ảnh hoặc data:image/... để thay hình quà trong túi đồ (để '' = dùng hình pixel vẽ sẵn) */
 levels:[
-{title:'Trạm dịch chuyển',place:'Bến xe buýt',description:'Trạm dịch chuyển có một chiếc máy gắp ngọc cổ.',howTo:'Chạm để thả cần khi móc nằm ngay trên viên ngọc phát sáng. Tối đa 3 lượt, sau đó có trợ giúp.',dialogue:'“music blend.”',rewardName:'Máy nghe nhạc & tai nghe',rewardDescription:'Viên ngọc dịch chuyển mở ra như quả cầu, bên trong là máy nghe nhạc và tai nghe.',memory:'Để hai đứa nghe chung một bên tai.',rewardImage:''},
+{title:'Trạm dịch chuyển',place:'Bến xe buýt',description:'Trạm dịch chuyển có một chiếc máy gắp ngọc cổ.',howTo:'Chạm để thả cần khi móc nằm ngay trên viên ngọc phát sáng. Móc đúng vị trí cũng chỉ có khoảng 1/10 cơ hội gắp được, và ngọc có thể tuột giữa chừng. Thất bại 20 lượt sẽ có trợ giúp.',dialogue:'“music blend.”',rewardName:'Máy nghe nhạc & tai nghe',rewardDescription:'Viên ngọc dịch chuyển mở ra như quả cầu, bên trong là máy nghe nhạc và tai nghe.',memory:'Để hai đứa nghe chung một bên tai.',rewardImage:''},
 {title:'Bí cảnh công sở',place:'Văn phòng',description:'Trong khu vườn công sở, linh đan mọc khắp nơi.',howTo:'Dùng phím mũi tên / WASD hoặc nút điều hướng. Ăn 5 linh đan, tránh tường, đá và thân rắn.',dialogue:'“Ngồi tám tiếng một ngày thì phải ngồi cho tử tế.”',rewardName:'Chiếc ghế',rewardDescription:'Hộp quà mở ra, một chiếc ghế công thái học hiện lên.',memory:'Lưng anh, em lo.',rewardImage:''},
 {title:'Tiên trù các',place:'Nhà hàng',description:'Bếp tiên đang dọn món, trứng linh thú rơi như mưa.',howTo:'Kéo ngón tay hoặc chuột (hoặc phím trái/phải) để di chuyển giỏ. Hứng đủ 10 phần, trứng vàng được 2 điểm, dính vỏ sò bị trừ 1.',dialogue:'“Sườn bì chả, đủ bộ.”',rewardName:'Đĩa cơm tấm',rewardDescription:'Một đĩa cơm tấm nóng, sườn nướng cháy cạnh.',memory:'Món anh gọi đi gọi lại mãi không chán.',rewardImage:''},
 {title:'Linh trà các',place:'Quán cà phê',description:'Trà đã pha, nhưng các tấm thẻ bùa vẫn đang úp.',howTo:'Lật từng thẻ để tìm 4 cặp giống nhau. Thẻ sai sẽ tự úp lại.',dialogue:'“Ngọt vừa thôi, như anh.”',rewardName:'Cookie & bánh chuối',rewardDescription:'Một chiếc cookie chocolate chip và một lát bánh chuối.',memory:'Buổi chiều ngồi lì ở quán quen.',rewardImage:''},
@@ -1222,11 +1222,16 @@ const VIS=[
 {sx:98,gx:40,gy:152,fl:1,off:28,p:()=>{el(40,177,11,2,'#6A4A2A',.3)}},
 {sx:8,gx:61,gy:108,fl:1,off:36,p:()=>{el(61,110,30,22,'#FFF2D0',.1);el(61,132,24,2,'#5A6EA0',.3)}}];
 /* 1 Gacha */
-function g1(w,lose,h){const tx=26+rn()*56;let cx=54,cy=62,s=0,at=0,car=0;const ds=[0,1,2,3,4,5].map(k=>[18+k*14+rn()*4,['#F08AB0','#F0B73A','#4A8FD0','#8A5A3A'][k%4]]);h('Lượt gắp 1/3');
-return{u(dt,t){if(s==0)cx=54+38*Math.sin(t/600);else if(s==1){cy+=70*dt;if(cy>=124){cy=124;car=at>=3||Math.abs(cx-tx)<7;if(car)cx=tx;s=2}}else if(s==2){cy-=70*dt;if(cy<=62){cy=62;if(car)w();else{at++;s=0;h('Lượt gắp '+Math.min(at+1,3)+'/3'+(at>=3?' (có trợ giúp)':''))}}}},
+function g1(w,lose,h){/* ĐỘ KHÓ: CH = xác suất gắp được khi móc đúng vị trí; SLIP = xác suất ngọc tuột giữa chừng sau khi gắp; PITY = sau bấy nhiêu lượt thất bại thì được trợ giúp (đặt 9999 để tắt) */const CH=.1,SLIP=.35,PITY=20,tx=26+rn()*56;let cx=54,cy=62,s=0,at=0,car=0,slipAt=0,oy=134,fall=0,fv=0,jit=0,why='';const ds=[0,1,2,3,4,5].map(k=>[18+k*14+rn()*4,['#F08AB0','#F0B73A','#4A8FD0','#8A5A3A'][k%4]]);h('Lượt gắp 1');
+return{u(dt,t){if(fall){fv+=420*dt;oy+=fv*dt;if(oy>=134){oy=134;fall=0}}
+if(s==0)cx=54+38*Math.sin(t/600);
+else if(s==1){cy+=70*dt;if(cy>=124){cy=124;const as=at>=PITY,al=Math.abs(cx-tx)<7;car=as||(al&&Math.random()<CH);why=al&&!car?'Móc trượt khỏi ngọc!':'';slipAt=car&&!as&&Math.random()<SLIP?72+Math.random()*34:0;if(car)cx=tx;s=2}}
+else if(s==2){cy-=70*dt;jit=car&&slipAt&&cy<slipAt+16?(Math.sin(t/18)>0?1:-1):0;
+if(car&&slipAt&&cy<=slipAt){car=0;slipAt=0;jit=0;oy=cy+3;fv=0;fall=1;why='Ngọc tuột mất!'}
+if(cy<=62){cy=62;if(car)w();else{at++;s=0;h((why||'Trượt rồi!')+' · Lượt gắp '+(at+1)+(at>=PITY?' (có trợ giúp)':''))}}}},
 d(){X.globalAlpha=.35;R(14,56,80,96,'#fff');X.globalAlpha=1;R(12,52,84,4,'#B3231F');R(12,152,84,6,'#B3231F');R(12,52,2,106,'#B3231F');R(94,52,2,106,'#B3231F');R(14,60,80,2,'#6F6F77');
-ds.forEach(d=>R(d[0]-4|0,142,8,8,d[1]));if(!car||s==0)spr('orb',tx-8|0,134,2);
-R(cx|0,62,1,cy-62|0,'#9C9CA3');R(cx-4|0,cy|0,9,2,'#6F6F77');R(cx-4|0,cy+2|0,2,5,'#6F6F77');R(cx+3|0,cy+2|0,2,5,'#6F6F77');if(car&&s==2)spr('orb',cx-8|0,cy+3|0,2)},
+ds.forEach(d=>R(d[0]-4|0,142,8,8,d[1]));if(!car||s==0)spr('orb',tx-8|0,oy|0,2);
+R(cx|0,62,1,cy-62|0,'#9C9CA3');R(cx-4|0,cy|0,9,2,'#6F6F77');R(cx-4|0,cy+2|0,2,5,'#6F6F77');R(cx+3|0,cy+2|0,2,5,'#6F6F77');if(car&&s==2)spr('orb',cx-8+jit|0,cy+3|0,2)},
 p(){if(s==0)s=1}}}
 /* 2 Snake — khung chơi riêng, chữ không đè lên sân */
 function g2(w,lose,h){const C=5,N=20,M=20,ox=4,oy=56,ob=[[5,5],[14,5],[5,14],[14,14]];let sn=[[9,12],[8,12],[7,12]],dir=[1,0],nd=[1,0],f=0,tm=0,left=40,fd;
