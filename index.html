@@ -81,8 +81,27 @@ h2.lp{font:800 26px/1.3 'Noto Serif',serif}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.petal{display:none}.lp{opacity:1}}
 #nav{gap:4px}#nav button{min-width:40px;height:42px;padding:0 9px;font-size:16px}#nav #sk,#nav #nb{font-size:13px}
 #vol{pointer-events:auto;width:56px;flex:none;accent-color:#F0B73A}
+#volbox{display:flex;align-items:center;pointer-events:auto}
+#volbox .vmute{display:none;pointer-events:auto}
 #nt{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.dpad{display:flex;gap:10px;justify-content:center}.dpad button{width:64px;height:52px;border:2px solid #D9B25B;border-radius:12px;background:var(--panel);color:var(--ink);font:800 20px sans-serif;cursor:pointer;touch-action:manipulation}
+@media(max-width:700px){
+#nav{flex-wrap:wrap;align-items:flex-start;row-gap:4px}
+#nav button{box-sizing:border-box;min-width:34px;height:38px;padding:0 6px;font-size:15px}
+#nav #bk,#nav #mu,#nav #rs,#nav #fw{width:34px}
+#nav #nb{min-width:54px;font-size:12px}
+#nav #sk{min-width:42px;font-size:12px}
+#nt{order:10;flex:1 0 100%;box-sizing:border-box;min-height:22px;padding:4px 8px;border-radius:6px;background:rgba(20,40,50,.78);font-size:11px;line-height:1.3;letter-spacing:1px;white-space:normal;overflow:visible;text-overflow:clip}
+#volbox{display:none;position:absolute;top:43px;right:0;z-index:20;width:170px;max-width:calc(100vw - 20px);padding:10px 12px;box-sizing:border-box;flex-direction:column;align-items:stretch;gap:8px;border:1px solid #D9B25B;border-radius:10px;background:rgba(20,40,50,.96);box-shadow:0 6px 20px rgba(0,0,0,.4)}
+#nav.vol-open #volbox{display:flex}
+#vol{width:100%;height:28px;box-sizing:border-box}
+#volbox .vmute{display:block;width:100%;height:36px;border:1px solid #D9B25B;border-radius:8px;background:rgba(255,255,255,.1);color:#FFF3C4;font:700 13px 'Be Vietnam Pro',sans-serif}
+#pn{padding:90px 10px 12px;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+#pn>.cd{box-sizing:border-box;max-height:100%;min-height:0;overflow-y:auto;touch-action:pan-y}
+#sub{left:12px;right:12px;bottom:calc(14% + env(safe-area-inset-bottom,0px))}
+#sub b{font-size:20px}
+#sub i{font-size:14px}
+}
+.dpad{display:grid;grid-template-columns:repeat(3,64px);grid-template-rows:repeat(2,52px);gap:8px;justify-content:center}.dpad button{width:64px;height:52px;border:2px solid #D9B25B;border-radius:12px;background:var(--panel);color:var(--ink);font:800 20px 'Be Vietnam Pro',sans-serif;cursor:pointer;touch-action:manipulation}.dpad button:nth-child(1){grid-column:2;grid-row:1}.dpad button:nth-child(2){grid-column:1;grid-row:2}.dpad button:nth-child(3){grid-column:3;grid-row:2}.dpad button:nth-child(4){grid-column:2;grid-row:2}
 .bar{display:flex;gap:8px}.bar button{flex:1;min-height:44px;border:2px solid #D9B25B;border-radius:12px;background:var(--panel);color:var(--ink);font:800 14px 'Be Vietnam Pro',sans-serif;cursor:pointer}
 #pn .cd .bt+.bt{margin-top:-2px}
 .gb{border:0;background:radial-gradient(circle,rgba(255,243,176,.9),rgba(255,243,176,0) 70%);padding:16px;animation:pu 2s ease-in-out infinite;cursor:pointer}.gb canvas{width:96px;height:96px;image-rendering:pixelated;display:block}
@@ -1534,7 +1553,8 @@ c.append(E('small','','ẢI '+(i+1)+' · '+q.title.toUpperCase()),tl,E('h2','gt'
 if(ok)c.append(E('p','pt',q.memory));
 const x=E('button','bt','Đóng');x.onclick=()=>o.remove();c.append(x);o.append(c);o.onclick=e=>{if(e.target===o)o.remove()};$('app').append(o)}
 $('nb').onclick=()=>{bagUI();$('bag').classList.toggle('on')};
-$('mu').onclick=()=>{mu=!mu;$('mu').textContent=mu?'×':'♪';$('mmu').classList.toggle('off',!!mu);if(mu){fbStop();Object.values(tracks).forEach(a=>a.pause())}else{const k=cur;cur='';music(k||'intro')}};
+function toggleMute(){mu=!mu;$('mu').textContent=mu?'×':'♪';if(!matchMedia('(max-width:700px)').matches)$('mu').setAttribute('aria-label',mu?'Bật nhạc':'Tắt nhạc');$('mmu').classList.toggle('off',!!mu);const vm=$('vmute');if(vm){vm.textContent=mu?'Bật nhạc':'Tắt nhạc';vm.setAttribute('aria-label',mu?'Bật nhạc nền':'Tắt nhạc nền')}if(mu){fbStop();Object.values(tracks).forEach(a=>a.pause())}else{const k=cur;cur='';music(k||'intro')}}
+$('mu').onclick=()=>{if(matchMedia('(max-width:700px)').matches){const open=$('nav').classList.toggle('vol-open');$('mu').setAttribute('aria-expanded',String(open));$('mu').setAttribute('aria-label',open?'Đóng điều chỉnh âm lượng':'Mở điều chỉnh âm lượng')}else toggleMute()};
 
 /* ---------- Nhạc nền ---------- */
 const MUS=gameContent.music||{};let mvol=MUS.volume!=null?MUS.volume:.55,cur='',tracks={};
@@ -1579,7 +1599,12 @@ setTimeout(()=>{if(a.broken||(a.readyState===0&&a.networkState===3))fbStart(kind
 fade(a,mvol)}
 function musVol(v){mvol=v;const a=tracks[cur];if(a&&!a.broken)a.volume=v;if(MUSB)MUSB.gain.value=v*.9}
 const vs=document.createElement('input');vs.type='range';vs.min=0;vs.max=1;vs.step=.05;vs.value=mvol;vs.id='vol';vs.setAttribute('aria-label','Âm lượng nhạc nền');
-vs.oninput=()=>musVol(+vs.value);$('nav').insertBefore(vs,$('mu').nextSibling);
+vs.oninput=()=>musVol(+vs.value);
+const volBox=document.createElement('div');volBox.id='volbox';$('mu').setAttribute('aria-controls','volbox');$('mu').setAttribute('aria-expanded','false');
+const vm=document.createElement('button');vm.type='button';vm.id='vmute';vm.className='vmute';vm.textContent='Tắt nhạc';vm.setAttribute('aria-label','Tắt nhạc nền');vm.onclick=toggleMute;
+volBox.append(vs,vm);$('nav').insertBefore(volBox,$('mu').nextSibling);
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('#nav')){$('nav').classList.remove('vol-open');$('mu').setAttribute('aria-expanded','false')}});
+addEventListener('keydown',e=>{if(e.key==='Escape'){$('nav').classList.remove('vol-open');$('mu').setAttribute('aria-expanded','false')}});
 addEventListener('pointerdown',()=>{const a=tracks[cur];if(a&&a.paused&&!mu)a.play().catch(()=>{});audio();if(AC.state==='suspended')AC.resume()},{passive:true});
 
 /* ---------- Màn gacha kết thúc ---------- */
