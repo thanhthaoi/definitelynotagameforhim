@@ -1612,7 +1612,7 @@ const vs=document.createElement('input');vs.type='range';vs.min=0;vs.max=1;vs.st
 vs.oninput=()=>musVol(+vs.value);
 const volBox=document.createElement('div');volBox.id='volbox';$('mu').setAttribute('aria-controls','volbox');$('mu').setAttribute('aria-expanded','false');
 const vm=document.createElement('button');vm.type='button';vm.id='vmute';vm.className='vmute';vm.textContent='Tắt nhạc';vm.setAttribute('aria-label','Tắt nhạc nền');vm.onclick=toggleMute;
-volBox.append(vs,vm);$('nav').insertBefore(volBox,$('mu').nextSibling);
+volBox.append(vs,vm);$('mu').parentNode.insertBefore(volBox,$('mu').nextSibling);
 document.addEventListener('pointerdown',e=>{if(!e.target.closest('#nav')){$('nav').classList.remove('vol-open');$('mu').setAttribute('aria-expanded','false')}});
 addEventListener('keydown',e=>{if(e.key==='Escape'){$('nav').classList.remove('vol-open');$('mu').setAttribute('aria-expanded','false')}});
 addEventListener('pointerdown',()=>{const context=audio();if(context.state!=='running')context.resume().catch(()=>{});if(mu)return;const kind=cur||'intro',a=tracks[kind];if(!a||a.broken){if(!SQ)fbStart(kind);return}if(a.paused){const pr=a.play();if(pr&&pr.then)pr.then(()=>{if(cur===kind)fbStop()}).catch(()=>{if(cur===kind&&!mu)fbStart(kind)});else fbStop()}},{passive:true});
