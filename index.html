@@ -81,18 +81,20 @@ h2.lp{font:800 26px/1.3 'Noto Serif',serif}
 @keyframes lf{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.petal{display:none}.lp{opacity:1}}
 #nav{gap:4px}#nav button{min-width:40px;height:42px;padding:0 9px;font-size:16px}#nav #sk,#nav #nb{font-size:13px}
+.nav-controls{display:flex;align-items:center;gap:4px;flex:none}
 .level-play #nav{display:none}
 #vol{pointer-events:auto;width:56px;flex:none;accent-color:#F0B73A}
 #volbox{display:flex;align-items:center;pointer-events:auto}
 #volbox .vmute{display:none;pointer-events:auto}
 #nt{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 @media(max-width:700px){
-#nav{display:grid;grid-template-columns:repeat(6,max-content);justify-content:center;align-items:center;column-gap:4px;row-gap:4px}
+#nav{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:4px}
+.nav-controls{width:100%;justify-content:center}
 #nav button{box-sizing:border-box;min-width:34px;height:38px;padding:0 6px;font-size:15px}
 #nav #bk,#nav #mu,#nav #rs,#nav #fw{width:34px}
 #nav #nb{min-width:54px;font-size:12px}
 #nav #sk{min-width:42px;font-size:12px}
-#nt{grid-column:1/-1;order:0;flex:none;width:100%;box-sizing:border-box;min-height:22px;padding:4px 8px;border-radius:6px;background:rgba(20,40,50,.78);font-size:11px;line-height:1.3;letter-spacing:1px;white-space:normal;overflow:visible;text-overflow:clip}
+#nt{order:initial;flex:none;width:100%;box-sizing:border-box;min-height:22px;padding:4px 8px;border-radius:6px;background:rgba(20,40,50,.78);font-size:11px;line-height:1.3;letter-spacing:1px;white-space:normal;overflow:visible;text-overflow:clip}
 #volbox{display:none;position:absolute;top:43px;right:0;z-index:20;width:170px;max-width:calc(100vw - 20px);padding:10px 12px;box-sizing:border-box;flex-direction:column;align-items:stretch;gap:8px;border:1px solid #D9B25B;border-radius:10px;background:rgba(20,40,50,.96);box-shadow:0 6px 20px rgba(0,0,0,.4)}
 #nav.vol-open #volbox{display:flex}
 #vol{width:100%;height:28px;box-sizing:border-box}
@@ -316,7 +318,7 @@ addEventListener('resize',fit);fit()})();
 <button id="edg"></button><div id="kh"><kbd>↑</kbd><kbd>↓</kbd> / <kbd>W</kbd><kbd>S</kbd> di chuyển<br><kbd>Enter</kbd> vào ải · bấm bản đồ để đi tới</div><div id="tst"></div><div id="mo"></div></div>
 <div id="lv" class="v"><canvas id="mg" width="108" height="192"></canvas><div id="fx"></div><div id="pn"></div></div>
 <div id="ld" class="v"></div><div id="cr" class="v"><div id="crs"></div></div><div id="bag" class="v"></div>
-<button id="fsb" type="button" aria-label="Bật/tắt toàn màn hình" title="Toàn màn hình (F11)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1.5 5.5v-4h4M10.5 1.5h4v4M14.5 10.5v4h-4M5.5 14.5h-4v-4"/></svg></button><div id="nav"><button id="bk" aria-label="Quay lại">‹</button><span id="nt"></span><button id="nb">Túi (0)</button><button id="sk">Skip</button><button id="mu" aria-label="Bật/tắt âm thanh">♪</button><button id="rs" aria-label="Chơi lại từ đầu">↺</button><button id="fw" aria-label="Tiến tới">›</button></div>
+<button id="fsb" type="button" aria-label="Bật/tắt toàn màn hình" title="Toàn màn hình (F11)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1.5 5.5v-4h4M10.5 1.5h4v4M14.5 10.5v4h-4M5.5 14.5h-4v-4"/></svg></button><div id="nav"><div class="nav-controls"><button id="bk" aria-label="Quay lại">‹</button><button id="nb">Túi (0)</button><button id="sk">Skip</button><button id="mu" aria-label="Bật/tắt âm thanh">♪</button><button id="rs" aria-label="Chơi lại từ đầu">↺</button><button id="fw" aria-label="Tiến tới">›</button></div><span id="nt"></span></div>
 </div>
 <script>
 /* ===== CẤU HÌNH: SỬA Ở ĐÂY ===== */
@@ -324,7 +326,7 @@ const gameContent={
 recipientName:'Đạt nè',nickname:'Đạt nè',relationshipStartDate:'2026-01-01',birthdayDate:'18/11',
 /* nhạc nền: tải 2 bản từ Pixabay rồi để file cạnh file game, hoặc dán link mp3 trực tiếp vào đây.
    Nếu để trống / không tải được, game tự phát nhạc lo-fi nội bộ (WebAudio). */
-music:{intro:'nhac-mo-dau.mp3',map:'nhac-ban-do.mp3',end:'',volume:.55},
+music:{intro:'turning_pages-new-adventure-in-new-bark-town-462735.mp3',map:'turning_pages-new-adventure-in-new-bark-town-462735.mp3',end:'turning_pages-new-adventure-in-new-bark-town-462735.mp3',volume:.55},
 introDialogue:[
 ['“CUỐI CÙNG CŨNG XONG RỒI”','( Nobita cậu nhìn nè )'],
 ['“Đạo hữu Đạt nè, từ ngày 1/1 đến nay chúng ta đã đi cùng nhau gần 11 tháng.”',''],
@@ -1565,10 +1567,10 @@ $('mu').onclick=()=>{if(matchMedia('(max-width:700px)').matches){const open=$('n
 
 /* ---------- Nhạc nền ---------- */
 const MUS=gameContent.music||{};let mvol=MUS.volume!=null?MUS.volume:.55,cur='',tracks={};
-function mk(src){const a=new Audio();a.src=src;a.loop=true;a.preload='auto';a.volume=0;a.addEventListener('error',()=>{a.broken=1});return a}
-if(MUS.intro)tracks.intro=mk(MUS.intro);
-if(MUS.map)tracks.map=mk(MUS.map);
-if(MUS.end)tracks.end=mk(MUS.end);
+function mk(src,kind){const a=new Audio();a.src=src;a.loop=true;a.preload='auto';a.volume=0;a.addEventListener('error',()=>{a.broken=1;if(cur===kind&&!mu&&(!SQ||SQ.S0!==SONGS[kind]))fbStart(kind)});return a}
+if(MUS.intro)tracks.intro=mk(MUS.intro,'intro');
+if(MUS.map)tracks.map=mk(MUS.map,'map');
+if(MUS.end)tracks.end=mk(MUS.end,'end');
 /* nhạc nền dựng sẵn: 3 bài ngũ cung (mở đầu / bản đồ / kết), dùng khi không có file mp3 */
 const MA=[[69,1],[74,1],[76,1],[78,1],[81,2],[78,1],[76,1],[74,1.5],[76,.5],[78,1],[81,1],[83,3],[0,1],[81,1],[78,1],[76,1],[74,1],[76,2],[78,1],[69,1],[71,1.5],[74,.5],[76,1],[78,1],[74,3],[0,1]];
 const MB=[[74,.5],[76,.5],[78,1],[81,1],[78,1],[76,.5],[74,.5],[76,1],[71,2],[74,.5],[76,.5],[78,1],[81,1],[83,1],[81,3],[0,1],[83,.5],[81,.5],[78,1],[76,1],[74,1],[76,1],[78,1],[81,2],[83,1],[81,.5],[78,.5],[76,1],[78,1],[74,3],[0,1]];
@@ -1613,7 +1615,7 @@ const vm=document.createElement('button');vm.type='button';vm.id='vmute';vm.clas
 volBox.append(vs,vm);$('nav').insertBefore(volBox,$('mu').nextSibling);
 document.addEventListener('pointerdown',e=>{if(!e.target.closest('#nav')){$('nav').classList.remove('vol-open');$('mu').setAttribute('aria-expanded','false')}});
 addEventListener('keydown',e=>{if(e.key==='Escape'){$('nav').classList.remove('vol-open');$('mu').setAttribute('aria-expanded','false')}});
-addEventListener('pointerdown',()=>{const a=tracks[cur];if(a&&a.paused&&!mu)a.play().catch(()=>{});audio();if(AC.state==='suspended')AC.resume()},{passive:true});
+addEventListener('pointerdown',()=>{const context=audio();if(context.state!=='running')context.resume().catch(()=>{});if(mu)return;const kind=cur||'intro',a=tracks[kind];if(!a||a.broken){if(!SQ)fbStart(kind);return}if(a.paused){const pr=a.play();if(pr&&pr.then)pr.then(()=>{if(cur===kind)fbStop()}).catch(()=>{if(cur===kind&&!mu)fbStart(kind)});else fbStop()}},{passive:true});
 
 /* ---------- Màn gacha kết thúc ---------- */
 let Gc={};
