@@ -294,7 +294,7 @@ html.land #pn>.ob{position:absolute;left:36px;top:96px;width:340px;box-sizing:bo
 html.land #pn>.ob b{font-size:19px;margin-bottom:4px}
 html.land #pn>.ct{position:absolute;right:36px;top:50%;width:340px;margin:0;transform:translateY(-50%)}
 html.land #pn>.ct .bt{min-height:52px;font-size:17px}
-html.land #pn .skf{right:36px}
+html.land #pn .skf{right:76px}
 html.land .cd{max-width:480px}
 html.land #fx{left:0;right:0;width:640px;margin:0 auto}
 html.land #sub{left:0;right:0;width:760px;margin:0 auto}
@@ -2065,7 +2065,7 @@ function g9(w,lose,h){const n=DHV,L=DHV_LV[n],RR=L.R,CC=L.C,TS=Math.min(22,Math.
  u(dt){an.forEach(r=>r.forEach((v,j)=>{if(v>0)r[j]=Math.max(0,v-dt*8)}));tt+=dt;
   if(ph===1){const k=Math.min(route.length+1,(tt/.11|0));lit=route.slice(0,k);if(k>=route.length+1&&tt>route.length*.11+.25){ph=2;tt=0;seg=0}}
   else if(ph===2){petals(dt,x0,x0+BW,y0-10,y0+BH+30);if(walk(dt,50)){ph=3;tt=0;sfx(880,.15)}}
-  else if(ph===3){petals(dt,x0,x0+BW,y0-10,y0+BH+30);if(tt>1.3&&!ended){if(n<DHV_N-1){ended=1;begin()}else startCS()}}
+  else if(ph===3){petals(dt,x0,x0+BW,y0-10,y0+BH+30);if(tt>1.3&&!ended){if(n<DHV_N-1){ended=1;begin()}else card()}}
   else if(ph===4&&CS){CS.t+=dt;petals(dt,XL,XR,-4,196);
    if(CS.k===0){if(CS.t>.5&&walk(dt,30)&&!CS.wt)CS.wt=CS.t;if(CS.wt&&CS.t>CS.wt+.6){CS.k=1;CS.t=0;pet=[]}}
    else if(CS.k===1&&CS.t>5.2)card()}},
@@ -2677,11 +2677,33 @@ function mapHUD(){$('alv').textContent=prog;$('arl').textContent=REALM[Math.min(
  $('cd').textContent=days()+' ngày';
  LB.forEach((b,i)=>{b.classList.toggle('done',i<prog);b.classList.toggle('now',i===prog);b.classList.toggle('lock',i>prog)});$('mlt').classList.toggle('lock',prog<NL)}
 /* Lời chào khi quay lại (chỉ gọi một lần lúc mở trang) */
-function welcomeBack(){const dhvDone=prog>6,inDhv=!dhvDone&&prog>=6&&(DHV>0||!!dhvGridLoad(DHV));const cl=E('button','bt ghost','Về bản đồ');cl.onclick=closeMo;
- if(dhvDone){const a=E('button','bt','Xem lại');a.onclick=()=>{closeMo();go({t:'c',i:6})};
-  mmodal([E('small','','ĐÀO HOA VIÊN'),E('h2','gt','Chào mừng trở lại!'),E('p','','Bạn đã đi hết 3 màn Đào Hoa Viên rồi. Xem lại khoảnh khắc khiêu vũ, hoặc về bản đồ tiếp tục hành trình săn kho báu nhé!'),a,cl]);return}
- const a=E('button','bt','Tiếp tục');a.onclick=()=>{closeMo();if(inDhv){go({t:'l',i:6});begin()}};
- mmodal([E('small','',inDhv?'ĐÀO HOA VIÊN · MÀN '+(DHV+1)+'/'+DHV_N:'HÀNH TRÌNH'),E('h2','gt','Chào mừng trở lại!'),E('p','','Tiếp tục hành trình săn kho báu nhé!'),a])}
+const GREET={
+ start:[
+  ['Chào mừng trở lại!','Hành trình mới chỉ vừa bắt đầu thôi. Ải {next} đang chờ đạo hữu ở phía trước.'],
+  ['Đạo hữu đã trở về!','Chưa vượt qua cảnh giới nào cả, nhưng không sao, hoa đào vẫn rơi và ải {next} vẫn đợi đấy.'],
+  ['Lại gặp nhau rồi!','Đường tu tiên còn dài lắm, mình cùng đi tiếp từ ải {next} nhé!']
+ ],
+ mid:[
+  ['Chào mừng trở lại!','Đạo hữu đã vượt qua {n}/{t} cảnh giới, hiện đang ở {realm}. Ải {next} đang chờ đấy!'],
+  ['Đạo hữu đã trở về!','Đã đi hết {n} cảnh giới tu tiên rồi, còn {left} cảnh giới nữa là đột phá. Đi tiếp nhé?'],
+  ['Lại gặp nhau rồi!','Tu vi hiện tại: {realm}. Kho báu ở ải {next} vẫn chưa ai động tới đâu.'],
+  ['Đường tu tiên còn dài!','{n}/{t} cảnh giới đã qua, hành trang vẫn đủ đầy. Tiếp tục thôi nào!'],
+  ['Nghỉ ngơi xong rồi à?','Xem lại món quà vừa nhận, hoặc đi tiếp tới ải {next} nhé!'],
+  ['Hoa đào vẫn đang rơi…','Mới đi được {n}/{t} chặng thôi, phía trước còn {left} cảnh giới đang đợi đạo hữu.']
+ ],
+ all:[
+  ['Chào mừng trở lại!','Đạo hữu đã vượt qua đủ {t} cảnh giới rồi. Pháp bảo cuối cùng đang chờ ở đào hoa viên.'],
+  ['Sắp đột phá rồi!','Chỉ còn một bước nữa thôi. Về đào hoa viên nhận pháp bảo cuối cùng nhé!']
+ ]};
+function welcomeBack(){const t=NL,n=Math.min(prog,t),inDhv=prog===6&&(DHV>0||!!dhvGridLoad(DHV));
+ const realm=REALM[n],next=LV[Math.min(prog,t-1)].title,list=prog>=t?GREET.all:prog>0?GREET.mid:GREET.start,[h,p]=list[Math.random()*list.length|0];
+ const fill=s=>s.replace('{n}',n).replace('{t}',t).replace('{left}',t-n).replace('{realm}',realm).replace('{next}',next);
+ const cl=E('button','bt ghost','Về bản đồ');cl.onclick=closeMo;const btn=[];
+ if(inDhv){const a=E('button','bt','Tiếp tục');a.onclick=()=>{closeMo();go({t:'l',i:6});begin()};btn.push(a)}
+ if(prog>=t){const g=E('button',btn.length?'bt ghost':'bt','Về đào hoa viên');g.onclick=()=>{closeMo();go({t:'g',n:0})};btn.push(g)}
+ /* Xem lại = cutscene nhận quà của ải gần nhất đã hoàn thành */
+ if(prog>0){const r=E('button',btn.length?'bt ghost':'bt','Xem lại');r.onclick=()=>{closeMo();go({t:'c',i:n-1})};btn.push(r)}
+ mmodal([E('small','',inDhv?'ĐÀO HOA VIÊN · MÀN '+(DHV+1)+'/'+DHV_N:'CẢNH GIỚI '+n+'/'+t+' · '+realm.toUpperCase()),E('h2','gt',h),E('p','',fill(p)),...btn,cl])}
 function closeMo(){$('mo').classList.remove('on');$('mo').replaceChildren()}
 function mmodal(n){const c=E('div','cd');c.append(...n);$('mo').replaceChildren(c);$('mo').classList.add('on')}
 $('mo').onclick=e=>{if(e.target===$('mo'))closeMo()};
