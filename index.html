@@ -140,6 +140,10 @@ h2.lp{font:800 26px/1.3 'Noto Serif',serif}
 .onmap #nav{display:none}
 .ink{text-shadow:0 1px 0 #1A0E14,1px 0 0 #1A0E14,-1px 0 0 #1A0E14,0 -1px 0 #1A0E14,0 2px 4px rgba(0,0,0,.6)}
 #mhud{position:absolute;top:8px;left:8px;right:8px;display:flex;gap:8px;align-items:flex-start;pointer-events:none;z-index:3}
+.p36-toggle,.p36-go{position:absolute;z-index:4;box-sizing:border-box;border:1.5px solid #E2B85A;border-radius:8px;background:rgba(26,18,24,.92);color:#FFF6E0;font:700 12px 'Be Vietnam Pro',sans-serif;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.p36-toggle{top:84px;right:10px;min-height:36px;padding:4px 10px}
+.p36-go{right:10px;bottom:104px;min-height:44px;padding:6px 12px;background:linear-gradient(#F7D774,#E0A12E);color:#3A2414;font-weight:800}
+.p36-toggle:focus-visible,.p36-go:focus-visible{outline:2px solid #FFF3C4;outline-offset:2px}
 .avw{position:relative;flex:none}
 .ava{width:62px;height:62px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 30%,#FFF1D0,#D9AE6A 68%,#8A5A22);border:3px solid #241820;box-shadow:0 0 0 2px #E2B85A,0 4px 10px rgba(0,0,0,.45)}
 .ava canvas{width:100%;height:100%;image-rendering:pixelated}
@@ -290,6 +294,8 @@ html.land{padding:0}
 html.land body{background:#0A0610}
 html.land #app{position:absolute;left:50%;top:50%;width:1360px;height:768px;max-width:none;margin:0;--vh:7.68px;transform:translate(-50%,-50%) scale(var(--z,1));transform-origin:50% 50%;user-select:none;-webkit-user-select:none}
 html.land #mhud{right:auto;left:16px;top:14px;width:600px}
+html.land .p36-toggle{top:108px;right:36px;min-height:42px;font-size:14px}
+html.land .p36-go{right:36px;bottom:112px;min-height:50px;font-size:15px}
 html.land #mbar{left:50%;right:auto;width:820px;margin-left:-410px;padding:0 80px 6px;background:none}
 html.land #mbar::before{top:0;bottom:0;height:auto;background:radial-gradient(circle at 12px 12px,#2E2028 9px,transparent 10px) 0 22px/24px 12px repeat-x,linear-gradient(180deg,rgba(28,20,24,0) 0,rgba(28,20,24,.9) 30px,#17101A 100%)}
 html.land #mbar::before,html.land #mbar::after{-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
@@ -371,6 +377,7 @@ addEventListener('resize',fit);fit()})();
 <div id="mhud"><div class="avw"><div class="ava"><canvas id="avc" width="16" height="16"></canvas></div><b class="alv" id="alv">0</b><span class="rlm" id="arl"></span></div>
 <div class="mi"><div class="r1"><div class="nm"><span id="anm"></span><i><u id="axp"></u></i></div><span class="cur" id="pk" title="Pháp bảo đã nhận"><b id="cp"></b></span><span class="cur" id="dk" title="Ngày bên nhau"><b id="cd"></b></span></div>
 <div class="pw"><em>Tu vi</em><b class="gt" id="apw"></b></div></div></div>
+<button id="p36toggle" class="p36-toggle" type="button" aria-pressed="false">Piano 36: OFF</button><button id="p36go" class="p36-go" type="button" hidden>Vào game 36</button>
 <div id="mbar"><button class="mb" id="mbg"><span class="ink">Hành Lý</span></button><button class="mb" id="mnv"><span class="ink">Nhiệm Vụ</span></button><button id="en" class="go"><b class="ring" id="enr"></b><span id="ent" class="ink">Lên đường</span><small id="ens"></small></button><button class="mb" id="mlt"><span class="ink">Thư Tay</span></button><button class="mb" id="mmu"><span class="ink">Âm Nhạc</span></button></div>
 <button id="edg"></button><div id="kh"><kbd>↑</kbd><kbd>↓</kbd> / <kbd>W</kbd><kbd>S</kbd> di chuyển<br><kbd>Enter</kbd> vào ải · bấm bản đồ để đi tới</div><div id="tst"></div><div id="mo"></div></div>
 <div id="lv" class="v"><canvas id="mg" width="108" height="192"></canvas><canvas id="pz" width="216" height="384"></canvas><div id="fx"></div><div id="pn"></div></div>
@@ -456,6 +463,7 @@ const $=id=>document.getElementById(id);
 const E=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x)e.textContent=x;return e};
 let X,sd=7,prog=0,H=[],P=0,mode='',walking=0,S=0,tgt=null,kd=0,mv=0,fc=1,near='',ni=-1,G={},C={},ac,mu=0,WB;
 try{prog=+localStorage.getItem('tt8')||0}catch(e){}
+let pianoShortcut=0;try{pianoShortcut=+localStorage.getItem('tt8p36')===1?1:0}catch(e){}
 const save=()=>{try{localStorage.setItem('tt8',prog)}catch(e){}};
 const rn=()=>(sd=sd*16807%2147483647)/2147483647;
 const LW=window.LAND?340:108,OX=(LW-108)/2,XL=-OX,XR=108+OX;let EXT=0;
@@ -2587,6 +2595,8 @@ $('nt').textContent=nt;$('bk').disabled=P<1;$('fw').disabled=P>=H.length-1;$('sk
 }
 function go(v){H=H.slice(0,P+1);H.push(v);P++;show()}
 function nav(k){const n=P+k;if(n<0||n>=H.length||walking)return;P=n;show()}
+function setPianoShortcut(on){pianoShortcut=on?1:0;try{localStorage.setItem('tt8p36',pianoShortcut)}catch(e){}$('p36toggle').setAttribute('aria-pressed',String(!!pianoShortcut));$('p36toggle').textContent='Piano 36: '+(pianoShortcut?'ON':'OFF');$('p36go').hidden=!pianoShortcut}
+$('p36toggle').onclick=()=>setPianoShortcut(!pianoShortcut);$('p36go').onclick=()=>go({t:'l',i:NL-1});setPianoShortcut(pianoShortcut);
 $('bk').onclick=()=>nav(-1);$('fw').onclick=()=>nav(1);
 $('sk').onclick=()=>{if(walking)return;const t=H[P].t;if(t==='c')C.t=99;else if(t==='f'){if(F.ph==='road')photoStart();else if(F.t<10)F.t=10}else if(t==='k')go({t:'q'});else go({t:'w'})};
 function doReset(){prog=0;save();DHV=0;dhvSave();dhvGridClear();try{localStorage.removeItem('tt8started')}catch(e){}S=0;tgt=null;H=[{t:'p',n:0}];P=0;walking=0;show()}
