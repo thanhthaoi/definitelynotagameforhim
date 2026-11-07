@@ -1,0 +1,4 @@
+git add jump.mp3
+git add index.html
+git commit -m "Sửa âm thanh động 36"
+git push origin main

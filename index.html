@@ -1623,6 +1623,8 @@ const layer=(n,par,s,a,sd2)=>{for(let k=0;k<n;k++){const fx=((k*.618+sd2)%1),xx=
 const side=(par)=>{for(let k=0;k<6;k++){const yy=((k*55+13-cam*par)%330+330)%330-50;[XL+8+(k%2)*10,XR-8-(k%2)*10].forEach(xx=>{if(xx<XA-6||xx>XB+6||LW<=108)puff(xx,yy,2.2,.9)})}};
 /* ===== Hiệu ứng rắm: khí xanh ngọc phụt xuống từ mông nhân vật mỗi lần bật khỏi bệ ===== */
 const MR=Math.random,FB='#8FE3C8',FE='#43B89C',FH='#E2FFF5';
+const jumpAudio=new Audio('jump.mp3');jumpAudio.preload='auto';
+const jumpSound=()=>{if(mu)return;jumpAudio.pause();jumpAudio.currentTime=0;jumpAudio.volume=mvol;const play=jumpAudio.play();if(play)play.catch(()=>{})};
 const pfft=big=>{if(mu)return;try{const a=audio(),t=a.currentTime,lg2=big||MR()<.12,d=(lg2?.24:.11)+MR()*.08,f0=(big?72:92)+MR()*38;
  const o=a.createOscillator(),lf=a.createOscillator(),lg=a.createGain(),lp=a.createBiquadFilter(),g=a.createGain();
  o.type='sawtooth';o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f0*(.55+MR()*.2),t+d);
@@ -1707,7 +1709,7 @@ return{noOb:0,tip:'Kéo ngón tay / di chuột, hoặc giữ phím ← → để
 u(dt){if(ded)return;fx.forEach(e=>e.t-=dt);fx=fx.filter(e=>e.t>0);ban=Math.max(0,ban-dt);updFart(dt);updSC(dt);
 /* rơi: nảy một lần trên đệm mây ở đáy khung, rồi về bệ đầu (không thua) */
 if(ph==1){pt+=dt;vy+=G0*dt;py+=vy*dt;sq=Math.max(0,sq-dt*3);
- if(vy>0&&py>=cam+176&&pt>.15){py=cam+176;if(pt>.5){ph=2;pt=0;let lo=null;pl.forEach(q=>{if(!q.c&&q.y<cam+184&&q.y>cam+40&&(!lo||q.y>lo.y))lo=q});if(!lo)lo=pl.filter(q=>q.y<cam+184).sort((m,n)=>n.y-m.y)[0];if(lo){lo.vx=0;px=lo.x;py=lo.y}vy=0;sq=1;toast()}else{vy=-120;sq=1}}return}
+ if(vy>0&&py>=cam+176&&pt>.15){py=cam+176;if(pt>.5){ph=2;pt=0;let lo=null;pl.forEach(q=>{if(!q.c&&q.y<cam+184&&q.y>cam+40&&(!lo||q.y>lo.y))lo=q});if(!lo)lo=pl.filter(q=>q.y<cam+184).sort((m,n)=>n.y-m.y)[0];if(lo){lo.vx=0;px=lo.x;py=lo.y}vy=0;sq=1;toast()}else{vy=-120;sq=1;jumpSound()}}return}
 if(ph==2){pt+=dt;sq=Math.max(0,sq-dt*3);if(pt>.55){ph=0;vy=JV;tx=null;kt=0;lpx=px;fart(0)}return}
 
 /* điều khiển ngang: bám theo điểm chạm/chuột, hoặc phím */
@@ -1715,8 +1717,8 @@ let hv=0;if(kt>0){kt-=dt;hv=kv*80}else if(tx!==null){const d=dx(tx,px);hv=Math.m
 if(hv)fc=hv>0?1:-1;px=wr(px+hv*dt);
 pl.forEach(p=>{if(p.c){p.x+=p.vx*dt;if((p.vx<0&&(p.x<XA+12||p.x<p.x0-22))||(p.vx>0&&(p.x>XB-12||p.x>p.x0+22)))p.vx=-p.vx}});
 const oy=py;vy+=G0*(vy>0?GD:1)*dt;py+=vy*dt;sq=Math.max(0,sq-dt*5);
-if(vy>0)for(const p of pl){if(oy<=p.y+4&&py>=p.y&&Math.abs(dx(px,p.x))<PW/2+5){py=p.y;vy=JV;sq=1;jc++;fart(0);break}}
-if(sc&&vy>0){const ty=sc.y+sc.b-SCT;if(oy<=ty+4&&py>=ty&&Math.abs(dx(px,sc.x))<16){py=ty;vy=JV*1.22;sq=1;sc.sq=1;sc.oh=.7;jc++;fart(1);sfx(880,.06);fx.push({x:px,y:py-18,t:.8,s:'Bụp!',c:'#B8F2E0'})}}
+if(vy>0)for(const p of pl){if(oy<=p.y+4&&py>=p.y&&Math.abs(dx(px,p.x))<PW/2+5){py=p.y;vy=JV;sq=1;jc++;jumpSound();fart(0);break}}
+if(sc&&vy>0){const ty=sc.y+sc.b-SCT;if(oy<=ty+4&&py>=ty&&Math.abs(dx(px,sc.x))<16){py=ty;vy=JV*1.22;sq=1;sc.sq=1;sc.oh=.7;jc++;jumpSound();fart(1);sfx(880,.06);fx.push({x:px,y:py-18,t:.8,s:'Bụp!',c:'#B8F2E0'})}}
 /* nhặt linh đan */
 pl.forEach(p=>{if(p.o&&Math.abs(dx(px,p.x))<8&&Math.abs(py-10-(p.y-9))<10){p.o=0;got++;sfx(760,.07);fx.push({x:p.x,y:p.y-14,t:.8});st();if(got>=10){ded=1;w()}}});
 if(py<cam+84)cam=py-84;const hh=Math.max(0,Math.round((180-py)/10));if(hh>best){best=hh;st()}
@@ -2149,7 +2151,7 @@ const PIANO_CFG={
 const PIANO_MUSIC={src:'audiomass-output.mp3',volume:.85,delaySec:PIANO_CFG.introSec,loop:false};
 /* 11 Piano — Động phủ số 36 */
 function g11(w,lose,h){const C=PIANO_CFG,SPB=60/C.bpm,BB=C.beatsPerBar,BAR=SPB*BB,MR=Math.random,TR=C.travelBeats*SPB,WIN=C.hitWindow*SPB;
-try{music(null)}catch(e){}
+try{music(null)}catch(e){}pianoMusicActive=1;
 const PCS=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'],LANES=['A','S','D','F','G','H','J','K','L'],LO=[0,0,1,2,2,3,4,5,6,7,8,8];/* 12 cao độ → 9 phím A..L (cao độ sát nhau dùng chung một phím) */
 const KX=5,WK=11,KY=144,KH=36,TOPY=28,HY=137;
 const LX=l=>KX+l*WK+5,keyX=pc=>LX(LO[pc]);
@@ -2284,7 +2286,7 @@ p(x,y){if(paused||done||tm<C.introSec-.2||fin>=0)return;let ln=null;
  tryHit(ln)},
 k(c){if(c==='p'||c==='Escape'){paused?resume():openPause();return}if(paused)return;const M={a:0,s:1,d:2,f:3,g:4,h:5,j:6,k:7,l:8};if(c in M&&!done&&fin<0&&tm>=C.introSec-.2)tryHit(M[c])},
 pause:openPause,
-stop(){if(stopped)return;stopped=1;document.removeEventListener('visibilitychange',vis);if(au){if(au.paused)return;let v=au.volume;const iv=setInterval(()=>{v-=.12;if(v<=0){clearInterval(iv);au.pause()}else au.volume=v},40)}}}}
+stop(){if(stopped)return;stopped=1;pianoMusicActive=0;document.removeEventListener('visibilitychange',vis);if(au){if(au.paused)return;let v=au.volume;const iv=setInterval(()=>{v-=.12;if(v<=0){clearInterval(iv);au.pause()}else au.volume=v},40)}}}}
 const GM=[g1,g2,g3,g5,g14,g6,g9,g7,g4,g13,g11];
 function startLevel(i){$('app').classList.remove('level-play','lv-crane','lv-doodle','lv-tq','lv-pz');mode='l';const d=i<prog,q=LV[i],pn=$('pn'),c=E('div','cd');G={i,st:'intro',bg:scn(i)};pn.replaceChildren(c);
 c.append(E('small','','MÀN 0'+(i+1)+(d?' · ĐÃ HOÀN THÀNH':'')),E('h2','gt',q.mt||q.title),E('p','',q.description),E('hr'),E('p','pt','Cách chơi: '+q.howTo));
@@ -2386,7 +2388,7 @@ function toggleMute(){mu=!mu;$('mu').textContent=mu?'×':'♪';if(!matchMedia('(
 $('mu').onclick=()=>{if(matchMedia('(max-width:700px)').matches){const open=$('nav').classList.toggle('vol-open');$('mu').setAttribute('aria-expanded',String(open));$('mu').setAttribute('aria-label',open?'Đóng điều chỉnh âm lượng':'Mở điều chỉnh âm lượng')}else toggleMute()};
 
 /* ---------- Nhạc nền ---------- */
-const MUS=gameContent.music||{};let mvol=MUS.volume!=null?MUS.volume:.55,cur='',tracks={};
+const MUS=gameContent.music||{};let mvol=MUS.volume!=null?MUS.volume:.55,cur='',tracks={},pianoMusicActive=0;
 function mk(src,kind){const a=new Audio();a.src=src;a.loop=true;a.preload='auto';a.volume=0;a.addEventListener('error',()=>{a.broken=1;if(cur===kind&&!mu&&(!SQ||SQ.S0!==SONGS[kind]))fbStart(kind)});return a}
 if(MUS.intro)tracks.intro=mk(MUS.intro,'intro');
 if(MUS.map)tracks.map=mk(MUS.map,'map');
@@ -2418,7 +2420,7 @@ function seqPlay(e,t,q){const S0=q.S0,o=q.g,sp=q.spb;
 function fbStop(){if(SQ){clearInterval(SQ.tm);const g=SQ.g;try{const t=AC.currentTime;g.gain.cancelScheduledValues(t);g.gain.setValueAtTime(g.gain.value,t);g.gain.linearRampToValueAtTime(0,t+.8);setTimeout(()=>{try{g.disconnect()}catch(e){}},5200)}catch(e){}SQ=null}}
 function fade(a,to,done){if(!a)return done&&done();const st=a.volume,t0=performance.now();
 const step=()=>{const k=Math.min(1,(performance.now()-t0)/700);a.volume=Math.max(0,Math.min(1,st+(to-st)*k));if(k<1)requestAnimationFrame(step);else done&&done()};step()}
-function music(kind){if(cur===kind)return;const old=tracks[cur],a=tracks[kind];if(old&&a&&old!==a&&old.src===a.src&&!old.broken){cur=kind;return}cur=kind;fbStop();
+function music(kind){if(pianoMusicActive&&kind!==null)return;if(cur===kind)return;const old=tracks[cur],a=tracks[kind];if(old&&a&&old!==a&&old.src===a.src&&!old.broken){cur=kind;return}cur=kind;fbStop();
 if(old)fade(old,0,()=>old.pause());
 if(mu||!kind)return;
 if(!a||a.broken)return fbStart(kind);
@@ -2426,7 +2428,7 @@ const fallback=()=>{if(cur===kind&&!mu&&(!SQ||SQ.S0!==SONGS[kind]))fbStart(kind)
 const pr=a.play();if(pr&&pr.catch)pr.catch(fallback);
 setTimeout(()=>{if(a.broken||(a.readyState===0&&a.networkState===3))fallback()},900);
 fade(a,mvol)}
-function mapMusic(){const kind=cur||'map',context=audio(),suspended=context.state!=='running';if(suspended)context.resume().catch(e=>console.error('Không thể bật âm thanh:',e));
+function mapMusic(){if(pianoMusicActive){if(mu)toggleMute();return}const kind=cur||'map',context=audio(),suspended=context.state!=='running';if(suspended)context.resume().catch(e=>console.error('Không thể bật âm thanh:',e));
 if(mu){toggleMute();return}
 const a=tracks[kind],playing=!!(SQ&&SQ.S0===SONGS[kind])||!!(a&&!a.paused&&!a.broken);
 if(playing&&!suspended){toggleMute();return}
@@ -2440,7 +2442,7 @@ const vm=document.createElement('button');vm.type='button';vm.id='vmute';vm.clas
 volBox.append(vs,vm);$('mu').parentNode.insertBefore(volBox,$('mu').nextSibling);
 document.addEventListener('pointerdown',e=>{if(!e.target.closest('#nav')){$('nav').classList.remove('vol-open');$('mu').setAttribute('aria-expanded','false')}});
 addEventListener('keydown',e=>{if(e.key==='Escape'){$('nav').classList.remove('vol-open');$('mu').setAttribute('aria-expanded','false')}});
-addEventListener('pointerdown',e=>{if(e.target.closest('#mmu'))return;const context=audio();if(context.state!=='running')context.resume().catch(()=>{});if(mu)return;const kind=cur||'intro',a=tracks[kind];if(!a||a.broken){if(!SQ)fbStart(kind);return}if(a.paused){const pr=a.play();if(pr&&pr.then)pr.then(()=>{if(cur===kind)fbStop()}).catch(()=>{if(cur===kind&&!mu)fbStart(kind)});else fbStop()}},{passive:true});
+addEventListener('pointerdown',e=>{if(e.target.closest('#mmu'))return;const context=audio();if(context.state!=='running')context.resume().catch(()=>{});if(mu||pianoMusicActive)return;const kind=cur||'intro',a=tracks[kind];if(!a||a.broken){if(!SQ)fbStart(kind);return}if(a.paused){const pr=a.play();if(pr&&pr.then)pr.then(()=>{if(cur===kind)fbStop()}).catch(()=>{if(cur===kind&&!mu)fbStart(kind)});else fbStop()}},{passive:true});
 
 /* ---------- Màn gacha kết thúc ---------- */
 let Gc={};
