@@ -2262,6 +2262,7 @@ const keyboard=(t,yo)=>{
   R(x,whiteY+whiteH-2,kw,2,'#D9DADD');
   if(lit>.05){X.globalAlpha=Math.min(.78,lit*.8);R(x+1,whiteY+dn+1,kw-2,whiteH-dn-2,mix('#FFFFFF',col,lit));X.globalAlpha=1;
    R(x+1,whiteY+whiteH-3,kw-2,2,mix('#D8DDE0',col,lit))}
+  glyph(LANES[l],x+2,K+KH-16+dn,lit>.5?'#2A1F4A':'#6A5A9A');
  }
  /* five black keys in the familiar 2 + 3 grouping */
  const blacks=[{gap:0,lane:0,pc:1},{gap:1,lane:2,pc:3},{gap:3,lane:4,pc:6},{gap:4,lane:6,pc:8},{gap:5,lane:8,pc:10}];
