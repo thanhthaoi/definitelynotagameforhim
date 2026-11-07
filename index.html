@@ -2132,12 +2132,12 @@ p(){const x=14+p;if(x>46&&x<62){hit++;fl=.4;sfx(700,.08);if(hit>=5)setTimeout(w,
    - barsPerChord: số ô nhịp cho mỗi hợp âm. revealBars: số ô nhịp nghỉ để hiện tên đoạn (Chord Reveal).
    - chords: nốt của từng hợp âm (gốc-3-5-7) và màu sắc thái. Bb viết là A# cho trùng phím đen. */
 const PIANO_CFG={
- bpm:70,beatsPerBar:3,barsPerChord:1,revealBars:1,
+ bpm:71.78,beatsPerBar:3,barsPerChord:1,revealBars:0,
  introSec:3.4,          /* thời gian chuyển phòng ngày → đêm trước khi vào nhịp */
  travelBeats:2.4,       /* nốt rơi từ trên xuống vạch mất bao nhiêu phách (lớn = chậm, dễ nhìn) */
  hitWindow:.45,         /* sai số cho phép, tính bằng phách (±0,45 phách ≈ ±0,39 s) */
  passRatio:.45,         /* chạm trúng ≥ 45% số nốt là qua; chưa đủ thì chơi thêm một vòng Chorus */
- maxExtraLoops:2,       /* tối đa số vòng chơi thêm, sau đó luôn cho qua (game sinh nhật) */
+ maxExtraLoops:1,       /* tối đa số vòng chơi thêm, sau đó luôn cho qua (game sinh nhật) */
  perfectRatio:.85,      /* trúng ≥ 85% một đoạn → khoảnh khắc "Hòa âm trọn vẹn" */
  sections:[
   {name:'Verse',pattern:[[0],[],[2]],chords:['Dmaj7','F#aug','Bm','D7','Gmaj7','D/F#','E7','A7']},
@@ -2157,6 +2157,8 @@ const PIANO_CFG={
    - Nút âm thanh (♪ / ×) trên thanh điều hướng cũng tắt tiếng nhạc này.
    - Để trống src = chỉ có tiếng đàn tự sinh của game. */
 const PIANO_MUSIC={src:'audiomass-output.mp3',volume:.85,delaySec:PIANO_CFG.introSec,loop:false};
+/* Beat map được phân tích từ audiomass-output (2).mp3; mỗi timestamp là một phách half-time (xấp xỉ 71.78 BPM). */
+const AUDIO_HALF_BEATS=[0.09288,0.88236,1.71828,2.53098,3.32045,4.06349,4.84136,5.65406,6.52481,7.43039,8.33596,9.29959,10.18195,11.06431,11.95828,12.81741,13.61850,14.39637,15.19746,16.03338,16.85769,17.68200,18.49469,19.36544,20.23619,21.11855,22.00091,22.76717,23.60308,24.40417,25.21687,26.07601,26.87710,27.65497,28.42122,29.23392,30.02340,30.81288,31.61397,32.42667,33.23937,34.02884,34.84154,35.65424,36.45533,37.37252,38.25488,39.12562,39.98476,40.85551,41.73787,42.55057,43.42132,44.26884,45.12798,45.97551,46.81143,47.70540,48.55293,49.41206,50.27120,51.13034,51.98948,52.84862,53.70776,54.56689,55.39120,56.22712,56.99338,57.78286,58.53751,59.31537,60.07002,60.97560,61.78830,62.50812,63.29760,64.11029,64.85333,65.70086,66.56000,67.43075,68.27828,69.12580,69.98494,70.85569,71.71483,72.59719,73.42150,74.28063,75.22104,75.98730,76.84644,77.70558,78.55311,79.41224,80.27138,81.13052,81.97805,82.83719,83.70794,84.56707,85.44943,86.28535,87.13288,87.99202,88.85116,89.71029,90.65070,91.44018,92.27610,93.13524,93.99438,94.83029,95.65460,96.56018,97.41932,98.33651,99.14921,99.96190,100.84426,101.69179,102.55093,103.41007,104.26921,105.12834,105.99909,106.84662,107.68254];
 /* 11 Piano — Động phủ số 36 */
 function g11(w,lose,h){const C=PIANO_CFG,SPB=60/C.bpm,BB=C.beatsPerBar,BAR=SPB*BB,MR=Math.random,TR=C.travelBeats*SPB,WIN=C.hitWindow*SPB;
 try{music(null)}catch(e){}pianoMusicActive=1;
@@ -2168,11 +2170,21 @@ const cl=v=>Math.max(0,Math.min(1,v)),sm=v=>{v=cl(v);return v*v*(3-2*v)};
 const play=fn=>{if(mu)return;try{const a=audio();fn(a.currentTime)}catch(e){}};
 /* ---- dựng dòng thời gian: mỗi đoạn = 1 ô nhịp Chord Reveal + các ô nhịp hợp âm; mỗi phách một nốt thuộc hợp âm ---- */
 let bars=[],notes=[],rid=0,runs=[];
-const addSection=(si,t0)=>{const S=C.sections[si],r=rid++;runs[r]={si,tot:0,hit:0};bars.push({t:t0,rev:S.name,chord:S.chords[0],r});t0+=BAR*C.revealBars;
- S.chords.forEach((ch,ci)=>{for(let k=0;k<C.barsPerChord;k++){const bi=bars.length,cd=C.chords[ch];bars.push({t:t0,chord:ch,r,nn:0,nh:0,fin:si==C.sections.length-1&&ci==S.chords.length-1});
-  S.pattern.forEach((ix,b)=>ix.forEach(q=>{notes.push({pc:PCS.indexOf(cd.n[Math.min(q,cd.n.length-1)]),t:t0+b*SPB,bi,r,st:0});bars[bi].nn++;runs[r].tot++}));t0+=BAR}});return t0};
-let end=C.introSec;C.sections.forEach((S,si)=>end=addSection(si,end));
-let tm=0,hits=0,combo=0,loops=0,fin=-1,done=0,cbi=-1,lastBeat=-1,beat=0,col='#C8C0F0',colT=col,fx=[],flow=[],sw=0;
+/* Ánh xạ beat-index sang timestamp thực tế của audio. Nội suy giữa các beat đã phân tích;
+   phần cuối audio map được ngoại suy bằng tempo trung bình 71.78 BPM. */
+const audioTimeAtBeat=i=>{
+ const n=AUDIO_HALF_BEATS.length;
+ if(i<=0)return AUDIO_HALF_BEATS[0]+i*SPB;
+ const j=Math.floor(i),f=i-j;
+ if(j>=n-1)return AUDIO_HALF_BEATS[n-1]+(i-(n-1))*SPB;
+ return AUDIO_HALF_BEATS[j]+(AUDIO_HALF_BEATS[j+1]-AUDIO_HALF_BEATS[j])*f;
+};
+const gameTimeToAudio=t=>audioTimeAtBeat((t-C.introSec)/SPB);
+const addSection=(si,t0)=>{const S=C.sections[si],r=rid++;runs[r]={si,tot:0,hit:0};if(C.revealBars>0){bars.push({t:t0,audioT:gameTimeToAudio(t0),rev:S.name,chord:S.chords[0],r});t0+=BAR*C.revealBars;}
+ S.chords.forEach((ch,ci)=>{for(let k=0;k<C.barsPerChord;k++){const bi=bars.length,cd=C.chords[ch];bars.push({t:t0,audioT:gameTimeToAudio(t0),chord:ch,r,nn:0,nh:0,fin:si==C.sections.length-1&&ci==S.chords.length-1});
+  S.pattern.forEach((ix,b)=>ix.forEach(q=>{notes.push({pc:PCS.indexOf(cd.n[Math.min(q,cd.n.length-1)]),t:t0+b*SPB,audioT:gameTimeToAudio(t0+b*SPB),bi,r,st:0});bars[bi].nn++;runs[r].tot++}));t0+=BAR}});return t0};
+let end=C.introSec;C.sections.forEach((S,si)=>end=addSection(si,end));let endAudio=gameTimeToAudio(end);
+let tm=0,chartTm=-C.introSec,hits=0,combo=0,loops=0,fin=-1,done=0,cbi=-1,lastBeat=-1,beat=0,col='#C8C0F0',colT=col,fx=[],flow=[],sw=0;
 const kg=new Array(9).fill(0),kp=new Array(9).fill(0);
 const curChord=()=>cbi>=0?bars[cbi].chord:'Dmaj7',chordNotes=()=>C.chords[curChord()].n.map(x=>PCS.indexOf(x));
 const strum=(ch,vol,gap)=>play(t=>C.chords[ch].n.forEach((x,k)=>pluck(t+k*gap,mf(62+((PCS.indexOf(x)-2+12)%12)),2.4,vol,SFXB,1)));
@@ -2184,7 +2196,7 @@ const onBar=(bi,prev)=>{const B=bars[bi],P=prev>=0?bars[prev]:null;
  if(B.rev){fx.push({ty:'rev',sec:B.rev,ch:B.chord,t:0,l:BAR});strum(B.chord,.05,.09)}
  else{for(let k=0;k<3;k++)fx.push({ty:'wave',x:54,y:KY+4,c:colT,t:-k*.12,l:1.1,rm:60})}};
 const onBeat=b=>{beat=b;if(b==0)fx.push({ty:'beat',t:0,l:.8});if(b==1)for(let k=0;k<5;k++)fx.push({ty:'spark',x:10+MR()*88,y:HY-6-MR()*60,vx:(MR()-.5)*6,vy:-6-MR()*8,t:0,l:1.2,c:colT})};
-const tryHit=ln=>{kp[ln]=1;let best=null;notes.forEach(n=>{if(n.st||LO[n.pc]!==ln)return;const d=Math.abs(n.t-tm);if(d<=WIN&&(!best||d<best.d))best={n,d}});
+const tryHit=ln=>{kp[ln]=1;let best=null;notes.forEach(n=>{if(n.st||LO[n.pc]!==ln)return;const d=Math.abs(n.audioT-chartTm);if(d<=WIN&&(!best||d<best.d))best={n,d}});
  if(!best){play(t=>pluck(t,mf(60+ln*2),.24,.045,SFXB,1));return}const n=best.n;n.st=1;hits++;combo++;bars[n.bi].nh++;runs[n.r].hit++;kg[ln]=1;const pc=n.pc,x=LX(ln),c=C.chords[bars[n.bi].chord].c;
  ring(x,HY,c,.55,16);ring(x,KY+6,c,.7,24);for(let k=0;k<6;k++)fx.push({ty:'spark',x,y:HY,vx:(MR()-.5)*40,vy:-20-MR()*30,t:0,l:.6+MR()*.3,c:k%2?'#FFFFFF':c});
  flow.push({x,t:tm});if(flow.length>9)flow.shift();
@@ -2213,12 +2225,12 @@ const noteSpr=(x,y,c)=>NOTE.forEach((row,j)=>{for(let i=0;i<4;i++)if(row[i]=='#'
 const panel=(t,yo)=>{X.globalAlpha=.78;R(3,1+yo,102,25,'#141030');X.globalAlpha=1;R(3,1+yo,102,1,'#E8D098');R(3,25+yo,102,1,'#6A5A9A');
  pxText('Nothing',7,1+yo,'#F6DFA8',1,'l','#0A0820');pxText('Bruno Major',7,11+yo,'#C8C0F0',1,'l','#0A0820');
  const ch=curChord(),cw=pxTextW(ch,1);pxText(ch,101-cw,1+yo,mix(col,'#FFFFFF',.2),1,'l','#0A0820');
- for(let b=0;b<3;b++){const on=tm>=C.introSec&&beat==b,x=82+b*7;pxText(''+(b+1),x,11+yo,on?(b==0?'#FFE6A0':'#F4E8FF'):'#5A5280',1,'l',on?'#0A0820':'')}
+ for(let b=0;b<3;b++){const on=chartTm>=AUDIO_HALF_BEATS[0]&&beat==b,x=82+b*7;pxText(''+(b+1),x,11+yo,on?(b==0?'#FFE6A0':'#F4E8FF'):'#5A5280',1,'l',on?'#0A0820':'')}
  const pr=cl((tm-C.introSec)/(end-C.introSec));R(7,22+yo,94,1,'#2E2850');R(7,22+yo,Math.round(94*pr),1,'#F0D898');R(7+Math.round(94*pr)-1,21+yo,2,3,'#FFF4D0')};
 const GLY={A:['.###.','#...#','#...#','#####','#...#','#...#','#...#'],S:['.####','#....','#....','.###.','....#','....#','####.'],D:['####.','#...#','#...#','#...#','#...#','#...#','####.'],F:['#####','#....','#....','####.','#....','#....','#....'],G:['.####','#....','#....','#.###','#...#','#...#','.####'],H:['#...#','#...#','#...#','#####','#...#','#...#','#...#'],J:['..###','....#','....#','....#','....#','#...#','.###.'],K:['#...#','#..#.','#.#..','##...','#.#..','#..#.','#...#'],L:['#....','#....','#....','#....','#....','#....','#####']};
 const glyph=(ch,x,y,c)=>GLY[ch].forEach((row,j)=>{for(let i=0;i<5;i++)if(row[i]==='#')R(x+i,y+j,1,1,c)});
-const keyboard=(t,yo)=>{const act=tm>=C.introSec?chordNotes().map(p=>LO[p]):[],soon=new Array(9).fill(0);
- notes.forEach(n=>{if(!n.st){const d=n.t-tm,l=LO[n.pc];if(d>0&&d<SPB)soon[l]=Math.max(soon[l],1-d/SPB)}});
+const keyboard=(t,yo)=>{const act=chartTm>=AUDIO_HALF_BEATS[0]?chordNotes().map(p=>LO[p]):[],soon=new Array(9).fill(0);
+ notes.forEach(n=>{if(!n.st){const d=n.audioT-chartTm,l=LO[n.pc];if(d>0&&d<SPB)soon[l]=Math.max(soon[l],1-d/SPB)}});
  const K=KY+yo;R(1,K-5,106,KH+7,'#1C1630');R(1,K-5,106,1,'#E8D098');R(1,K-4,106,2,'#3A3058');R(1,K+KH+1,106,1,'#0E0A1C');
  for(let l=0;l<9;l++){const x=KX+l*WK,lit=Math.max(kg[l],kp[l]*.35,soon[l]*.45,act.includes(l)?.16:0),dn=kp[l]>.6?1:0;
   R(x,K+dn,WK-1,KH-dn,mix('#F2ECF8',col,lit*.85));R(x,K+KH-4,WK-1,4,mix('#CFC4E4',col,lit*.5));R(x,K+dn,1,KH-4,'#FFFFFF');R(x+WK-1,K,1,KH,'#7A7098');
@@ -2234,31 +2246,31 @@ const openPause=()=>{if(paused||done||stopped)return;paused=1;G.paused=1;if(au)a
  const a=E('button','bt','Tiếp tục'),r=E('button','bt ghost','Chơi lại'),m=E('button','bt ghost','Về bản đồ');a.onclick=resume;r.onclick=()=>begin();m.onclick=()=>go({t:'w'});c.append(a,r,m);o.append(c);$('app').append(o)};
 const vis=()=>{if(document.hidden)openPause()};document.addEventListener('visibilitychange',vis);
 return{noOb:1,
-u(dt){if(done||paused)return;if(au){au.muted=!!mu;if(!auOn&&tm>=MU.delaySec)auPlay()}tm+=dt;for(let k=0;k<9;k++){kg[k]=Math.max(0,kg[k]-dt*1.8);kp[k]=Math.max(0,kp[k]-dt*4)}
+u(dt){if(done||paused)return;tm+=dt;if(au){au.muted=!!mu;if(!auOn&&tm>=MU.delaySec)auPlay();chartTm=auOn?au.currentTime:tm-MU.delaySec;}else chartTm=tm-MU.delaySec;for(let k=0;k<9;k++){kg[k]=Math.max(0,kg[k]-dt*1.8);kp[k]=Math.max(0,kp[k]-dt*4)}
  fx.forEach(e=>{e.t+=dt;if(e.vx!=null){e.x+=e.vx*dt;e.y+=e.vy*dt}});fx=fx.filter(e=>e.t<e.l);
- notes.forEach(n=>{if(!n.st&&tm-n.t>WIN){n.st=2;combo=0}});
- if(tm>=C.introSec){const bt=Math.floor((tm-C.introSec)/SPB);if(bt!==lastBeat){lastBeat=bt;onBeat(bt%BB)}}
- let bi=cbi;while(bi+1<bars.length&&bars[bi+1].t<=tm)bi++;if(bi!==cbi){const pv=cbi;cbi=bi;onBar(bi,pv)}
- if(tm>=end&&fin<0){if(hits/Math.max(1,notes.length)>=C.passRatio||loops>=C.maxExtraLoops){fin=0;strum('Dmaj7',.06,.14);play(t=>bell(t+.6,mf(86),3,.05,SFXB))}
-  else{loops++;fx.push({ty:'msg',s:'Thêm một vòng nữa nhé!',t:0,l:2.4});end=addSection(C.sections.length-1,end)}}
+ notes.forEach(n=>{if(!n.st&&chartTm-n.audioT>WIN){n.st=2;combo=0}});
+ if(chartTm>=AUDIO_HALF_BEATS[0]){let bi=0;while(bi+1<AUDIO_HALF_BEATS.length&&AUDIO_HALF_BEATS[bi+1]<=chartTm)bi++;const bt=bi;if(bt!==lastBeat){lastBeat=bt;onBeat(bt%BB)}}
+ let bi=cbi;while(bi+1<bars.length&&bars[bi+1].audioT<=chartTm)bi++;if(bi!==cbi){const pv=cbi;cbi=bi;onBar(bi,pv)}
+ if(chartTm>=endAudio&&fin<0){if(hits/Math.max(1,notes.length)>=C.passRatio||loops>=C.maxExtraLoops){fin=0;strum('Dmaj7',.06,.14);play(t=>bell(t+.6,mf(86),3,.05,SFXB))}
+  else{loops++;fx.push({ty:'msg',s:'Thêm một vòng nữa nhé!',t:0,l:2.4});end=addSection(C.sections.length-1,end);endAudio=gameTimeToAudio(end)}}
  if(fin>=0){fin+=dt;sw+=dt;if(sw>.07){sw=0;const ln=MR()*9|0;fx.push({ty:'fly',x:LX(ln),y:KY-2,vx:(MR()-.5)*10,vy:-26-MR()*20,t:0,l:2.4,c:['#FFE3A0','#FFB6D6','#D6C2FA','#FFFFFF'][MR()*4|0]})}
   if(fin>4.4&&!done){done=1;w()}}},
 d(t){const n=sm(tm/(C.introSec*.85)),lamp=sm((tm-1.3)/.6),lastB=cbi>=0&&bars[cbi].fin?cl((tm-bars[cbi].t)/BAR):0,warm=Math.max(lastB*.3,sm(fin/2.4));
  col=mix(col,colT,.06);night(n,warm,lamp,t);
  const ua=sm((tm-1.8)/1.2),yo=Math.round((1-ua)*60);
  /* ánh sắc thái hợp âm + nhịp: phách 1 sáng rõ, phách 2 vừa, phách 3 dịu xuống */
- if(tm>=C.introSec){const ph=((tm-C.introSec)/SPB)%1,amp=[.13,.07,.04][beat]*(1-ph*.6);X.save();X.globalCompositeOperation='lighter';const g=X.createRadialGradient(54,HY,4,54,HY,120);const c=rgb(col);g.addColorStop(0,'rgba('+c+','+amp+')');g.addColorStop(1,'rgba('+c+',0)');X.fillStyle=g;X.fillRect(XL,0,LW,192);X.restore()}
+ if(chartTm>=AUDIO_HALF_BEATS[0]){const ph=((chartTm-AUDIO_HALF_BEATS[0])/SPB)%1,amp=[.13,.07,.04][beat]*(1-ph*.6);X.save();X.globalCompositeOperation='lighter';const g=X.createRadialGradient(54,HY,4,54,HY,120);const c=rgb(col);g.addColorStop(0,'rgba('+c+','+amp+')');g.addColorStop(1,'rgba('+c+',0)');X.fillStyle=g;X.fillRect(XL,0,LW,192);X.restore()}
  /* khu vực nốt rơi: dải tối trong suốt + làn của các nốt thuộc hợp âm */
  if(ua>0){X.globalAlpha=.24*ua;R(2,TOPY+yo*0,104,HY-TOPY+6,'#120E2C');X.globalAlpha=1;
-  if(tm>=C.introSec)chordNotes().forEach(pc=>{X.globalAlpha=.13+(beat==0?.07:0);R(keyX(pc),TOPY,1,HY-TOPY,col);X.globalAlpha=1});
-  const bp=tm>=C.introSec?1-(((tm-C.introSec)/SPB)%1):0;X.globalAlpha=(.25+.35*bp*(beat==0?1:.5))*ua;R(3,HY-1,102,3,mix(col,'#FFFFFF',.4));X.globalAlpha=ua;R(3,HY,102,1,'#FFF0C8');X.globalAlpha=1;
+  if(chartTm>=AUDIO_HALF_BEATS[0])chordNotes().forEach(pc=>{X.globalAlpha=.13+(beat==0?.07:0);R(keyX(pc),TOPY,1,HY-TOPY,col);X.globalAlpha=1});
+  const bp=chartTm>=AUDIO_HALF_BEATS[0]?1-(((chartTm-AUDIO_HALF_BEATS[0])/SPB)%1):0;X.globalAlpha=(.25+.35*bp*(beat==0?1:.5))*ua;R(3,HY-1,102,3,mix(col,'#FFFFFF',.4));X.globalAlpha=ua;R(3,HY,102,1,'#FFF0C8');X.globalAlpha=1;
   /* chỉ báo đúng chỗ cần chạm trên vạch */
-  notes.forEach(q=>{if(q.st)return;const d=q.t-tm;if(d<SPB*1.2&&d>-WIN){const x=keyX(q.pc),a=cl(1-Math.abs(d)/(SPB*1.2));X.globalAlpha=a;R(x-2,HY-1,5,3,'#FFF6DA');R(x-1,HY-2,3,5,'#FFF6DA');X.globalAlpha=1}})}
+  notes.forEach(q=>{if(q.st)return;const d=q.audioT-chartTm;if(d<SPB*1.2&&d>-WIN){const x=keyX(q.pc),a=cl(1-Math.abs(d)/(SPB*1.2));X.globalAlpha=a;R(x-2,HY-1,5,3,'#FFF6DA');R(x-1,HY-2,3,5,'#FFF6DA');X.globalAlpha=1}})}
  /* Musical Flow: chạm đúng liên tiếp → dải sóng sáng nối các phím */
  if(combo>=3&&flow.length>1){const amp=Math.min(14,3+combo);for(let i=1;i<flow.length;i++){const a=flow[i-1],b=flow[i],age=tm-b.t;if(age>BAR*1.5)continue;const al=(1-age/(BAR*1.5))*.8;
   for(let s2=0;s2<=1;s2+=.05){const x=a.x+(b.x-a.x)*s2,y=HY-3-Math.sin(s2*Math.PI)*amp-Math.sin(t/180+s2*6)*1.5;X.globalAlpha=al;R(x|0,y|0,1,1,mix('#FFE6A8','#FFB6D6',s2))}}X.globalAlpha=1}
  /* nốt rơi: viên sáng màu hợp âm, có vệt sáng */
- notes.forEach(q=>{if(q.st==1)return;const y=HY-(q.t-tm)/TR*(HY-TOPY);if(y<TOPY-6||y>HY+12)return;const x=keyX(q.pc),c=C.chords[bars[q.bi].chord].c,fa=q.st==2?cl(1-(tm-q.t-WIN)/.4):1;if(fa<=0)return;
+ notes.forEach(q=>{if(q.st==1)return;const y=HY-(q.audioT-chartTm)/TR*(HY-TOPY);if(y<TOPY-6||y>HY+12)return;const x=keyX(q.pc),c=C.chords[bars[q.bi].chord].c,fa=q.st==2?cl(1-(chartTm-q.audioT-WIN)/.4):1;if(fa<=0)return;
   X.globalAlpha=.25*fa;R(x,(y-10)|0,1,7,c);el(x,y|0,5,4,c,.22*fa);X.globalAlpha=fa;el(x,y|0,3,3,mix(c,'#3A2E6A',.25),fa);el(x,(y|0)-1,2,2,c,fa);X.globalAlpha=fa;R(x-1,(y|0)-2,2,1,'#FFFFFF');
   if(Math.abs(y-HY)<10){X.globalAlpha=.5*fa;R(x-5,y|0,1,1,c);R(x+5,y|0,1,1,c);R(x,(y|0)-5,1,1,c)}X.globalAlpha=1});
  keyboard(t,yo);
@@ -2289,7 +2301,7 @@ d(t){const n=sm(tm/(C.introSec*.85)),lamp=sm((tm-1.3)/.6),lastB=cbi>=0&&bars[cbi
  if(tm<C.introSec*.9&&n<.98){X.globalAlpha=cl(Math.sin(cl(tm/(C.introSec*.9))*Math.PI));pxText('Đêm xuống rồi...',54,96,'#F4E8FF',1,'c','#0A0820');X.globalAlpha=1}},
 p(x,y){if(paused||done||tm<C.introSec-.2||fin>=0)return;let ln=null;
  if(y>=KY-4){ln=Math.floor((x-KX)/WK);if(ln<0||ln>8)return}
- else{let best=null;notes.forEach(q=>{if(q.st||Math.abs(q.t-tm)>WIN)return;const d=Math.abs(keyX(q.pc)-x);if(d<10&&(!best||d<best.d))best={q,d}});
+ else{let best=null;notes.forEach(q=>{if(q.st||Math.abs(q.audioT-chartTm)>WIN)return;const d=Math.abs(keyX(q.pc)-x);if(d<10&&(!best||d<best.d))best={q,d}});
   if(best)ln=LO[best.q.pc];else{let bd=99;for(let k=0;k<9;k++){const d=Math.abs(LX(k)-x);if(d<bd){bd=d;ln=k}}}}
  tryHit(ln)},
 k(c){if(c==='p'||c==='Escape'){paused?resume():openPause();return}if(paused)return;const M={a:0,s:1,d:2,f:3,g:4,h:5,j:6,k:7,l:8};if(c in M&&!done&&fin<0&&tm>=C.introSec-.2)tryHit(M[c])},
