@@ -788,7 +788,7 @@ if(ek!==edk){edk=ek;const e=$('edg');e.className=ek?'on '+ek:'';e.textContent=ek
 placeLabels()}
 function proj2(e){const c=toC($('wd'),e);tgt=proj(c[0],c[1]+camY)[0]}
 let drag=0;const wd=$('wd'),wv=$('wv');
-wv.onpointerdown=e=>{if(e.target.closest('#mbar, #mhud, #lbl, #mo'))return;drag=1;wv.setPointerCapture(e.pointerId);proj2(e);e.preventDefault()};
+wv.onpointerdown=e=>{if(e.target.closest('#mbar, #mhud, #lbl, #mo, #p36go'))return;drag=1;wv.setPointerCapture(e.pointerId);proj2(e);e.preventDefault()};
 wv.onpointermove=e=>{if(drag)proj2(e)};wv.onpointerup=wv.onpointercancel=()=>drag=0;
 $('en').onclick=()=>{if(ni>=0&&ni<=prog)go({t:'l',i:ni});else if(ni<0){if(prog<NL)tgt=LOC[prog];else go({t:'g',n:0})}};
 onkeydown=e=>{const k=e.key;if(mode==='l'&&G.st==='play'&&G.g.k){if(/^Arrow| /.test(k))e.preventDefault();G.g.k(k.length==1?k.toLowerCase():k);return}if(mode!=='w')return;if(/^(ArrowUp|ArrowRight|w|d)$/i.test(k))kd=1;else if(/^(ArrowDown|ArrowLeft|s|a)$/i.test(k))kd=-1;else if(k==='Enter'&&ni>=0&&ni<=prog)go({t:'l',i:ni})};
@@ -797,13 +797,13 @@ onkeyup=()=>kd=0;
 /* ---------- Mini-game ---------- */
 /* ========== ÂM THANH: synth WebAudio (đàn tranh, chuông, sáo, pad) + vang ========== */
 let AC=null,MST,REVI,SFXB,MUSB;
-function audio(){if(AC)return AC;AC=new(window.AudioContext||window.webkitAudioContext)();ac=AC;
+function audio(){if(AC){if(AC.state!=='running')AC.resume().catch(()=>{});return AC}AC=new(window.AudioContext||window.webkitAudioContext)();ac=AC;
  const cp=AC.createDynamicsCompressor();cp.threshold.value=-16;cp.ratio.value=3;cp.connect(AC.destination);
  MST=AC.createGain();MST.gain.value=.9;MST.connect(cp);
  const len=AC.sampleRate*2.4|0,ir=AC.createBuffer(2,len,AC.sampleRate);for(let c=0;c<2;c++){const d=ir.getChannelData(c);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.8)}
  const rv=AC.createConvolver();rv.buffer=ir;REVI=AC.createGain();REVI.gain.value=1;REVI.connect(rv);const ro=AC.createGain();ro.gain.value=.32;rv.connect(ro);ro.connect(MST);
  const bus=(v,send)=>{const g=AC.createGain();g.gain.value=v;g.connect(MST);const s=AC.createGain();s.gain.value=send;g.connect(s);s.connect(REVI);return g};
- SFXB=bus(.85,.28);MUSB=bus(typeof mvol==='number'?mvol*.9:.5,.4);return AC}
+ SFXB=bus(.85,.28);MUSB=bus(typeof mvol==='number'?mvol*.9:.5,.4);if(AC.state!=='running')AC.resume().catch(()=>{});return AC}
 const mf=m=>440*Math.pow(2,(m-69)/12);
 function env(g,t,a,v,dur){g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+a);g.gain.exponentialRampToValueAtTime(.0004,t+dur)}
 /* đàn tranh: gảy, hơi trượt cao độ lúc đầu */
@@ -2166,7 +2166,7 @@ const SHOW_PIANO_SHORTCUT=true;
 const AUDIO_HALF_BEATS=[0.09288,0.88236,1.71828,2.53098,3.32045,4.06349,4.84136,5.65406,6.52481,7.43039,8.33596,9.29959,10.18195,11.06431,11.95828,12.81741,13.61850,14.39637,15.19746,16.03338,16.85769,17.68200,18.49469,19.36544,20.23619,21.11855,22.00091,22.76717,23.60308,24.40417,25.21687,26.07601,26.87710,27.65497,28.42122,29.23392,30.02340,30.81288,31.61397,32.42667,33.23937,34.02884,34.84154,35.65424,36.45533,37.37252,38.25488,39.12562,39.98476,40.85551,41.73787,42.55057,43.42132,44.26884,45.12798,45.97551,46.81143,47.70540,48.55293,49.41206,50.27120,51.13034,51.98948,52.84862,53.70776,54.56689,55.39120,56.22712,56.99338,57.78286,58.53751,59.31537,60.07002,60.97560,61.78830,62.50812,63.29760,64.11029,64.85333,65.70086,66.56000,67.43075,68.27828,69.12580,69.98494,70.85569,71.71483,72.59719,73.42150,74.28063,75.22104,75.98730,76.84644,77.70558,78.55311,79.41224,80.27138,81.13052,81.97805,82.83719,83.70794,84.56707,85.44943,86.28535,87.13288,87.99202,88.85116,89.71029,90.65070,91.44018,92.27610,93.13524,93.99438,94.83029,95.65460,96.56018,97.41932,98.33651,99.14921,99.96190,100.84426,101.69179,102.55093,103.41007,104.26921,105.12834,105.99909,106.84662,107.68254];
 /* 11 Piano — Động phủ số 36 */
 function g11(w,lose,h){const C=PIANO_CFG,SPB=60/C.bpm,BB=C.beatsPerBar,BAR=SPB*BB,MR=Math.random,TR=C.travelBeats*SPB,WIN=C.hitWindow*SPB;
-try{music(null)}catch(e){}pianoMusicActive=1;
+pianoMusicActive=1;try{music(null)}catch(e){}
 const PCS=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'],LANES=['A','S','D','F','G','H','J','K','L'],LO=[0,0,1,2,2,3,4,5,6,7,8,8];/* 12 cao độ → 9 phím A..L (cao độ sát nhau dùng chung một phím) */
 const KX=5,WK=11,KY=144,KH=48,TOPY=28,HY=137;
 const LX=l=>KX+l*WK+5,keyX=pc=>LX(LO[pc]);
@@ -2450,7 +2450,8 @@ if(ok)c.append(E('p','pt',q.memory));
 const x=E('button','bt','Đóng');x.onclick=()=>o.remove();c.append(x);o.append(c);o.onclick=e=>{if(e.target===o)o.remove()};$('app').append(o)}
 $('nb').onclick=()=>{bagUI();$('bag').classList.toggle('on')};
 function toggleMute(){mu=!mu;$('mu').textContent=mu?'×':'♪';if(!matchMedia('(max-width:700px)').matches)$('mu').setAttribute('aria-label',mu?'Bật nhạc':'Tắt nhạc');$('mmu').classList.toggle('off',!!mu);$('mmu').setAttribute('aria-label',mu?'Bật nhạc':'Tắt nhạc');const vm=$('vmute');if(vm){vm.textContent=mu?'Bật nhạc':'Tắt nhạc';vm.setAttribute('aria-label',mu?'Bật nhạc nền':'Tắt nhạc nền')}if(mu){fbStop();Object.values(tracks).forEach(a=>a.pause())}else{const k=cur;cur='';music(k||'intro')}}
-$('mu').onclick=()=>{if(matchMedia('(max-width:700px)').matches){const open=$('nav').classList.toggle('vol-open');$('mu').setAttribute('aria-expanded',String(open));$('mu').setAttribute('aria-label',open?'Đóng điều chỉnh âm lượng':'Mở điều chỉnh âm lượng')}else toggleMute()};
+function enableAudioPlayback(){const context=audio();if(context.state!=='running')context.resume().catch(()=>{});if(mu){toggleMute();return}const kind=cur||'intro',track=tracks[kind];if(!track||track.broken){if(!SQ)fbStart(kind);return}track.volume=mvol;if(track.paused){const play=track.play();if(play&&play.catch)play.catch(()=>{if(cur===kind&&!mu)fbStart(kind)})}}
+$('mu').onclick=()=>{if(matchMedia('(max-width:700px)').matches){enableAudioPlayback();const open=$('nav').classList.toggle('vol-open');$('mu').setAttribute('aria-expanded',String(open));$('mu').setAttribute('aria-label',open?'Đóng điều chỉnh âm lượng':'Bật âm thanh / điều chỉnh âm lượng')}else toggleMute()};
 
 /* ---------- Nhạc nền ---------- */
 const MUS=gameContent.music||{};let mvol=MUS.volume!=null?MUS.volume:.55,cur='',tracks={},pianoMusicActive=0;
@@ -2482,10 +2483,10 @@ function seqPlay(e,t,q){const S0=q.S0,o=q.g,sp=q.spb;
  else if(e.k==='bs')pluck(t,mf(e.n),sp*1.8,.1,o);
  else if(e.k==='a')pluck(t,mf(e.n),sp*.9,.045,o);
  else if(e.k==='kk')kick(t,.16,o);else if(e.k==='tk')noise(t,.04,.05,o,'highpass',7000)}
-function fbStop(){if(SQ){clearInterval(SQ.tm);const g=SQ.g;try{const t=AC.currentTime;g.gain.cancelScheduledValues(t);g.gain.setValueAtTime(g.gain.value,t);g.gain.linearRampToValueAtTime(0,t+.8);setTimeout(()=>{try{g.disconnect()}catch(e){}},5200)}catch(e){}SQ=null}}
+function fbStop(immediate){if(SQ){clearInterval(SQ.tm);const g=SQ.g;try{const t=AC.currentTime;g.gain.cancelScheduledValues(t);if(immediate){g.gain.setValueAtTime(0,t);g.disconnect()}else{g.gain.setValueAtTime(g.gain.value,t);g.gain.linearRampToValueAtTime(0,t+.8);setTimeout(()=>{try{g.disconnect()}catch(e){}},5200)}}catch(e){}SQ=null}}
 function fade(a,to,done){if(!a)return done&&done();const st=a.volume,t0=performance.now();
 const step=()=>{const k=Math.min(1,(performance.now()-t0)/700);a.volume=Math.max(0,Math.min(1,st+(to-st)*k));if(k<1)requestAnimationFrame(step);else done&&done()};step()}
-function music(kind){if(pianoMusicActive&&kind!==null)return;if(cur===kind)return;const old=tracks[cur],a=tracks[kind];if(old&&a&&old!==a&&old.src===a.src&&!old.broken){cur=kind;return}cur=kind;fbStop();
+function music(kind){if(pianoMusicActive&&kind!==null)return;if(kind===null){cur=null;fbStop(true);Object.values(tracks).forEach(a=>{a.pause();a.volume=0;try{a.currentTime=0}catch(e){}});return}if(cur===kind)return;const old=tracks[cur],a=tracks[kind];if(old&&a&&old!==a&&old.src===a.src&&!old.broken){cur=kind;return}cur=kind;fbStop();
 if(old)fade(old,0,()=>old.pause());
 if(mu||!kind)return;
 if(!a||a.broken)return fbStart(kind);
