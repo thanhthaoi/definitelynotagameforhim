@@ -2191,7 +2191,7 @@ const addSection=(si,t0)=>{const S=C.sections[si],r=rid++;runs[r]={si,tot:0,hit:
 let end=C.introSec;C.sections.forEach((S,si)=>end=addSection(si,end));
 /* Extend the chart with chorus repeats so playable notes cover the complete audio. */
 const TARGET_AUDIO_DURATION=PIANO_MUSIC.durationSec||113.893875;
-while(gameTimeToAudio(end)<TARGET_AUDIO_DURATION+TR){end=addSection(C.sections[C.sections.length-1],end)}
+while(gameTimeToAudio(end)<TARGET_AUDIO_DURATION+TR){end=addSection(C.sections.length-1,end)}
 /* Do not create playable notes beyond the actual music; recalculate scoring totals. */
 notes=notes.filter(n=>n.audioT<=TARGET_AUDIO_DURATION-.02);
 bars.forEach(b=>{b.nn=0;b.nh=0});runs.forEach(r=>{r.tot=0;r.hit=0});
@@ -2281,16 +2281,16 @@ const keyboard=(t,yo)=>{
  R(0,K+KH,108,2,'#24262B');R(0,K+KH+2,108,1,'#08090B');
 };
 /* ---- nhạc nền (placeholder) + tạm dừng ---- */
-const MU=PIANO_MUSIC,au=MU.src?new Audio(MU.src):null;let paused=0,auOn=0,auTried=0,auAttempt=0,stopped=0;
+const MU=PIANO_MUSIC,au=MU.src?new Audio(MU.src):null;let paused=0,auOn=0,auTried=0,auAttempt=0,auPending=0,auPendingAt=0,stopped=0;
 if(au){au.preload='auto';au.volume=MU.volume;au.loop=!!MU.loop}
-const auPlay=()=>{if(!au||done||stopped)return;au.muted=!!mu;auTried=1;auOn=1;const attempt=++auAttempt,pr=au.play();if(pr&&pr.catch)pr.catch(()=>{if(attempt===auAttempt)auOn=0})};
-const resume=()=>{if(!paused)return;paused=0;G.paused=0;document.querySelectorAll('.pause').forEach(e=>e.remove());if(au){if(auOn)auPlay();else auTried=0}};
-const openPause=()=>{if(paused||done||stopped)return;paused=1;G.paused=1;if(au)au.pause();const o=E('div','bdt pause'),c=E('div','cd'),q=LV[G.i];
+const auPlay=()=>{if(!au||done||stopped)return;au.muted=!!mu;auTried=1;auPending=1;auPendingAt=tm;const attempt=++auAttempt;let pr;try{pr=au.play()}catch(e){auPending=0;return}if(pr&&pr.then)pr.then(()=>{if(attempt!==auAttempt||stopped){au.pause();return}auPending=0;auOn=1}).catch(()=>{if(attempt===auAttempt){auPending=0;auOn=0}});else{auPending=0;auOn=!au.paused}};
+const resume=()=>{if(!paused)return;paused=0;G.paused=0;document.querySelectorAll('.pause').forEach(e=>e.remove());if(au){auOn=0;auPending=0;auTried=0;if(tm>=MU.delaySec)auPlay()}};
+const openPause=()=>{if(paused||done||stopped)return;paused=1;G.paused=1;if(au){au.pause();auOn=0;auPending=0;auAttempt++}const o=E('div','bdt pause'),c=E('div','cd'),q=LV[G.i];
  c.append(E('small','','TẠM DỪNG'),E('h2','gt',q.mt||q.title),E('p','',q.description),E('hr'),E('p','pt','Cách chơi: '+q.howTo));
  const a=E('button','bt','Tiếp tục'),r=E('button','bt ghost','Chơi lại'),m=E('button','bt ghost','Về bản đồ');a.onclick=resume;r.onclick=()=>begin();m.onclick=()=>go({t:'w'});c.append(a,r,m);o.append(c);$('app').append(o)};
 const vis=()=>{if(document.hidden)openPause()};document.addEventListener('visibilitychange',vis);
 return{noOb:1,
-u(dt){if(done||paused)return;tm+=dt;if(au){au.muted=!!mu;if(!auOn&&!auTried&&tm>=MU.delaySec)auPlay()}chartTm=tm-MU.delaySec;for(let k=0;k<9;k++){kg[k]=Math.max(0,kg[k]-dt*1.8);kp[k]=Math.max(0,kp[k]-dt*4)}
+u(dt){if(done||paused)return;tm+=dt;if(au){au.muted=!!mu;if(!auOn&&!auPending&&!auTried&&tm>=MU.delaySec)auPlay();if(auPending&&tm-auPendingAt>2){auPending=0;auAttempt++;au.pause()}chartTm=auOn?au.currentTime:tm-MU.delaySec}else chartTm=tm-MU.delaySec;for(let k=0;k<9;k++){kg[k]=Math.max(0,kg[k]-dt*1.8);kp[k]=Math.max(0,kp[k]-dt*4)}
  fx.forEach(e=>{e.t+=dt;if(e.vx!=null){e.x+=e.vx*dt;e.y+=e.vy*dt}});fx=fx.filter(e=>e.t<e.l);
  notes.forEach(n=>{if(!n.st&&chartTm-n.audioT>WIN){n.st=2;combo=0}});
  if(chartTm>=AUDIO_HALF_BEATS[0]){let bi=0;while(bi+1<AUDIO_HALF_BEATS.length&&AUDIO_HALF_BEATS[bi+1]<=chartTm)bi++;const bt=bi;if(bt!==lastBeat){lastBeat=bt;onBeat(bt%BB)}}
