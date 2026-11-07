@@ -168,7 +168,7 @@ h2.lp{font:800 26px/1.3 'Noto Serif',serif}
 .mb.off canvas{opacity:.35}.mb.lock canvas{filter:grayscale(1) brightness(.7)}
 .mb:active,#en:active{transform:translateY(2px)}
 #en{position:relative;z-index:2;align-self:flex-end;width:92px;margin-bottom:-2px;border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;cursor:pointer;color:#FFF6E0}
-#en .ring{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 42% 35%,#FFF3B0,#F0B73A 52%,#9A5A12);border:3px solid #2A1414;box-shadow:0 0 0 2px #F7D774,0 0 16px rgba(255,220,120,.5)}
+#en .ring{box-sizing:border-box;flex:0 0 68px;width:68px;height:68px;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 42% 35%,#FFF3B0,#F0B73A 52%,#9A5A12);border:3px solid #2A1414;box-shadow:0 0 0 2px #F7D774,0 0 16px rgba(255,220,120,.5)}
 #en .ring canvas{width:32px;height:32px;image-rendering:pixelated}
 #en.go .ring{animation:gl 1.6s ease-in-out infinite}
 @keyframes gl{50%{box-shadow:0 0 0 2px #F7D774,0 0 26px rgba(255,230,140,.95)}}
@@ -376,7 +376,7 @@ recipientName:'Đạt nè',nickname:'Đạt nè',relationshipStartDate:'2026-01-
 music:{intro:'turning_pages-new-adventure-in-new-bark-town-462735.mp3',map:'turning_pages-new-adventure-in-new-bark-town-462735.mp3',end:'turning_pages-canyon-hearth-at-twilight-601107.mp3',volume:.55},
 introDialogue:[
 ['“CUỐI CÙNG CŨNG XONG RỒI”','( Nobita cậu nhìn nè )'],
-['“Đạo hữu Đạt né, từ ngày 1/1 đến nay chúng ta đã đi cùng nhau gần 11 tháng.”',''],
+['“Đạo hữu Đạt n, từ ngày 1/1 đến nay chúng ta đã đi cùng nhau gần 11 tháng.”',''],
 ['“Hôm nay 18/11, ta đã giấu cho người một món quà.”',''],
 ['“Nhưng trước khi nhận được nó...”',''],
 ['“Hãy vượt qua 11 cửa ải này đã.”','( chạm để lên đường )']],
@@ -435,7 +435,7 @@ levels:[
 {title:'Tiên trù các',place:'Nhà hàng',description:'Bếp tiên đang dọn món, trứng linh thú rơi như mưa.',howTo:'Kéo ngón tay hoặc chuột (hoặc phím trái/phải) để di chuyển nhân vật, há miệng hứng trứng. Ăn đủ 20 phần, trứng vàng được 2 điểm, dính vỏ sò bị trừ 1.',dialogue:'“Sườn bì chả, đủ bộ.”',rewardName:'Đĩa cơm tấm',rewardDescription:'Một đĩa cơm tấm nóng, sườn nướng cháy cạnh.',memory:'Món anh gọi đi gọi lại mãi không chán.',rewardImage:''},
 {title:'Linh trà các',place:'Quán cà phê',description:'Trà đã pha, hương trà bốc lên tận tầng mây tiên cảnh.',howTo:'Nhân vật tự nhảy khi chạm bệ. Kéo ngón tay, di chuột hoặc giữ phím trái/phải để di chuyển; đi qua mép này sẽ hiện ra ở mép kia. Nhặt đủ 10 viên linh đan trong một lượt; lỡ rơi thì đệm mây sẽ đỡ bạn lên bệ gần nhất để nhảy tiếp.',dialogue:'“Ngọt vừa thôi, như anh.”',rewardName:'Cookie & bánh chuối',rewardDescription:'Một chiếc cookie chocolate chip và một lát bánh chuối.',memory:'Buổi chiều ngồi lì ở quán quen.',rewardImage:''},
 {title:'Tàng thư các',place:'Tiệm sách',description:'Linh châu trong tàng thư các đổ xuống như tuyết lở.',howTo:'Dùng nút điều hướng để di chuyển, nút ▲ để xoay cặp linh châu. Ghép 4 viên cùng màu dính nhau là nổ. Nổ đủ 16 viên là xong.',dialogue:'“Dọn xong đống linh châu rồi, sách này mới chịu hiện ra.”',rewardName:'Quyển sách bàn tay',rewardDescription:'Quyển sách bìa da, in hình bàn tay sáu ngón.',memory:'Hai đứa đọc cùng một chương rồi cãi nhau về cái kết.',rewardImage:''},
-{title:'Tửu quán',place:'Pub / bar',description:'Linh thú nghịch ngợm chui lên từ xô đá và thùng rượu trong quán.',howTo:'Chạm linh thú (hồ ly cam, slime ngọc, tiểu miêu tím) để ghi điểm, đừng chạm linh thú đá xám có dán bùa. Đạt 8 điểm trong 20 giây.',dialogue:'“Không rượu. Nho thôi.”',rewardName:'Chùm nho',rewardDescription:'Một chùm nho tím mọng nằm trên quầy bar.',memory:'Đêm đó mình ngồi tới lúc quán dọn bàn.',rewardImage:''},
+{title:'Tửu quán',place:'Pub / bar',description:'Linh thú nghịch ngợm chui lên từ xô đá và thùng rượu trong quán.',howTo:'Chạm linh thú (hồ ly cam, slime ngọc, tiểu miêu tím) để ghi điểm, đừng chạm linh thú đá xám có dán bùa. Đạt 8 điểm trong 20 giây.',dialogue:'“Không rượu. Nho thôi.”',rewardName:'Chùm nho',rewardDescription:'Một chùm nho xanh mọng nằm trên quầy bar.',memory:'Đêm đó mình ngồi tới lúc quán dọn bàn.',rewardImage:''},
 {title:'Đào hoa viên',place:'Công viên',description:'Lối đá trong đào hoa viên đã bị xáo tung, cổng vườn đang chờ ở cuối đường.',howTo:'Chạm vào ô để xoay 90°. Xoay các ô để nối lối đá liền mạch từ nhân vật đến cổng vườn. Có 3 màn, khó dần.',dialogue:'“Nhóm này nháy mắt với anh kìa.”',rewardName:'Cặp đôi khiêu vũ',rewardDescription:'Một cặp đôi đang nhảy giữa công viên, cô gái nháy mắt một cái.',memory:'Kiểu đùa chỉ hai đứa hiểu.',rewardImage:''},
 {title:'Phường thị',mt:'Phường thị – Ghép lại kỷ niệm',place:'Trung tâm thương mại',description:'Những mảnh ký ức đang thất lạc. Hãy ghép chúng lại nhé!',howTo:'Chạm mảnh cạnh ô trống để trượt vào và ghép lại tấm ảnh photobooth. Giữ nút “Xem hình mẫu” nếu cần.',dialogue:'“Bốn tấm, không tấm nào nghiêm túc.”',rewardName:'Dải ảnh photobooth',rewardDescription:'Dải bốn tấm ảnh chụp trong máy photobooth.',memory:'Tấm thứ ba anh cười hỏng cả khung hình.',rewardImage:''},
 {title:'Thiên lâu',place:'Tòa nhà',description:'Gió trên cao mạnh, kiếm bay là cách duy nhất qua những cột đá.',howTo:'Chạm (hoặc nhấn Space) để bay lên. Vượt qua 5 cột đá. Có 3 mạng.',dialogue:'“Hoa hồng, đúng tông áo anh hay mặc.”',rewardName:'Bó hoa hồng phấn',rewardDescription:'Một bó hoa hồng phấn có giấy gói và ruy băng.',memory:'Lần đầu em tặng hoa cho con trai.',rewardImage:''},
@@ -1313,7 +1313,7 @@ const GIFTS=[
 /* 6 Chùm nho + lá */
 (x,y,s)=>{const g=(a,b,w,h,c)=>GP(x,y,s,a,b,w,h,c);
  g(11,1,2,4,'#5A3A1A');g(13,1,5,3,K);g(14,2,4,2,'#4FA83A');g(15,1,3,1,'#7BD34E');
- const G2=(a,b)=>{g(a,b,5,5,K);g(a+1,b+1,3,3,'#7A42A0');g(a+1,b+1,2,2,'#9A62C0');g(a+1,b+1,1,1,'#C49AE0')};
+ const G2=(a,b)=>{g(a,b,5,5,K);g(a+1,b+1,3,3,'#2F7D32');g(a+1,b+1,2,2,'#4FA83A');g(a+1,b+1,1,1,'#9FE870')};
  [[7,5],[12,5],[4,9],[9,9],[14,9],[7,13],[12,13],[9,17]].forEach(p=>G2(p[0],p[1]))},
 /* 7 Cặp đôi khiêu vũ */
 (x,y,s)=>{const g=(a,b,w,h,c)=>GP(x,y,s,a,b,w,h,c);
