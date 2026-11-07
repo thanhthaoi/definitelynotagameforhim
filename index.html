@@ -2163,7 +2163,7 @@ const AUDIO_HALF_BEATS=[0.09288,0.88236,1.71828,2.53098,3.32045,4.06349,4.84136,
 function g11(w,lose,h){const C=PIANO_CFG,SPB=60/C.bpm,BB=C.beatsPerBar,BAR=SPB*BB,MR=Math.random,TR=C.travelBeats*SPB,WIN=C.hitWindow*SPB;
 try{music(null)}catch(e){}pianoMusicActive=1;
 const PCS=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'],LANES=['A','S','D','F','G','H','J','K','L'],LO=[0,0,1,2,2,3,4,5,6,7,8,8];/* 12 cao độ → 9 phím A..L (cao độ sát nhau dùng chung một phím) */
-const KX=5,WK=11,KY=144,KH=36,TOPY=28,HY=137;
+const KX=5,WK=11,KY=144,KH=48,TOPY=28,HY=137;
 const LX=l=>KX+l*WK+5,keyX=pc=>LX(LO[pc]);
 const rgb=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)),mix=(a,b,f)=>{f=Math.max(0,Math.min(1,f));const A=rgb(a),B=rgb(b);return'#'+A.map((v,i)=>Math.round(v+(B[i]-v)*f).toString(16).padStart(2,'0')).join('')};
 const cl=v=>Math.max(0,Math.min(1,v)),sm=v=>{v=cl(v);return v*v*(3-2*v)};
@@ -2237,13 +2237,44 @@ const panel=(t,yo)=>{X.globalAlpha=.78;R(3,1+yo,102,25,'#141030');X.globalAlpha=
  const pr=cl((tm-C.introSec)/(end-C.introSec));R(7,22+yo,94,1,'#2E2850');R(7,22+yo,Math.round(94*pr),1,'#F0D898');R(7+Math.round(94*pr)-1,21+yo,2,3,'#FFF4D0')};
 const GLY={A:['.###.','#...#','#...#','#####','#...#','#...#','#...#'],S:['.####','#....','#....','.###.','....#','....#','####.'],D:['####.','#...#','#...#','#...#','#...#','#...#','####.'],F:['#####','#....','#....','####.','#....','#....','#....'],G:['.####','#....','#....','#.###','#...#','#...#','.####'],H:['#...#','#...#','#...#','#####','#...#','#...#','#...#'],J:['..###','....#','....#','....#','....#','#...#','.###.'],K:['#...#','#..#.','#.#..','##...','#.#..','#..#.','#...#'],L:['#....','#....','#....','#....','#....','#....','#####']};
 const glyph=(ch,x,y,c)=>GLY[ch].forEach((row,j)=>{for(let i=0;i<5;i++)if(row[i]==='#')R(x+i,y+j,1,1,c)});
-const keyboard=(t,yo)=>{const act=chartTm>=AUDIO_HALF_BEATS[0]?chordNotes().map(p=>LO[p]):[],soon=new Array(9).fill(0);
- notes.forEach(n=>{if(!n.st){const d=n.audioT-chartTm,l=LO[n.pc];if(d>0&&d<SPB)soon[l]=Math.max(soon[l],1-d/SPB)}});
- const K=KY+yo;R(1,K-5,106,KH+7,'#1C1630');R(1,K-5,106,1,'#E8D098');R(1,K-4,106,2,'#3A3058');R(1,K+KH+1,106,1,'#0E0A1C');
- for(let l=0;l<9;l++){const x=KX+l*WK,lit=Math.max(kg[l],kp[l]*.35,soon[l]*.45,act.includes(l)?.16:0),dn=kp[l]>.6?1:0;
-  R(x,K+dn,WK-1,KH-dn,mix('#F2ECF8',col,lit*.85));R(x,K+KH-4,WK-1,4,mix('#CFC4E4',col,lit*.5));R(x,K+dn,1,KH-4,'#FFFFFF');R(x+WK-1,K,1,KH,'#7A7098');
-  glyph(LANES[l],x+2,K+KH-16+dn,lit>.5?'#2A1F4A':'#6A5A9A')}
- X.globalAlpha=.5;R(1,K+KH+2,106,3,'#0A0818');X.globalAlpha=1};
+const keyboard=(t,yo)=>{
+ const soonW=new Array(9).fill(0),soonB=new Array(9).fill(0);
+ notes.forEach(n=>{if(!n.st){const d=n.audioT-chartTm,l=LO[n.pc],v=d>0&&d<SPB?1-d/SPB:0;
+  if(n.pc%12===1||n.pc%12===3||n.pc%12===6||n.pc%12===8||n.pc%12===10)soonB[l]=Math.max(soonB[l],v);
+  else soonW[l]=Math.max(soonW[l],v);
+ }});
+ const K=KY+yo,kw=WK-1,whiteY=K,whiteH=KH;
+ /* piano body + red strike line, styled like a real rhythm-game keyboard */
+ R(0,K-4,108,KH+4,'#111318');
+ R(0,K-4,108,1,'#8A151D');R(0,K-3,108,1,'#E83B45');
+ /* white keys */
+ for(let l=0;l<9;l++){
+  const x=KX+l*WK,lit=Math.max(kg[l],kp[l]*.35,soonW[l]*.45,soonB[l]*.24);
+  const dn=kp[l]>.6?2:0;
+  R(x,whiteY+dn,kw,whiteH-dn,'#F8F8F6');
+  R(x,whiteY+dn,1,whiteH-dn,'#FFFFFF');
+  R(x+kw-1,whiteY+dn,1,whiteH-dn,'#B9BBC0');
+  R(x,whiteY+whiteH-2,kw,2,'#D9DADD');
+  if(lit>.05){X.globalAlpha=Math.min(.78,lit*.8);R(x+1,whiteY+dn+1,kw-2,whiteH-dn-2,mix('#FFFFFF',col,lit));X.globalAlpha=1;
+   R(x+1,whiteY+whiteH-3,kw-2,2,mix('#D8DDE0',col,lit))}
+ }
+ /* five black keys in the familiar 2 + 3 grouping */
+ const blacks=[{gap:0,lane:0,pc:1},{gap:1,lane:2,pc:3},{gap:3,lane:4,pc:6},{gap:4,lane:6,pc:8},{gap:5,lane:8,pc:10}];
+ blacks.forEach((b,i)=>{
+  const x=KX+(b.gap+1)*WK-3.5,w=6,h=KH*.62;
+  const lit=Math.max(kp[b.lane]*.9,kg[b.lane]*.75,soonB[b.lane]*.8);
+  /* soft side shadow */
+  R(x-1,K+1,w+2,h+1,'#A5A6AA');
+  R(x,K,w,h,'#08090B');
+  R(x,K,w,2,'#303238');
+  R(x,K+2,1,h-4,'#44464B');
+  R(x+w-1,K+2,1,h-4,'#000000');
+  R(x+1,K+h-2,w-2,2,'#17191D');
+  if(lit>.05){X.globalAlpha=Math.min(.95,lit);R(x+1,K+1,w-2,h-2,mix('#15171B',col,lit));R(x+1,K+1,w-2,2,mix('#34363B',col,lit));X.globalAlpha=1}
+ });
+ /* subtle front edge / bottom lip */
+ R(0,K+KH,108,2,'#24262B');R(0,K+KH+2,108,1,'#08090B');
+};
 /* ---- nhạc nền (placeholder) + tạm dừng ---- */
 const MU=PIANO_MUSIC,au=MU.src?new Audio(MU.src):null;let paused=0,auOn=0,stopped=0;
 if(au){au.preload='auto';au.volume=MU.volume;au.loop=!!MU.loop}
