@@ -217,6 +217,12 @@ h2.lp{font:800 26px/1.3 'Noto Serif',serif}
 .pill{display:flex;align-items:center;gap:4px;width:fit-content;padding:2px 10px 2px 3px;border-radius:999px;background:#E9DFCA;color:#5A4A3A;font:800 12px 'Be Vietnam Pro',sans-serif}
 .pill canvas{width:16px;height:16px;image-rendering:pixelated}.pill em{font-style:normal}
 .bempty{grid-column:1/-1;text-align:center;color:#8A7A66;font:500 14px 'Be Vietnam Pro',sans-serif;padding:24px 0}
+/* ===== Túi đồ: kho phiếu gacha ===== */
+.gsum{grid-column:1/-1;margin:0;text-align:center;color:#8A7A66;font:600 13px 'Be Vietnam Pro',sans-serif}
+.gchips{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:2px}
+.gchips .tchip{font-size:13px;padding:2px 12px 3px}
+.gx{position:absolute;right:-6px;bottom:-6px;min-width:22px;height:22px;box-sizing:border-box;padding:0 5px;border-radius:999px;border:2px solid #FBF5E6;background:#3A2A20;color:#FFE9A0;font:800 12px/18px 'Be Vietnam Pro',sans-serif;text-align:center;font-style:normal}
+.pill.tp{padding:2px 10px;color:#2A1A10;border:1.5px solid rgba(42,26,16,.55)}
 .bback{position:sticky;z-index:3;bottom:14px;margin:18px 0 0 14px;width:56px;height:56px;border-radius:50%;border:2px solid #E2B85A;background:#2E2630;color:#FFE9A0;font:800 30px/1 'Be Vietnam Pro',sans-serif;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.35)}
 .bdt{position:absolute;inset:0;z-index:8;display:flex;padding:20px;box-sizing:border-box;background:rgba(14,8,26,.6)}
 .bdt .cd{background:#FBF5E6;color:#3A2A20}
@@ -244,11 +250,14 @@ h2.lp{font:800 26px/1.3 'Noto Serif',serif}
 
 /* ===== Gacha 4 tier ===== */
 .tchip{align-self:center;padding:3px 14px 4px;border-radius:999px;font:400 15px/1.2 var(--brush);color:#2A1A10;border:2px solid #2A1A10}
-.tchip.dong{background:linear-gradient(#F0A868,#B8642E)}.tchip.sat{background:linear-gradient(#C8D2DC,#6E7A88);color:#1A2028}
-.tchip.bac{background:linear-gradient(#FFFFFF,#AEBCCE)}.tchip.vang{background:linear-gradient(#FFF3B0,#E8A830);box-shadow:0 0 12px rgba(255,220,120,.9)}
-.cd.t-dong{border-color:#C8743A}.cd.t-sat{border-color:#8E9AA8}.cd.t-bac{border-color:#C8D4E2;box-shadow:0 10px 40px rgba(0,0,0,.4),0 0 18px rgba(220,230,245,.6)}
-.cd.t-vang{border-color:#F0B73A;box-shadow:0 10px 40px rgba(0,0,0,.4),0 0 28px rgba(255,210,100,.85)}
-.tchip.kc{background:linear-gradient(90deg,#9BE0E8,#F0B8E0,#C49AE0,#9BE0E8);background-size:200% 100%;animation:kcs 2.4s linear infinite;box-shadow:0 0 14px rgba(160,230,255,.9)}
+.tchip.dong{background:linear-gradient(#DCEBA8,#8FB458);color:#2A2410;border-color:#5A4420}.tchip.sat{background:linear-gradient(#9FF4FA,#3A8AD8);color:#0E2238}
+.tchip.bac{background:linear-gradient(#E6D8FF,#9A6AE8);color:#1E1038;box-shadow:0 0 10px rgba(170,130,240,.7)}.tchip.vang{background:linear-gradient(#FFF3B0,#F0A030);box-shadow:0 0 12px rgba(255,200,90,.9)}
+.cd.t-dong{border-color:#8FB458}.cd.t-sat{border-color:#3A8AD8;box-shadow:0 10px 40px rgba(0,0,0,.4),0 0 14px rgba(95,232,240,.45)}.cd.t-bac{border-color:#9A6AE8;box-shadow:0 10px 40px rgba(0,0,0,.4),0 0 18px rgba(170,130,240,.6)}
+.cd.t-vang{border-color:#F0B73A;box-shadow:0 10px 40px rgba(0,0,0,.4),0 0 28px rgba(255,190,80,.85)}
+.tchip.kc{background:linear-gradient(90deg,#FFFFFF,#9BE0E8,#B48CF0,#F7D774,#FFFFFF);background-size:200% 100%;animation:kcs 2.4s linear infinite;box-shadow:0 0 14px rgba(160,230,255,.9);color:#1E1038}
+.gpass{display:flex;gap:6px;margin-top:4px}.gpass input{flex:1;min-width:0;padding:6px 10px;border-radius:10px;border:2px solid #2A1A10;font:inherit;font-size:14px;background:#FFF8EC;color:#2A1A10}.gpass button{padding:6px 12px;border-radius:10px;border:2px solid #2A1A10;background:linear-gradient(#FFF3B0,#F0A030);font:inherit;font-size:14px;color:#2A1A10;cursor:pointer}
+.g10{display:flex;flex-direction:column;gap:4px;max-height:34vh;overflow:auto;margin:2px 0}.g10 div{display:flex;align-items:center;gap:8px;font-size:13.5px;text-align:left}.g10 .tchip{font-size:12px;padding:1px 10px 2px;flex:none}
+.tmsg{margin:0!important;font:400 17px/1.25 var(--brush);text-align:center}
 @keyframes kcs{to{background-position:200% 0}}
 .cd.t-kc{border-color:#9BE0E8;animation:rise .7s,kcg 2s ease-in-out infinite}
 @keyframes kcg{0%,100%{box-shadow:0 10px 40px rgba(0,0,0,.4),0 0 24px rgba(155,224,232,.85)}50%{box-shadow:0 10px 40px rgba(0,0,0,.4),0 0 34px rgba(240,184,224,.95)}}
@@ -401,40 +410,66 @@ finalLetter:[
 'Em để 8 cửa ải thành 11, nhưng số em thích vẫn là số 8 — quay ngang nó là dấu vô cực. Em tham lam vậy đó, muốn đi với anh lâu thật lâu.',
 'Chuyến Phú Quốc mình hoãn vì công việc, em tiếc thiệt. Nhưng biển thì không chạy đi đâu, mình đi sau cũng được, miễn là đi cùng nhau.',
 'Chúc anh tuổi mới đột phá cảnh giới: ít họp hành vô nghĩa, ngủ đủ giấc, và luôn có người chờ anh ở cuối ngày.'],
-/* gacha cuối: 4 tier, rate = tỉ lệ % (tổng 100). pity = sau bấy nhiêu lượt chưa ra Vàng thì lượt đó chắc chắn Vàng */
+/* gacha cuối: 4 tier, rate = tỉ lệ % (tổng 100). pity = sau bấy nhiêu lượt chưa ra Tiên Phẩm thì lượt đó chắc chắn Tiên Phẩm */
 gachaTiers:[
-{id:'dong',name:'Đồng',rate:50},
-{id:'sat',name:'Sắt',rate:30},
-{id:'bac',name:'Bạc',rate:14},
-{id:'vang',name:'Vàng',rate:5},
-{id:'kc',name:'Kim Cương',rate:1}],
+{id:'dong',name:'Phàm Phẩm',rate:50},
+{id:'sat',name:'Pháp Khí',rate:30},
+{id:'bac',name:'Linh Khí',rate:14},
+{id:'vang',name:'Tiên Phẩm',rate:5},
+{id:'kc',name:'Thần Phẩm',rate:1}],
 gachaPity:10,
 gachaPityKC:50,
+/* giới hạn quay: mỗi bấy nhiêu PHÚT chỉ được quay 1 lần (60 = 1 tiếng; 0 = không giới hạn) */
+gachaCooldownMin:60,
+/* passcode: nhập đúng ở màn gacha sẽ được quay liền 10 lần (bỏ qua giới hạn thời gian). gachaPasscodeOnce:true = mỗi máy chỉ dùng được 1 lần */
+gachaPasscode:'yeuvonhat',
+gachaPasscodeOnce:true,
+gachaNote:'Bộ OneWishWidow dành riêng cho anh. Có giá trị sử dụng thực tế, không có giá trị quy đổi thành tiền mặt. Người phát hành có quyền cười trong quá trình thực hiện. Người nhận không được kiện cáo.',
 gachaPrizes:[
-{tier:'dong',name:'Linh phù “ôm một cái”',desc:'Dùng bất cứ lúc nào, không giới hạn số lần.'},
-{tier:'dong',name:'Phiếu “một ly trà sữa”',desc:'Em mua, size L, topping tuỳ anh chọn.'},
-{tier:'dong',name:'Phiếu “chọn nhạc trên xe”',desc:'Một chuyến đi nghe nhạc anh chọn, em không được chê.'},
-{tier:'dong',name:'Bùa “khen ba câu”',desc:'Em khen anh ba câu liền, câu nào cũng thật lòng.'},
-{tier:'dong',name:'Phiếu “chúc ngủ ngon bản dài”',desc:'Một tin nhắn chúc ngủ ngon dài hơn ba dòng.'},
-{tier:'dong',name:'Phiếu “đấm lưng 10 phút”',desc:'Đấm nhẹ, đúng chỗ, không kêu mỏi tay.'},
-{tier:'sat',name:'Bùa “anh đúng một lần”',desc:'Dùng được một lần duy nhất trong tháng.'},
-{tier:'sat',name:'Phiếu “anh chọn phim”',desc:'Phim gì cũng xem, em hứa không ngủ gật.'},
-{tier:'sat',name:'Lệnh bài “em đi đón”',desc:'Một lần em chạy qua đón anh, mưa hay nắng.'},
-{tier:'sat',name:'Lệnh bài “miễn trễ hẹn”',desc:'Được trễ 15 phút mà không bị nói câu nào.'},
-{tier:'sat',name:'Phiếu “bóp vai 15 phút”',desc:'Sau một ngày họp liên tục.'},
-{tier:'sat',name:'Phiếu “em rửa bát”',desc:'Một bữa tối, anh khỏi đụng vào bồn rửa.'},
-{tier:'bac',name:'Phiếu “em nấu, anh ăn”',desc:'Một bữa do em tự nấu, anh chỉ việc ngồi.'},
-{tier:'bac',name:'Linh thạch nghỉ ngơi',desc:'Một ngày không làm gì cả, em lo hết.'},
-{tier:'bac',name:'Phiếu “hẹn hò trọn gói”',desc:'Một buổi hẹn em lên kế hoạch từ A tới Z.'},
-{tier:'bac',name:'Ngọc bội “chụp ảnh đôi”',desc:'Một buổi đi chụp ảnh, anh tạo dáng gì em chụp nấy.'},
-{tier:'bac',name:'Phiếu “cơm tấm bất tận”',desc:'Một tuần, anh thèm cơm tấm là em dẫn đi.'},
-{tier:'vang',name:'Vé Phú Quốc (bản tái phát hành)',desc:'Hoãn chứ không hủy. Hẹn mình đi.'},
-{tier:'vang',name:'Phiếu “một điều ước”',desc:'Ước gì cũng được, trong khả năng của em.'},
-{tier:'vang',name:'Nguyên bảo “một ngày làm vua”',desc:'Cả ngày anh nói gì em nghe nấy.'},
-{tier:'vang',name:'Phiếu “chuyến đi trong ngày”',desc:'Em lo xe, lo chỗ ăn, anh chỉ việc đi cùng.'},
-{tier:'kc',name:'Vé “đi đâu anh chọn”',desc:'Một chuyến đi xa, điểm đến do anh chọn.'},
-{tier:'kc',name:'Thư tay thật',desc:'Một bức thư em viết tay, gửi tận tay anh.'},
-{tier:'kc',name:'Đạo tâm “một lời hứa”',desc:'Không đổi được ra gì cả. Chỉ để anh biết em nghiêm túc.'}],
+/* tier: dong=Phàm Phẩm / sat=Pháp Khí / bac=Linh Khí / vang=Tiên Phẩm / kc=Thần Phẩm — đổi tier để đổi độ hiếm của phiếu */
+{tier:'dong',name:'Ôm đi, hỏi gì',desc:'Thưởng nóng một cái ôm 🐥'},
+{tier:'dong',name:'Phiếu chọn phim',desc:'Anh chọn phim, iem xem cùng. 🐣'},
+{tier:'dong',name:'Hôn sâu',desc:'Đổi được một cái hôn sâu. Không nhận hối lộ để tăng số lượng. 🐤'},
+{tier:'dong',name:'Bùa nắm tay',desc:'Được nắm tay em cả buổi. Buông ra để cầm đồ thì được, buông ra để cầm điện thoại thì khỏi đổi phiếu. 😾'},
+{tier:'dong',name:'Bé của em',desc:'Em gọi anh là bé cả buổi. Anh bé của em. 🫄🏻'},
+{tier:'dong',name:'Chọn đồ ăn vặt',desc:'Anh chọn món, em ăn cùng. Nếu món dở thì hai đứa cùng chịu, tình yêu là vậy 😤'},
+{tier:'dong',name:'Ảnh độc quyền',desc:'Em gửi anh một tấm ảnh riêng. Không được zoom quá 200% để tìm khuyết điểm. 👵🏽'},
+{tier:'dong',name:'5 phút gia hạn',desc:'Được ôm thêm năm phút. Hết giờ không được giả vờ mất khả năng đọc đồng hồ. 😪'},
+{tier:'dong',name:'Đặt biệt danh',desc:'Anh được đặt cho em một biệt danh trong ngày. Tên xúc phạm nhân phẩm có quyền bị kháng cáo. 🐴'},
+{tier:'dong',name:'Quyền chiến thắng',desc:'Anh được thắng một cuộc tranh luận vô tri. Có thể đi khoe với thiên hạ, nhưng đừng tưởng mình đúng thật. 🥸'},
+{tier:'dong',name:'Avatar 24h',desc:'Anh chọn avatar, em dùng 24 giờ. Chọn ảnh dìm thì tình yêu sẽ bước vào giai đoạn thử thách. 😏'},
+{tier:'dong',name:'Ngủ nướng',desc:'Được nằm thêm 15 phút. Không ai được nhắc chuyện dậy, trừ khi muộn làm. 😗'},
+{tier:'sat',name:'Bàn tay vàng',desc:'Em đấm lưng cho anh 10 phút spa tại gia. 🤤'},
+{tier:'sat',name:'Bóp vai',desc:'Bóp vai cho anh 15 phút 🤤'},
+{tier:'sat',name:'Chăn độc quyền',desc:'Một đêm em không giành chăn. Anh được ngủ như người có quyền sở hữu hợp pháp. 😴'},
+{tier:'sat',name:'Massage đầu',desc:'Em massage đầu 10 phút 🥴'},
+{tier:'sat',name:'Trợ lý riêng',desc:'Em giúp anh một việc nhỏ. Nhỏ là nhỏ. 🥴'},
+{tier:'sat',name:'Chọn điểm đến',desc:'Anh chọn điểm đến, em không hỏi “đi làm gì?”. 🤫'},
+{tier:'sat',name:'Chốt đơn món ăn',desc:'Anh chọn món, em ăn món đó. Không có “hay là ăn cái khác”, không có “em không thèm nữa”. 🤫'},
+{tier:'sat',name:'Sai vặt',desc:'Anh được sai em một việc nhỏ. Không áp dụng cho việc mua nhà, xây cầu, giải cứu thế giới. 😳'},
+{tier:'sat',name:'Miễn dỗi',desc:'Một buổi em không dỗi vô cớ. Anh nhớ tận dụng, chứ không phải được cấp giấy phép làm bậy. 😳'},
+{tier:'sat',name:'Đặt tên',desc:'Anh muốn em gọi gì cũng được trong một ngày. Nếu chọn tên quá ấu zề, em sẽ ghi nhớ để trả thù.😠'},
+{tier:'bac',name:'Quyền chọn món',desc:'Anh chọn món ăn, em ăn đúng món đó. Không được 5 phút sau tuyên bố “em nghĩ lại rồi”. 😳'},
+{tier:'bac',name:'Lẩu và đồ cay',desc:'Anh được chọn một món em bình thường không thích. Em sẽ ăn cùng 🥵'},
+{tier:'bac',name:'Tráng miệng',desc:'Ăn xong được gọi món ngọt. Không ai được nói “thôi béo”, vì béo thì cùng béo, không ai được bỏ đồng đội. 😶‍🌫️'},
+{tier:'bac',name:'Trà sữa Koi Thé size L',desc:'Em mua size L, topping anh chọn. Chọn topping nào thì tự chịu trách nhiệm với hệ tiêu hóa.'},
+{tier:'bac',name:'Nạp vốn 50K',desc:'Em tài trợ 50K nạp game. Không được đứng trước mặt em rồi diễn cảnh thiếu vốn khởi nghiệp. 🫣'},
+{tier:'bac',name:'Đầu bếp tại gia',desc:'Em nấu một bữa và rửa bát hết. Anh được làm khách quý, nhưng cấm chấm điểm như MasterChef.'},
+{tier:'bac',name:'Cơm tấm cả tuần',desc:'Một tuần cơm tấm theo ý anh. Ăn nhiều đến mức nằm mơ thấy sườn bì chả thì em không chịu trách nhiệm. 🤭'},
+{tier:'bac',name:'Cà phê với người đẹp',desc:'Em bao nước. Anh được ngồi đối diện người đẹp mà không cần trả phí ngắm cảnh.🤭'},
+{tier:'bac',name:'Ăn khuya',desc:'Một buổi đi ăn khuya. Ăn xong đừng hỏi tại sao hôm sau hai đứa không muốn vận động.🤤'},
+{tier:'bac',name:'Vé xem phim',desc:'Em lo vé, anh chọn phim. Nếu phim dở thì hai đứa cùng mất tiền, cùng mất thời gian, cùng mất niềm tin. 🥴'},
+{tier:'bac',name:'Ship đồ ăn',desc:'Anh chọn món, em đặt ship. Gửi menu 50 món rồi bảo “em chọn đi” sẽ bị tịch thu quyền lợi. 🙄'},
+{tier:'bac',name:'Đi dạo + ăn vặt',desc:'Một buổi đi dạo, ăn vặt. Không cần vội về, trừ khi một trong hai bắt đầu than đau chân như người 80 tuổi. 😵'},
+{tier:'bac',name:'Đồng đội game',desc:'Anh chọn game, em chơi một trận. Nếu thua thì do anh gà, nếu thắng thì do anh may. 🥳'},
+{tier:'vang',name:'Combo tất + quần sịp',desc:'Một combo mới tinh, anh chọn mẫu hoặc màu. 🧦'},
+{tier:'vang',name:'Sạc dự phòng',desc:'Một chiếc sạc dự phòng mới để điện thoại anh không hết pin giữa chừng. 🔋'},
+{tier:'vang',name:'Áo mới',desc:'Một chiếc áo do anh chọn trong mức giá đã thống nhất. 👕'},
+{tier:'vang',name:'Đồ chơi yêu thích',desc:'Anh chọn một món nhỏ mình thích, em mua tặng. 🎮'},
+{tier:'vang',name:'Móc khóa đôi',desc:'Hai chiếc móc khóa để mỗi đứa giữ một cái. 🔑'},
+{tier:'vang',name:'Nâng cấp đồ dùng',desc:'Một món đồ anh đang dùng được thay bằng phiên bản mới hơn. ⬆️'},
+{tier:'vang',name:'Hộp đồ linh tinh',desc:'Em tự chuẩn bị một hộp gồm những món nhỏ anh thích. 🎁'},
+{tier:'kc',name:'Hộp bí mật',desc:'Trúng rồi thì đừng hỏi. Đến lúc nhận sẽ biết. 🤫💎'}],
 /* đoạn kết thật: sửa lời thoại ở đây */
 ending:{lanternLine:'Mười một ngọn đèn. Mười một kỷ niệm.',busLine:'Về thôi.',photoLine:'Chỉ còn thiếu một người.',photoCaption:'Giờ thì đủ rồi.',
  done:'Anh đi hết 11 ải rồi đó.',ask:'Anh có muốn chơi lại từ đầu không?',refuse:['Có những chuyện không cần làm lại.','Em muốn đi tiếp hơn.'],agree:'Em cũng nghĩ vậy.',go:'Đi tiếp cùng em',
@@ -2162,6 +2197,21 @@ const PIANO_CFG={
    - Để trống src = chỉ có tiếng đàn tự sinh của game. */
 const PIANO_MUSIC={src:'audiomass-output.mp3',volume:.85,delaySec:PIANO_CFG.introSec,loop:false,durationSec:113.893875};
 const SHOW_PIANO_SHORTCUT=true;
+/* ================== ÂM THANH TỰ CHÈN ==================
+   1) TIẾNG BẤM PHÍM PIANO (màn 11) — game KHÔNG còn tiếng đàn cố định.
+      hit  : file âm thanh khi bấm TRÚNG nốt. Có thể là 1 chuỗi, ví dụ 'sfx/hit.mp3',
+             hoặc mảng 9 file cho 9 phím A S D F G H J K L, ví dụ ['sfx/a.mp3','sfx/s.mp3',...].
+      miss : file âm thanh khi bấm TRƯỢT (để trống = không tiếng).
+      volume : 0..1.
+      Nếu để trống ('') thì mặc định chỉ RUNG (điện thoại rung; máy tính rung nhẹ khung game).
+      vibrate / vibrateMiss : kiểu rung, tính bằng mili-giây.
+      synth : true = bật lại tiếng đàn tự sinh cũ của game (mặc định false).
+   2) NHẠC RIÊNG CHO CUT-SCENE NHẬN QUÀ MÀN 11 (cảnh phòng ngủ "ĐÃ NHẬN QUÀ · ẢI 11 / 11"):
+      src : đường dẫn file nhạc, ví dụ 'music/cutscene36.mp3'. Để trống = giữ nhạc nền cũ.
+      volume : 0..1;  loop : true = lặp lại. */
+const PIANO_SFX={hit:'',miss:'',volume:.9,vibrate:[12],vibrateMiss:[6],synth:false};
+const CUT36_MUSIC={src:'velariomusic-lofi-chill-581723.mp3',volume:.8,loop:true};
+let cutAudio=null,cutOwn=0;
 /* Beat map được phân tích từ audiomass-output (2).mp3; mỗi timestamp là một phách half-time (xấp xỉ 71.78 BPM). */
 const AUDIO_HALF_BEATS=[0.09288,0.88236,1.71828,2.53098,3.32045,4.06349,4.84136,5.65406,6.52481,7.43039,8.33596,9.29959,10.18195,11.06431,11.95828,12.81741,13.61850,14.39637,15.19746,16.03338,16.85769,17.68200,18.49469,19.36544,20.23619,21.11855,22.00091,22.76717,23.60308,24.40417,25.21687,26.07601,26.87710,27.65497,28.42122,29.23392,30.02340,30.81288,31.61397,32.42667,33.23937,34.02884,34.84154,35.65424,36.45533,37.37252,38.25488,39.12562,39.98476,40.85551,41.73787,42.55057,43.42132,44.26884,45.12798,45.97551,46.81143,47.70540,48.55293,49.41206,50.27120,51.13034,51.98948,52.84862,53.70776,54.56689,55.39120,56.22712,56.99338,57.78286,58.53751,59.31537,60.07002,60.97560,61.78830,62.50812,63.29760,64.11029,64.85333,65.70086,66.56000,67.43075,68.27828,69.12580,69.98494,70.85569,71.71483,72.59719,73.42150,74.28063,75.22104,75.98730,76.84644,77.70558,78.55311,79.41224,80.27138,81.13052,81.97805,82.83719,83.70794,84.56707,85.44943,86.28535,87.13288,87.99202,88.85116,89.71029,90.65070,91.44018,92.27610,93.13524,93.99438,94.83029,95.65460,96.56018,97.41932,98.33651,99.14921,99.96190,100.84426,101.69179,102.55093,103.41007,104.26921,105.12834,105.99909,106.84662,107.68254];
 /* 11 Piano — Động phủ số 36 */
@@ -2172,7 +2222,12 @@ const KX=5,WK=11,KY=144,KH=48,TOPY=28,HY=137;
 const LX=l=>KX+l*WK+5,keyX=pc=>LX(LO[pc]);
 const rgb=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)),mix=(a,b,f)=>{f=Math.max(0,Math.min(1,f));const A=rgb(a),B=rgb(b);return'#'+A.map((v,i)=>Math.round(v+(B[i]-v)*f).toString(16).padStart(2,'0')).join('')};
 const cl=v=>Math.max(0,Math.min(1,v)),sm=v=>{v=cl(v);return v*v*(3-2*v)};
-const play=fn=>{if(mu)return;try{const a=audio();fn(a.currentTime)}catch(e){}};
+const play=fn=>{if(mu||!PIANO_SFX.synth)return;try{const a=audio();fn(a.currentTime)}catch(e){}};
+/* tiếng bấm phím do người chơi tự chèn (PIANO_SFX); không có file thì rung */
+const sfxPool={};let shakeT=0;
+const customSfx=(kind,ln)=>{let u=PIANO_SFX[kind];if(Array.isArray(u))u=u[ln]||u[0];if(!u)return false;if(mu)return true;try{let a=sfxPool[u];if(!a){a=sfxPool[u]=new Audio(u);a.preload='auto'}const b=a.cloneNode();b.volume=Math.max(0,Math.min(1,PIANO_SFX.volume));const pr=b.play();if(pr&&pr.catch)pr.catch(()=>{})}catch(e){}return true};
+const buzz=pat=>{try{if(navigator.vibrate&&navigator.vibrate(pat))return}catch(e){}const m=$('mg');if(!m)return;shakeT=performance.now()+90;m.style.transform='translate('+(MR()<.5?-1:1)+'px,'+(MR()<.5?-1:1)+'px)';setTimeout(()=>{if(performance.now()>=shakeT)m.style.transform=''},100)};
+const feedback=(kind,ln,pat)=>{if(!customSfx(kind,ln))buzz(pat)};
 /* ---- dựng dòng thời gian: mỗi đoạn = 1 ô nhịp Chord Reveal + các ô nhịp hợp âm; mỗi phách một nốt thuộc hợp âm ---- */
 let bars=[],notes=[],rid=0,runs=[];
 /* Ánh xạ beat-index sang timestamp thực tế của audio. Nội suy giữa các beat đã phân tích;
@@ -2210,10 +2265,10 @@ const onBar=(bi,prev)=>{const B=bars[bi],P=prev>=0?bars[prev]:null;
  else{for(let k=0;k<3;k++)fx.push({ty:'wave',x:54,y:KY+4,c:colT,t:-k*.12,l:1.1,rm:60})}};
 const onBeat=b=>{beat=b;if(b==0)fx.push({ty:'beat',t:0,l:.8});if(b==1)for(let k=0;k<5;k++)fx.push({ty:'spark',x:10+MR()*88,y:HY-6-MR()*60,vx:(MR()-.5)*6,vy:-6-MR()*8,t:0,l:1.2,c:colT})};
 const tryHit=ln=>{kp[ln]=1;let best=null;notes.forEach(n=>{if(n.st||LO[n.pc]!==ln)return;const d=Math.abs(n.audioT-chartTm);if(d<=WIN&&(!best||d<best.d))best={n,d}});
- if(!best){play(t=>pluck(t,mf(60+ln*2),.24,.045,SFXB,1));return}const n=best.n;n.st=1;hits++;combo++;bars[n.bi].nh++;runs[n.r].hit++;kg[ln]=1;const pc=n.pc,x=LX(ln),c=C.chords[bars[n.bi].chord].c;
+ if(!best){play(t=>pluck(t,mf(60+ln*2),.24,.045,SFXB,1));feedback('miss',ln,PIANO_SFX.vibrateMiss);return}const n=best.n;n.st=1;hits++;combo++;bars[n.bi].nh++;runs[n.r].hit++;kg[ln]=1;const pc=n.pc,x=LX(ln),c=C.chords[bars[n.bi].chord].c;
  ring(x,HY,c,.55,16);ring(x,KY+6,c,.7,24);for(let k=0;k<6;k++)fx.push({ty:'spark',x,y:HY,vx:(MR()-.5)*40,vy:-20-MR()*30,t:0,l:.6+MR()*.3,c:k%2?'#FFFFFF':c});
  flow.push({x,t:tm});if(flow.length>9)flow.shift();
- play(t=>{pluck(t,mf(62+((pc-2+12)%12)),1.8,.11,SFXB,1);if(bars[n.bi].nh>=bars[n.bi].nn)bell(t+.05,mf(86),1.4,.03,SFXB)})};
+ play(t=>{pluck(t,mf(62+((pc-2+12)%12)),1.8,.11,SFXB,1);if(bars[n.bi].nh>=bars[n.bi].nn)bell(t+.05,mf(86),1.4,.03,SFXB)});feedback('hit',ln,PIANO_SFX.vibrate)};
 /* ---- lớp ban đêm phủ lên CHÍNH phòng ngủ gốc: chỉ đổi ánh sáng + bầu trời trong khung kính ---- */
 const GL=[[8,8,1]];if(OX)GL.push([-76,8,0],[158,22,0]);/* [x khung kính, x tán cây trong khung, có trăng] */
 const STAR=[...Array(14)].map((_,k)=>[hs(k*3.7)*28|0,hs(k*5.1)*24|0,hs(k*9.3)*6]);
@@ -2431,9 +2486,9 @@ function bagUI(){const b=$('bag');b.replaceChildren();
 const hd=E('div','bh'),ct=E('div','bct');ct.append(icon('peach'),E('b','',prog+' / '+NL));
 const pile=document.createElement('canvas');pile.width=60;pile.height=46;pile.className='bpile';{const px=X;X=pile.getContext('2d');box(36,34,0);if(prog)GIFTS[prog-1](2,20,1);spr('peach',46,6,1);X=px}
 hd.append(ct,E('h2','bt1','Túi Càn Khôn'),E('h2','bt2','Thu Thập Pháp Bảo'),E('p','btm','Đã nhận '+prog+' / '+NL+' pháp bảo'),pile);
-const tabs=E('div','btabs');[['Tất Cả',0],['Đã Nhận',1],['Chưa Mở',2]].forEach(([l,f])=>{const t=E('button','coin'+(bagF===f?' on':''),l);t.onclick=()=>{bagF=f;bagUI()};tabs.append(t)});hd.append(tabs);
+const tabs=E('div','btabs');[['Tất Cả',0],['Đã Nhận',1],['Chưa Mở',2],['Phiếu',3]].forEach(([l,f])=>{const t=E('button','coin'+(bagF===f?' on':''),l);t.onclick=()=>{bagF=f;bagUI()};tabs.append(t)});hd.append(tabs);
 const gr=E('div','bgr');
-LV.forEach((q,i)=>{const ok=i<prog;if((bagF===1&&!ok)||(bagF===2&&ok))return;
+if(bagF===3)gachaGrid(gr);else LV.forEach((q,i)=>{const ok=i<prog;if((bagF===1&&!ok)||(bagF===2&&ok))return;
  const c=E('button','bk'+(ok?'':' lk'));if(ok&&i===prog-1)c.append(E('i','rb','Mới'));
  const tl=E('div','tl');
  if(ok){if(q.rewardImage){const im=E('img');im.src=q.rewardImage;im.alt='';tl.append(im)}else{const cv=document.createElement('canvas');cv.width=cv.height=48;const px=X;X=cv.getContext('2d');GIFTS[i](0,0,2);X=px;tl.append(cv)}}
@@ -2444,14 +2499,36 @@ LV.forEach((q,i)=>{const ok=i<prog;if((bagF===1&&!ok)||(bagF===2&&ok))return;
 if(!gr.childNodes.length)gr.append(E('p','bempty',bagF===1?'Chưa có pháp bảo nào. Qua ải đầu tiên để nhận món đầu.':'Đã nhận đủ '+NL+' pháp bảo.'));
 const back=E('button','bback','‹');back.setAttribute('aria-label','Đóng túi đồ');back.onclick=()=>b.classList.remove('on');
 b.append(hd,gr,back)}
+/* ---------- Kho phiếu gacha (tab "Phiếu" trong túi đồ) ---------- */
+function gachaHist(){let h=[];try{h=JSON.parse(gcLS('tt8gachaH')||'[]');if(!Array.isArray(h))h=[]}catch(e){h=[]}
+ if(!h.length){let p=null;try{p=JSON.parse(gcLS('tt8gachaP')||'null')}catch(e){}if(p&&p.name&&p.tier)h=[Object.assign({},p,{t:+gcLS('tt8gachaT')||0})]}
+ return h}
+function gachaLog(pz){const h=gachaHist();h.push({name:pz.name,desc:pz.desc,tn:pz.tn,tier:pz.tier,t:Date.now()});gcLS('tt8gachaH',JSON.stringify(h.slice(-300)))}
+function tierTile(tier){const id=TIER[tier]?tier:'dong',P=TIER[id],tl=E('div','tl');tl.style.background='linear-gradient(#6A5470,#46344E)';tl.style.borderColor=P.a;if(id==='vang'||id==='kc')tl.style.boxShadow='inset 0 0 0 2px rgba(255,220,180,.35),0 0 10px '+P.a;
+ const cv=document.createElement('canvas');cv.width=cv.height=48;const px=X;X=cv.getContext('2d');tierIcon(id,24,24,4);X=px;tl.append(cv);return tl}
+function gachaGrid(gr){const H=gachaHist(),T=gameContent.gachaTiers||[],ord=T.map(t=>t.id);
+ if(!H.length){gr.append(E('p','bempty','Chưa quay phiếu nào. Đi tới cuối hành trình để quay gacha nhé.'));return}
+ const m=new Map();H.forEach(h=>{const k=h.tier+'|'+h.name;let o=m.get(k);if(!o){o={name:h.name,desc:h.desc||'',tier:h.tier,tn:tierName(h.tier),n:0,last:0};m.set(k,o)}o.n++;o.last=Math.max(o.last,+h.t||0)});
+ const nw=H[H.length-1],items=[...m.values()].sort((a,b)=>ord.indexOf(b.tier)-ord.indexOf(a.tier)||b.last-a.last);
+ gr.append(E('p','gsum','Đã quay '+H.length+' lượt · '+items.length+' loại phiếu'));
+ const ch=E('div','gchips');T.slice().reverse().forEach(t=>{const n=H.filter(h=>h.tier===t.id).length;if(n)ch.append(E('span','tchip '+t.id,t.name+' ×'+n))});gr.append(ch);
+ items.forEach(it=>{const c=E('button','bk gk'),P=TIER[it.tier]||TIER.dong;
+  if(it.tier===nw.tier&&it.name===nw.name)c.append(E('i','rb','Mới'));
+  const tl=tierTile(it.tier);if(it.n>1)tl.append(E('i','gx','×'+it.n));
+  const inf=E('div','inf'),pl=E('span','pill tp',it.tn);pl.style.background='linear-gradient('+P.b+','+P.a+')';
+  inf.append(E('strong','',it.name),pl);c.append(tl,inf);c.onclick=()=>ticketDetail(it);gr.append(c)})}
+function ticketDetail(it){const o=E('div','bdt'),c=E('div','cd t-'+it.tier),tl=tierTile(it.tier);
+ let when='';if(it.last){const d=new Date(it.last),z=n=>String(n).padStart(2,'0');when='Gần nhất: '+z(d.getDate())+'/'+z(d.getMonth()+1)+' lúc '+z(d.getHours())+':'+z(d.getMinutes())}
+ c.append(E('span','tchip '+it.tier,it.tn),tl,E('h2','gt',it.name),E('p','',it.desc),E('p','pt','Đã quay trúng '+it.n+' lần'));if(when)c.append(E('p','pity',when));
+ const x=E('button','bt','Đóng');x.onclick=()=>o.remove();c.append(x);o.append(c);o.onclick=e=>{if(e.target===o)o.remove()};$('app').append(o)}
 function itemDetail(i){const q=LV[i],ok=i<prog,o=E('div','bdt'),c=E('div','cd'),tl=E('div','tl');
 if(ok){if(q.rewardImage){const im=E('img');im.src=q.rewardImage;im.alt='';tl.append(im)}else{const cv=document.createElement('canvas');cv.width=cv.height=48;const px=X;X=cv.getContext('2d');GIFTS[i](0,0,2);X=px;tl.append(cv)}}else tl.append(E('b','q big','?'));
 c.append(E('small','','ẢI '+(i+1)+' · '+q.title.toUpperCase()),tl,E('h2','gt',ok?q.rewardName:'Pháp bảo bí ẩn'),E('p','',ok?q.rewardDescription:'Qua ải “'+q.title+'” ở '+q.place.toLowerCase()+' để nhận món này.'));
 if(ok)c.append(E('p','pt',q.memory));
 const x=E('button','bt','Đóng');x.onclick=()=>o.remove();c.append(x);o.append(c);o.onclick=e=>{if(e.target===o)o.remove()};$('app').append(o)}
 $('nb').onclick=()=>{bagUI();$('bag').classList.toggle('on')};
-function toggleMute(){mu=!mu;$('mu').textContent=mu?'×':'♪';if(!matchMedia('(max-width:700px)').matches)$('mu').setAttribute('aria-label',mu?'Bật nhạc':'Tắt nhạc');$('mmu').classList.toggle('off',!!mu);$('mmu').setAttribute('aria-label',mu?'Bật nhạc':'Tắt nhạc');const vm=$('vmute');if(vm){vm.textContent=mu?'Bật nhạc':'Tắt nhạc';vm.setAttribute('aria-label',mu?'Bật nhạc nền':'Tắt nhạc nền')}if(mu){fbStop();Object.values(tracks).forEach(a=>a.pause())}else{const k=cur;cur='';music(k||'intro')}}
-function enableAudioPlayback(){const context=audio();if(context.state!=='running')context.resume().catch(()=>{});if(mu){toggleMute();return}const kind=cur||'intro',track=tracks[kind];if(!track||track.broken){if(!SQ)fbStart(kind);return}track.volume=mvol;if(track.paused){const play=track.play();if(play&&play.catch)play.catch(()=>{if(cur===kind&&!mu)fbStart(kind)})}}
+function toggleMute(){mu=!mu;$('mu').textContent=mu?'×':'♪';if(!matchMedia('(max-width:700px)').matches)$('mu').setAttribute('aria-label',mu?'Bật nhạc':'Tắt nhạc');$('mmu').classList.toggle('off',!!mu);$('mmu').setAttribute('aria-label',mu?'Bật nhạc':'Tắt nhạc');const vm=$('vmute');if(vm){vm.textContent=mu?'Bật nhạc':'Tắt nhạc';vm.setAttribute('aria-label',mu?'Bật nhạc nền':'Tắt nhạc nền')}if(mu){fbStop();Object.values(tracks).forEach(a=>a.pause());if(cutAudio)cutAudio.pause()}else if(cutOwn){cutMusicStart()}else{const k=cur;cur='';music(k||'intro')}}
+function enableAudioPlayback(){const context=audio();if(context.state!=='running')context.resume().catch(()=>{});if(mu){toggleMute();return}if(cutOwn)return;const kind=cur||'intro',track=tracks[kind];if(!track||track.broken){if(!SQ)fbStart(kind);return}track.volume=mvol;if(track.paused){const play=track.play();if(play&&play.catch)play.catch(()=>{if(cur===kind&&!mu)fbStart(kind)})}}
 $('mu').onclick=()=>{if(matchMedia('(max-width:700px)').matches){enableAudioPlayback();const open=$('nav').classList.toggle('vol-open');$('mu').setAttribute('aria-expanded',String(open));$('mu').setAttribute('aria-label',open?'Đóng điều chỉnh âm lượng':'Bật âm thanh / điều chỉnh âm lượng')}else toggleMute()};
 
 /* ---------- Nhạc nền ---------- */
@@ -2485,10 +2562,11 @@ function seqPlay(e,t,q){const S0=q.S0,o=q.g,sp=q.spb;
  else if(e.k==='a')pluck(t,mf(e.n),sp*.9,.045,o);
  else if(e.k==='kk')kick(t,.16,o);else if(e.k==='tk')noise(t,.04,.05,o,'highpass',7000)}
 function fbStop(immediate){if(SQ){clearInterval(SQ.tm);const g=SQ.g;try{const t=AC.currentTime;g.gain.cancelScheduledValues(t);if(immediate){g.gain.setValueAtTime(0,t);g.disconnect()}else{g.gain.setValueAtTime(g.gain.value,t);g.gain.linearRampToValueAtTime(0,t+.8);setTimeout(()=>{try{g.disconnect()}catch(e){}},5200)}}catch(e){}SQ=null}}
-function fade(a,to,done){if(!a)return done&&done();const st=a.volume,t0=performance.now();
-const step=()=>{const k=Math.min(1,(performance.now()-t0)/700);a.volume=Math.max(0,Math.min(1,st+(to-st)*k));if(k<1)requestAnimationFrame(step);else done&&done()};step()}
+function fade(a,to,done){if(!a)return done&&done();const id=a._fid=(a._fid||0)+1,st=a.volume,t0=performance.now();
+const step=()=>{if(a._fid!==id)return;const k=Math.min(1,(performance.now()-t0)/700);a.volume=Math.max(0,Math.min(1,st+(to-st)*k));if(k<1)requestAnimationFrame(step);else done&&done()};step()}
 function music(kind){if(pianoMusicActive&&kind!==null)return;if(kind===null){cur=null;fbStop(true);Object.values(tracks).forEach(a=>{a.pause();a.volume=0;try{a.currentTime=0}catch(e){}});return}if(cur===kind)return;const old=tracks[cur],a=tracks[kind];if(old&&a&&old!==a&&old.src===a.src&&!old.broken){cur=kind;return}cur=kind;fbStop();
 if(old)fade(old,0,()=>old.pause());
+setTimeout(()=>{const keep=tracks[cur];Object.values(tracks).forEach(t=>{if(t!==keep&&!(keep&&t.src===keep.src)&&!t.paused){t._fid=(t._fid||0)+1;t.pause();t.volume=0}})},800);
 if(mu||!kind)return;
 if(!a||a.broken)return fbStart(kind);
 const fallback=()=>{if(cur===kind&&!mu&&(!SQ||SQ.S0!==SONGS[kind]))fbStart(kind)};
@@ -2509,26 +2587,63 @@ const vm=document.createElement('button');vm.type='button';vm.id='vmute';vm.clas
 volBox.append(vs,vm);$('mu').parentNode.insertBefore(volBox,$('mu').nextSibling);
 document.addEventListener('pointerdown',e=>{if(!e.target.closest('#nav')){$('nav').classList.remove('vol-open');$('mu').setAttribute('aria-expanded','false')}});
 addEventListener('keydown',e=>{if(e.key==='Escape'){$('nav').classList.remove('vol-open');$('mu').setAttribute('aria-expanded','false')}});
-addEventListener('pointerdown',e=>{if(e.target.closest('#mmu'))return;const context=audio();if(context.state!=='running')context.resume().catch(()=>{});if(mu||pianoMusicActive)return;const kind=cur||'intro',a=tracks[kind];if(!a||a.broken){if(!SQ)fbStart(kind);return}if(a.paused){const pr=a.play();if(pr&&pr.then)pr.then(()=>{if(cur===kind)fbStop()}).catch(()=>{if(cur===kind&&!mu)fbStart(kind)});else fbStop()}},{passive:true});
+addEventListener('pointerdown',e=>{if(e.target.closest('#mmu'))return;const context=audio();if(context.state!=='running')context.resume().catch(()=>{});if(mu||pianoMusicActive||cutOwn)return;const kind=cur||'intro',a=tracks[kind];if(!a||a.broken){if(!SQ)fbStart(kind);return}if(a.paused){const pr=a.play();if(pr&&pr.then)pr.then(()=>{if(cur===kind)fbStop()}).catch(()=>{if(cur===kind&&!mu)fbStart(kind)});else fbStop()}},{passive:true});
 
+/* ---------- Nhạc riêng cho cut-scene nhận quà màn 11 ---------- */
+function cutMusicStart(){cutOwn=1;if(!cutAudio){cutAudio=new Audio(CUT36_MUSIC.src);cutAudio.preload='auto';cutAudio.addEventListener('error',()=>{if(cutOwn){cutOwn=0;if(!mu)music('intro')}})}
+ cutAudio.loop=CUT36_MUSIC.loop!==false;if(mu){cutAudio.pause();return}cutAudio.volume=0;try{cutAudio.currentTime=0}catch(e){}
+ const pr=cutAudio.play();if(pr&&pr.then)pr.then(()=>fade(cutAudio,CUT36_MUSIC.volume)).catch(()=>{});else fade(cutAudio,CUT36_MUSIC.volume)}
+function cutMusicStop(){cutOwn=0;const a=cutAudio;if(!a||a.paused)return;fade(a,0,()=>{if(!cutOwn){a.pause();try{a.currentTime=0}catch(e){}}})}
 /* ---------- Màn gacha kết thúc ---------- */
 let Gc={};
 /* tier gacha: màu + icon riêng */
-const TIER={dong:{a:'#C8743A',b:'#F0A868',d:'#8A4A22',ic:'ticket'},sat:{a:'#7E8A98',b:'#B8C2CE',d:'#4E5866',ic:'token'},bac:{a:'#C8D4E2',b:'#FFFFFF',d:'#8E9CB0',ic:'jade'},vang:{a:'#F0B73A',b:'#FFF3B0',d:'#B8741A',ic:'ingot'},kc:{a:'#7FE0F0',b:'#FFFFFF',d:'#3A8AC8',ic:'gem'}};
-const TIC={ticket:['............','............','KKKKKKKKKKKK','KbbbbbKbbbbK','KaaaaaKaaaaK','.aarraKaaaa.','.arrraKaaaa.','KaaaaaKaaaaK','KdddddKddddK','KKKKKKKKKKKK','............','............'],
-token:['...KKKKKK...','..KbbbbbbK..','..KaaaaaaK..','..KarrrraK..','..KaarraaK..','..KarrrraK..','..KaaaaaaK..','..KdaaaadK..','...KKKKKK...','.....rr.....','....rrrr....','....r..r....'],
-jade:['.....rr.....','.....rr.....','....KKKK....','..KKbbbbKK..','.KbaaaaaabK.','.KaaaKKaaaK.','.KaaK..KaaK.','.KaaaKKaaaK.','.KdaaaaaadK.','..KKddddKK..','....KKKK....','.....rr.....'],
-gem:['............','............','...KKKKKK...','..KbbabbaK..','.KbaabbaabK.','KKKKKKKKKKKK','.KaabaabaaK.','..KabaabaK..','...KaabaK...','....KabK....','.....KK.....','............'],
-ingot:['............','.....KK.....','....KbbK....','K..KbaabK..K','KbKaaaaaaKbK','KabaaaaaabaK','.KaaaaaaaaK.','.KdaaaaaadK.','..KddddddK..','...KKKKKK...','............','............']};
-function tierIcon(id,cx,cy,s){const P=TIER[id],rows=TIC[P.ic],col={K:K,a:P.a,b:P.b,d:P.d,r:'#D4302B'};rows.forEach((r,j)=>{for(let i=0;i<12;i++){const k=r[i];if(k!=='.')R(cx-6*s+i*s,cy-6*s+j*s,s,s,col[k])}})}
+const TIER={
+dong:{a:'#8FB458',b:'#DCEBA8',d:'#7A5A2A',p:{K:'#2A1408',a:'#A8642E',b:'#D08A48',d:'#6A3A1A',c:'#7FE08A',w:'#D8FFD0'}},
+sat:{a:'#3A8AD8',b:'#8FF0F8',d:'#1E4E9A',p:{K:'#0E1630',a:'#2E5EB8',b:'#5A9AE8',d:'#1A3470',c:'#5FE8F0',w:'#E8F4FF',s:'#C8D8E8'}},
+bac:{a:'#9A6AE8',b:'#E0D0FF',d:'#5A3AA8',p:{K:'#1A1030',a:'#B48CF0',b:'#EEE8FF',d:'#7A50C8',c:'#7FE8F0',s:'#D0D0E8',h:'#3A2058'}},
+vang:{a:'#F0B73A',b:'#FFF3B0',d:'#E8761A',p:{K:'#3A1E08',a:'#F0B73A',b:'#FFE89A',d:'#B8741A',c:'#D8501A',w:'#FFF8D8'}},
+kc:{a:'#9BE0E8',b:'#FFFFFF',d:'#8A5AE8',p:{K:'#1A1620',a:'#7FE0F0',b:'#FFFFFF',d:'#3A8AC8'}}};
+/* sprite pháp bảo 16x16: Linh Túi Phàm / Bình Tụ Linh / Huyền Ngọc Kiếm / Tiên Ấn Vạn Pháp; Thần Phẩm giữ viên kim cương gốc (12x12) */
+const TIC={
+dong:['................','......KKKK......','.....KwccwK.....','.....KccccK.....','......KddK......','.....KbddbK.....','....KbaaaabK....','...KbaaaaaadK...','..KbaaaaaaaadK..','..KbaaaaaaaadK..','..KaaaaaaaaddK..','..KaaaaaaaaddK..','...KdaaaaaddK...','....KddddddK....','.....KKKKKK.....','................'],
+sat:['......KKKK......','.....KssssK.....','......KKKK......','......KbaK......','......KbaK......','.....KbaadK.....','....KbaaaadK....','...KbaaccaadK...','..KbaacwwcaadK..','..KbacccccccdK..','..KaaaccccaadK..','..KaaaaaaaaddK..','...KaaaaaaddK...','....KddddddK....','.....KKKKKK.....','................'],
+bac:['.......KK.......','......KbaK......','......KbaK......','......KcaK......','......KbdK......','......KbaK......','......KcaK......','......KbdK......','......KbaK......','......KbdK......','...KKKKKKKKKK...','...KsssccsssK...','...KKKKKKKKKK...','......KhhK......','......KhhK......','......KccK......'],
+vang:['................','.....KKKKKK.....','.....KbbbaK.....','......KbaK......','...KKKKKKKKKK...','..KbbbbbbbbbaK..','..KbaaaaaaaadK..','..KbaccccccadK..','..KbacwaawcadK..','..KbacaccacadK..','..KbacwaawcadK..','..KbaccccccadK..','..KbaaaaaaaadK..','..KddddddddddK..','...KKKKKKKKKK...','................'],
+kc:['............','............','...KKKKKK...','..KbbabbaK..','.KbaabbaabK.','KKKKKKKKKKKK','.KaabaabaaK.','..KabaabaK..','...KaabaK...','....KabK....','.....KK.....','............']};
+function tierIcon(id,cx,cy,s){const P=TIER[id]||TIER.dong,rows=TIC[id]||TIC.dong,n=rows.length,ps=n===16?Math.max(1,Math.round(s*12/16)):s,col=P.p,ox=Math.round(cx-n/2*ps),oy=Math.round(cy-n/2*ps);rows.forEach((r,j)=>{for(let i=0;i<n;i++){const k=r[i];if(k!=='.')R(ox+i*ps,oy+j*ps,ps,ps,col[k])}})}
+const tierName=id=>((gameContent.gachaTiers||[]).find(t=>t.id===id)||{}).name||id;
+/* pháp trận pixel: vòng elip dẹt dưới pháp bảo, mở dần theo k (0..1) */
+const PHT={dong:{r:[[13,'#8FD870']],n:0},sat:{r:[[18,'#3A8AD8'],[12,'#8FF0F8']],n:4,rc:'#8FF0F8'},bac:{r:[[24,'#9A6AE8'],[17,'#7FE8F0'],[11,'#C8A8FF']],n:6,rc:'#E0D0FF'},vang:{r:[[30,'#F0B73A'],[23,'#FFE89A'],[16,'#E8761A']],n:8,rc:'#FFF3B0'},kc:{r:[[38,'#7FE8F0'],[30,'#B48CF0'],[23,'#F7D774'],[15,'#FFFFFF']],n:12,rc:'#F7D774'}};
+function pRing(cx,cy,r,ry,col,rot,gap){const st=1.2/r;let i=0;for(let a=0;a<6.283;a+=st,i++){if(gap&&i%gap<2)continue;R(Math.round(cx+Math.cos(a+rot)*r),Math.round(cy+Math.sin(a+rot)*r*ry),1,1,col)}}
+function phapTran(id,cx,cy,u,k){const C=PHT[id]||PHT.dong;C.r.forEach((q,j)=>{const r=q[0]*k;if(r<2)return;X.globalAlpha=.85;pRing(cx,cy,r,.36,q[1],u*(j%2?-.6:.6),j?7:0)});
+ for(let i=0;i<C.n;i++){const a=u*.5+i*6.283/C.n,r=(C.r[0][0]-4)*k,x=Math.round(cx+Math.cos(a)*r),y=Math.round(cy+Math.sin(a)*r*.36);R(x-1,y,3,1,C.rc);R(x,y-1,1,3,C.rc)}X.globalAlpha=1}
 function gRoll(){const gc=gameContent,T=gc.gachaTiers;let n=0,m=0;try{n=+localStorage.getItem('tt8pity')||0;m=+localStorage.getItem('tt8pitykc')||0}catch(e){}
  let tier;if(m+1>=gc.gachaPityKC)tier='kc';else if(n+1>=gc.gachaPity)tier='vang';else{let r=Math.random()*T.reduce((a,t)=>a+t.rate,0);for(const t of T){r-=t.rate;if(r<0){tier=t.id;break}}tier=tier||T[0].id}
  if(tier==='kc'){n=0;m=0}else if(tier==='vang'){n=0;m++}else{n++;m++}
  try{localStorage.setItem('tt8pity',n);localStorage.setItem('tt8pitykc',m)}catch(e){}
  const pool=gc.gachaPrizes.filter(p=>p.tier===tier),it=pool[Math.random()*pool.length|0]||gc.gachaPrizes[0];
  return Object.assign({},it,{tier,tn:(T.find(t=>t.id===tier)||{}).name,left:gc.gachaPity-n,leftKC:gc.gachaPityKC-m})}
-function gachaStart(quick){mode='g';Gc={t:0,ph:quick?2:0,bg:scn(6),prize:gRoll(),ui:0};$('pn').replaceChildren()}
+const gcLS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}};
+function gachaWait(){const cd=(+gameContent.gachaCooldownMin||0)*60000;if(!cd)return 0;const last=+gcLS('tt8gachaT')||0;if(!last)return 0;return Math.max(0,Math.min(cd,cd-(Date.now()-last)))}
+function passBox(){const w=E('div','gpass'),inp=E('input'),bt=E('button','','Nhập'),m=E('p','pity','');inp.placeholder='Nhập passcode…';inp.autocomplete='off';
+ const go10=()=>{const gc=gameContent,v=(inp.value||'').trim();if(!v)return;
+  if(!gc.gachaPasscode||v.toUpperCase()!==String(gc.gachaPasscode).toUpperCase()){m.textContent='Passcode không đúng, đạo hữu thử lại nhé.';return}
+  if(gc.gachaPasscodeOnce&&gcLS('tt8passUsed')){m.textContent='Passcode này đã được dùng rồi.';return}
+  gcLS('tt8passUsed','1');gachaMulti(10)};
+ bt.onclick=go10;inp.onkeydown=e=>{if(e.key==='Enter')go10()};w.append(inp,bt);const box=E('div');box.append(w,m);return box}
+function gachaMulti(n){mode='g';const ord=(gameContent.gachaTiers||[]).map(t=>t.id),arr=[];for(let i=0;i<n;i++){const pz=gRoll();gachaLog(pz);arr.push(pz)}
+ const best=arr.reduce((a,b)=>ord.indexOf(b.tier)>ord.indexOf(a.tier)?b:a,arr[0]);gcLS('tt8gachaP',JSON.stringify({name:best.name,desc:best.desc,tn:best.tn,tier:best.tier}));
+ Gc={t:0,ph:2,bg:scn(6),prize:best,multi:arr,ui:0};$('pn').replaceChildren()}
+function gachaStart(quick){mode='g';
+ if(gachaWait()>0){let lp=null;try{lp=JSON.parse(gcLS('tt8gachaP')||'null')}catch(e){}Gc={t:0,cd:1,lp,bg:scn(6),ui:0};$('pn').replaceChildren();return}
+ const pz=gRoll();gachaLog(pz);gcLS('tt8gachaT',String(Date.now()));gcLS('tt8gachaP',JSON.stringify({name:pz.name,desc:pz.desc,tn:pz.tn,tier:pz.tier}));
+ Gc={t:0,ph:quick?2:0,bg:scn(6),prize:pz,ui:0};$('pn').replaceChildren()}
 function gacha(dt,t){X=mc;const S=Gc;S.t+=dt;X.drawImage(S.bg,XL,0);sd=(t|0)%2147483647+1;
+if(S.cd){const w=gachaWait();if(w<=0){gachaStart();return}man(54,164,1,0,2);
+ if(!S.ui){S.ui=1;const c=E('div','cd');c.style.margin='auto 0 0';S.tp=E('p','pity','');c.append(E('small','','GACHA ĐỘT PHÁ'),E('p','','Mỗi tiếng chỉ được quay một lần. Hộp quà đang nghỉ, đợi chút nữa nhé.'),S.tp,E('small','','CÓ PASSCODE? QUAY LIỀN 10 LẦN'),passBox());
+  if(S.lp){c.append(E('small','','PHIẾU LẦN QUAY TRƯỚC'),E('h2','gt',S.lp.name),E('p','',S.lp.desc))}
+  const b=E('button','bt','Đọc thư');b.onclick=()=>go({t:'e',n:2});c.append(b);$('pn').replaceChildren(c)}
+ const m=Math.ceil(w/1000),txt='Còn '+String(m/60|0).padStart(2,'0')+':'+String(m%60).padStart(2,'0')+' nữa mới quay được.';if(S.tp.textContent!==txt)S.tp.textContent=txt;return}
 const cx=54,cy=118,TP=TIER[S.prize.tier],gold=S.prize.tier==='vang';
 if(S.ph===0){const T=S.t,sp=.7+T*.5,rad=Math.max(0,46-T*8);
 for(let i=0;i<NL;i++){const a=T*sp+i*6.283/NL,x=cx+Math.cos(a)*rad,y=cy+Math.sin(a)*rad*.6;
@@ -2540,7 +2655,7 @@ else if(S.ph===1){const k=Math.min(1,S.t/1.2);X.globalAlpha=1-k*.6;R(XL,0,LW,192
 man(cx,cy+46,1,0,2);const sz=(6+k*16)|0;R(cx-sz/2,cy-sz/2,sz,sz,'#C23A74');R(cx-sz/2,cy-sz/2,sz,sz/3,'#DE5C8E');glow(cx,cy,20,'#FFF3B0',.4);
 if(k>=1){S.ph=2;S.t=0}}
 else if(S.ph===2){man(cx-26,cy+46,1,0,2);box(cx,cy,0);glow(cx,cy,18+Math.sin(t/300)*4,'#FFF3B0',.35);
-if(!S.ui){S.ui=1;const c=E('div','cd');c.style.margin='auto 0 0';c.append(E('small','','PHÁP BẢO CUỐI CÙNG'),E('p','','11 món quà đã hợp lại thành một chiếc hộp. Mở ra xem nào.'));
+if(!S.ui){S.ui=1;const c=E('div','cd');c.style.margin='auto 0 0';c.append(E('small','',S.multi?'THẬP LIÊN TRIỆU HỒI · ×'+S.multi.length:'PHÁP BẢO CUỐI CÙNG'),E('p','',S.multi?'Passcode chính xác! '+S.multi.length+' pháp bảo đang tụ trong hộp. Mở ra xem nào.':'11 món quà đã hợp lại thành một chiếc hộp. Mở ra xem nào.'));
 const b=E('button','bt','Mở hộp quà');b.onclick=()=>{S.ph=3;S.t=0;S.ui=0;S.snd=0;SND.rumble(S.prize.tier==='kc'?2.8:S.prize.tier==='vang'?2:1.4);$('pn').replaceChildren()};c.append(b);$('pn').replaceChildren(c)}}
 else if(S.ph===3){const T=S.t,kc=S.prize.tier==='kc',top=gold||kc,dur=kc?2.8:gold?2:1.4,PR=['#9BE0E8','#F08AB0','#C49AE0','#FFFFFF','#B6E36B','#F7D774'],RB=kc?PR:['#F7D774','#F08AB0','#9BE0E8','#FFF3B0'];
 X.globalAlpha=kc?.7:.55;R(XL,0,LW,192,'#0A0610');X.globalAlpha=1;man(cx-26,cy+46,1,0,2);
@@ -2549,21 +2664,33 @@ if(T<dur){const k=T/dur,sh=(1+k*3)*(kc?2.2:gold?1.6:1);box(cx+Math.sin(T*44)*sh,
  glow(cx,cy,10+k*(kc?26:18),col,.25+k*.45);const tk=T*8|0;if(k>.45&&tk!==S.tk){S.tk=tk;sfx(300+k*(kc?900:500),.03)}
  if(kc&&k>.7){for(let j=0;j<6;j++){const a=j*1.05+T*3;ln(cx,cy,cx+Math.cos(a)*(k-.7)*160,cy+Math.sin(a)*(k-.7)*160,'#FFFFFF')}}}
 else{const u=T-dur;if(!S.snd){S.snd=1;SND.tier(S.prize.tier)}
- X.globalAlpha=Math.max(0,1-u*(kc?.8:1.2));R(XL,0,LW,192,kc?PR[(u*12|0)%PR.length]:TP.b);X.globalAlpha=1;
- box(cx,cy,1);const fy=cy-20-ease(u/.9)*54;
- const nr=kc?24:gold?18:S.prize.tier==='bac'?12:8;X.globalAlpha=top?.4:.28;for(let k=0;k<nr;k++){const a=u*(kc?.9:.4)+k*6.283/nr;ln(cx,fy,cx+Math.cos(a)*80,fy+Math.sin(a)*80,top?RB[k%RB.length]:TP.b)}X.globalAlpha=1;
- if(kc){X.globalAlpha=.55;for(let k=0;k<3;k++){const rr=((u*22+k*16)%48)+12;for(let a=0;a<6.283;a+=.09)R((cx+Math.cos(a)*rr)|0,(fy+Math.sin(a)*rr*.9)|0,1,1,PR[(k*2+(a*3|0))%6])}X.globalAlpha=1}
- glow(cx,fy,kc?30:24,TP.b,.5);
- if(S.prize.tier!=='dong')for(let k=0;k<(kc?36:gold?24:10);k++){const a=k*2.4+u,r=(u*30+k*7)%60;R((cx+Math.cos(a)*r)|0,(fy+Math.sin(a)*r)|0,top?2:1,top?2:1,top?RB[k%RB.length]:'#FFFFFF')}
- if(top)for(let k=0;k<(kc?22:16)*LW/108;k++){const x=XL+(k*37+u*12)%LW,y=((u*40+k*53)%200)-8;R(x|0,y|0,2,2,kc?PR[k%6]:k%2?'#F7D774':'#FFF3B0')}
- if(kc)for(let k=0;k<7;k++){const ph=(u*1.7+k*.37)%1,sx=(k*29+11)%100+4,sy=(k*47+20)%150+10,z=Math.round(Math.sin(ph*Math.PI)*3);if(z>0){R(sx-z,sy,z*2+1,1,'#FFFFFF');R(sx,sy-z,1,z*2+1,'#FFFFFF')}}
- X.save();X.translate(cx,fy);X.rotate(Math.sin(u*1.6)*.12);X.translate(-cx,-fy);tierIcon(S.prize.tier,cx,fy,3);
- if(kc){const g=(u*2)%1;X.globalAlpha=.8*Math.sin(g*Math.PI);R(cx-14+g*24|0,fy-12,3,24,'#FFFFFF');X.globalAlpha=1}X.restore();
+ const id=S.prize.tier,lv={dong:0,sat:1,bac:2,vang:3,kc:4}[id]||0;
+ X.globalAlpha=Math.max(0,1-u*(kc?.8:1.2))*(lv<3?.5:1);R(XL,0,LW,192,kc?PR[(u*12|0)%PR.length]:TP.b);X.globalAlpha=1;
+ box(cx,cy,1);const fy=cy-20-ease(Math.min(1,u/.9))*(lv?54:44)+Math.round(Math.sin(u*2.2)*2),ok=ease(Math.min(1,u/(.45+lv*.12)));
+ /* Tiên Phẩm: cột sáng vàng chiếu từ trên xuống */
+ if(gold){X.globalAlpha=.22*ok;R(cx-9,0,18,fy+16,'#FFE89A');X.globalAlpha=.35*ok;R(cx-3,0,6,fy+16,'#FFF8D8');X.globalAlpha=1}
+ /* tia linh khí xoay (chỉ từ Linh Khí trở lên) */
+ if(lv>=2){const nr=kc?16:gold?12:8;X.globalAlpha=top?.3:.2;for(let k=0;k<nr;k++){const a=u*(kc?.9:.4)+k*6.283/nr;ln(cx,fy,cx+Math.cos(a)*70,fy+Math.sin(a)*70,top?RB[k%RB.length]:TP.b)}X.globalAlpha=1}
+ /* pháp trận dưới pháp bảo */
+ phapTran(id,cx,fy+24,u,ok);
+ /* halo phía sau (Tiên Phẩm, Thần Phẩm) */
+ if(top){X.globalAlpha=.7;pRing(cx,fy,22*ok,1,gold?'#FFE89A':'#B48CF0',u*.8,9);if(kc)pRing(cx,fy,27*ok,1,'#7FE8F0',-u*.6,6);X.globalAlpha=1}
+ glow(cx,fy,8+lv*5,TP.b,.18+lv*.07);
+ /* hạt linh khí bay lên tụ lại */
+ const np=[4,8,12,20,28][lv],pc=[TP.a,TP.b,'#FFFFFF'];for(let k=0;k<np;k++){const ph=(u*.6+k*.137)%1,r=(1-ph)*(14+lv*6),a=k*2.4+u*(lv>=2?1.2:.4),z=lv>=3?2:1;X.globalAlpha=Math.sin(ph*Math.PI);R(Math.round(cx+Math.cos(a)*r),Math.round(fy+Math.sin(a)*r*.7-ph*10),z,z,top?RB[k%RB.length]:pc[k%3])}X.globalAlpha=1;
+ if(top)for(let k=0;k<(kc?14:10)*LW/108;k++){const x=XL+(k*37+u*12)%LW,y=((u*40+k*53)%200)-8;X.globalAlpha=.7;R(x|0,y|0,1,2,kc?PR[k%6]:k%2?'#F7D774':'#FFF3B0')}X.globalAlpha=1;
+ /* Thần Phẩm: vết nứt không gian + sao lóe */
+ if(kc){const fl=.5+.5*Math.sin(u*7);X.globalAlpha=.55*fl;[[14,40,1],[86,30,-1],[20,150,1],[90,140,-1]].forEach(c=>{let x=c[0],y=c[1];for(let j=0;j<7;j++){R(x,y,1,2,j%2?'#7FE8F0':'#FFFFFF');x+=c[2];y+=(j%3?2:1)}});X.globalAlpha=1;
+  for(let k=0;k<6;k++){const ph=(u*1.7+k*.37)%1,sx=(k*29+11)%100+4,sy=(k*47+20)%150+10,z=Math.round(Math.sin(ph*Math.PI)*3);if(z>0){R(sx-z,sy,z*2+1,1,'#FFFFFF');R(sx,sy-z,1,z*2+1,'#FFFFFF')}}}
+ X.save();if(id==='bac'||kc){X.translate(cx,fy);X.rotate(Math.sin(u*1.6)*.08);X.translate(-cx,-fy)}tierIcon(id,cx,fy,3);
+ if(kc){const g=(u*2)%1;X.globalAlpha=.6*Math.sin(g*Math.PI);R(cx-12+g*20|0,fy-10,2,20,'#FFFFFF');X.globalAlpha=1}X.restore();
  if(u>(kc?1.8:1.2)&&!S.ui){S.ui=1;const q=S.prize,c=E('div','cd t-'+q.tier);c.style.margin='auto 0 0';
-  c.append(E('span','tchip '+q.tier,'Tier '+q.tn),E('h2','gt',q.name),E('p','',q.desc));
-  c.append(E('p','pity',q.tier==='kc'?'Kim Cương! Cả hai bảo hiểm đã đặt lại.':q.tier==='vang'?'Còn '+q.leftKC+' lượt nữa chắc chắn ra Kim Cương.':'Còn '+q.left+' lượt nữa chắc chắn ra Vàng, '+q.leftKC+' lượt nữa ra Kim Cương.'));
+  const MSG={dong:'Đạo hữu thu được một vật phẩm phàm phẩm.',sat:'Pháp khí xuất thế!',bac:'Linh khí đã nhận chủ!',vang:'Tiên phẩm giáng thế!',kc:'Thiên địa dị tượng! Thần phẩm xuất thế!'};
+  c.append(E('span','tchip '+q.tier,tierName(q.tier)),E('p','tmsg',MSG[q.tier]||''),E('h2','gt',q.name),E('p','',q.desc));if(gameContent.gachaNote){const nt2=E('p','pity',gameContent.gachaNote);nt2.style.fontStyle='italic';c.append(nt2)}
+  if(S.multi){const L=E('div','g10');S.multi.forEach((p,k)=>{const r=E('div');r.append(E('span','tchip '+p.tier,tierName(p.tier)),E('span','',(k+1)+'. '+p.name));L.append(r)});c.append(E('small','','KẾT QUẢ THẬP LIÊN'),L)}
+  {const qp=S.multi?S.multi[S.multi.length-1]:q;  c.append(E('p','pity',qp.tier==='kc'?'Thần Phẩm xuất thế! Thiên đạo bảo hộ đã quy về khởi điểm.':(qp.leftKC<=1?'Thiên đạo bảo hộ: lượt tiếp theo đã định Thần Phẩm xuất thế.':qp.tier==='vang'?'Thiên đạo đã ghi nhận '+(gameContent.gachaPityKC-qp.leftKC)+' lần tích lũy. Còn '+qp.leftKC+' lượt nữa Thần Phẩm sắp xuất thế.':qp.left<=1?'Thiên đạo bảo hộ: lượt tiếp theo đã định Tiên Phẩm. Còn '+qp.leftKC+' lượt nữa Thần Phẩm xuất thế.':'Linh khí đang tụ hội… Còn '+qp.left+' lượt nữa chắc chắn đột phá Tiên Phẩm, '+qp.leftKC+' lượt nữa Thần Phẩm xuất thế.')));}
   const b=E('button','bt','Đọc thư');b.onclick=()=>go({t:'e',n:2});c.append(b);
-  const r=E('button','bt','Quay gacha lần nữa');r.onclick=()=>{gachaStart(1)};c.append(r);$('pn').replaceChildren(c)}}}
+  const r=E('button','bt','Quay gacha lần nữa');r.onclick=()=>{gachaStart(1)};c.append(r);if(!(gameContent.gachaPasscodeOnce&&gcLS('tt8passUsed')))c.append(E('small','','CÓ PASSCODE? QUAY LIỀN 10 LẦN'),passBox());$('pn').replaceChildren(c)}}}
 }
 function box(x,y,open){R(x-13,y-9,26,20,'#C23A74');R(x-13,y-9,26,5,'#DE5C8E');R(x-3,y-9,6,20,'#F7D774');
 if(open){R(x-15,y-16,30,6,'#DE5C8E');R(x-15,y-16,30,2,'#F7B8CF')}else{R(x-15,y-12,30,5,'#DE5C8E');R(x-15,y-12,30,2,'#F7B8CF');R(x-3,y-16,6,4,'#F7D774')}}
@@ -2588,7 +2715,7 @@ if(t==='g'){gachaStart();nt='Gacha đột phá'}
 if(t==='f'){finalStart();nt='Đường về'}
 if(t==='k'){credits();nt='Lời cảm ơn'}
 if(t==='q'){qStart();nt=''}
-music(t==='f'||t==='k'||t==='q'||(t==='e'&&v.n===2)?'end':t==='l'&&v.i===NL-1?'intro':(t==='w'||t==='l'?'map':'intro'));
+if(t==='c'&&v.i===NL-1&&CUT36_MUSIC.src){music(null);cutMusicStart()}else{cutMusicStop();music(t==='f'||t==='k'||t==='q'||(t==='e'&&v.n===2)?'end':t==='l'&&v.i===NL-1?'intro':(t==='w'||t==='l'?'map':'intro'))}
 if(t==='e'){nt='Đột phá';if(v.n===0)line(gameContent.finalCutscene);if(v.n===1){line(['','']);const b=E('button','gb'),c=document.createElement('canvas');c.width=c.height=8;X=c.getContext('2d');spr('box',0,0,1);b.append(c);b.setAttribute('aria-label','Mở hộp quà');b.onclick=()=>{$('sc').classList.add('warm');sfx(880,.3);bloom()};$('ov').append(b)}if(v.n===2)letter()}
 $('nt').textContent=nt;$('bk').disabled=P<1;$('fw').disabled=P>=H.length-1;$('sk').hidden=!['p','c','f','k'].includes(t);
 }
