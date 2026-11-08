@@ -86,6 +86,7 @@ h2.lp{font:800 26px/1.3 'Noto Serif',serif}
 #vol{pointer-events:auto;width:56px;flex:none;accent-color:#F0B73A}
 #volbox{display:flex;align-items:center;pointer-events:auto}
 #volbox .vmute{display:none;pointer-events:auto}
+#volbox #canyonmusic{display:block;padding:0 6px;border:0;background:transparent;color:#FFF3C4;font:700 12px 'Be Vietnam Pro',sans-serif;white-space:nowrap;cursor:pointer}
 #nt{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 @media(max-width:700px){
 #nav{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:4px}
@@ -99,6 +100,7 @@ h2.lp{font:800 26px/1.3 'Noto Serif',serif}
 #nav.vol-open #volbox{display:flex}
 #vol{width:100%;height:28px;box-sizing:border-box}
 #volbox .vmute{display:block;width:100%;height:36px;border:1px solid #D9B25B;border-radius:8px;background:rgba(255,255,255,.1);color:#FFF3C4;font:700 13px 'Be Vietnam Pro',sans-serif}
+#volbox #canyonmusic{height:36px;border:1px solid #D9B25B;border-radius:8px;background:rgba(255,255,255,.1);font:700 13px 'Be Vietnam Pro',sans-serif}
 #pn{padding:90px 10px 12px;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 #pn>.cd{box-sizing:border-box;max-height:100%;min-height:0;overflow-y:auto;touch-action:pan-y}
 #app.level-play #pn{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
@@ -2527,8 +2529,8 @@ c.append(E('small','','ẢI '+(i+1)+' · '+q.title.toUpperCase()),tl,E('h2','gt'
 if(ok)c.append(E('p','pt',q.memory));
 const x=E('button','bt','Đóng');x.onclick=()=>o.remove();c.append(x);o.append(c);o.onclick=e=>{if(e.target===o)o.remove()};$('app').append(o)}
 $('nb').onclick=()=>{bagUI();$('bag').classList.toggle('on')};
-function toggleMute(){mu=!mu;$('mu').textContent=mu?'×':'♪';if(!matchMedia('(max-width:700px)').matches)$('mu').setAttribute('aria-label',mu?'Bật nhạc':'Tắt nhạc');$('mmu').classList.toggle('off',!!mu);$('mmu').setAttribute('aria-label',mu?'Bật nhạc':'Tắt nhạc');const vm=$('vmute');if(vm){vm.textContent=mu?'Bật nhạc':'Tắt nhạc';vm.setAttribute('aria-label',mu?'Bật nhạc nền':'Tắt nhạc nền')}if(mu){fbStop();Object.values(tracks).forEach(a=>a.pause());if(cutAudio)cutAudio.pause()}else if(cutOwn){cutMusicStart()}else{const k=cur;cur='';music(k||'intro')}}
-function enableAudioPlayback(){const context=audio();if(context.state!=='running')context.resume().catch(()=>{});if(mu){toggleMute();return}if(cutOwn)return;const kind=cur||'intro',track=tracks[kind];if(!track||track.broken){if(!SQ)fbStart(kind);return}track.volume=mvol;if(track.paused){const play=track.play();if(play&&play.catch)play.catch(()=>{if(cur===kind&&!mu)fbStart(kind)})}}
+function toggleMute(){mu=!mu;$('mu').textContent=mu?'×':'♪';if(!matchMedia('(max-width:700px)').matches)$('mu').setAttribute('aria-label',mu?'Bật nhạc':'Tắt nhạc');$('mmu').classList.toggle('off',!!mu);$('mmu').setAttribute('aria-label',mu?'Bật nhạc':'Tắt nhạc');const vm=$('vmute');if(vm){vm.textContent=mu?'Bật nhạc':'Tắt nhạc';vm.setAttribute('aria-label',mu?'Bật nhạc nền':'Tắt nhạc nền')}if(mu){fbStop();Object.values(tracks).forEach(a=>a.pause());if(cutAudio)cutAudio.pause()}else if(cutOwn){cutMusicStart()}else{const k=cur;cur='';music(k||'intro')}updateCanyonButton()}
+function enableAudioPlayback(){const context=audio();if(context.state!=='running')context.resume().catch(()=>{});if(mu){toggleMute();return}if(cutOwn)return;const kind=cur||'intro',track=tracks[kind];if(!track||track.broken){if(!SQ)fbStart(kind);return}track.volume=mvol;if(track.paused){const play=track.play();if(play&&play.catch)play.catch(()=>{if(cur===kind&&!mu)fbStart(kind)})}updateCanyonButton()}
 $('mu').onclick=()=>{if(matchMedia('(max-width:700px)').matches){enableAudioPlayback();const open=$('nav').classList.toggle('vol-open');$('mu').setAttribute('aria-expanded',String(open));$('mu').setAttribute('aria-label',open?'Đóng điều chỉnh âm lượng':'Bật âm thanh / điều chỉnh âm lượng')}else toggleMute()};
 
 /* ---------- Nhạc nền ---------- */
@@ -2545,6 +2547,9 @@ const SONGS={intro:{bpm:68,mel:MA,ch:['D','Bm','G','A','D','Bm','G','D'],v:'pluc
  map:{bpm:94,mel:MB,ch:['G','Bm','D','A','G','D','Em','D'],v:'flute',arp:2,perc:1,o:0,mv:.12},
  end:{bpm:56,mel:MA,ch:['D','Bm','G','A','D','Bm','G','D'],v:'bell',arp:0,perc:0,o:12,mv:.1}};
 let SQ=null;
+function canyonMusicPlaying(){return !!(!mu&&cur==='end'&&((SQ&&SQ.S0===SONGS.end)||(tracks.end&&!tracks.end.paused&&!tracks.end.broken)))}
+function updateCanyonButton(){const b=$('canyonmusic');if(!b)return;const playing=canyonMusicPlaying();b.textContent=playing?'Tắt Canyon Heart':'Phát Canyon Heart';b.setAttribute('aria-label',playing?'Tắt nhạc Canyon Heart':'Phát nhạc Canyon Heart');b.setAttribute('aria-pressed',String(playing))}
+function toggleCanyonMusic(){if(canyonMusicPlaying()){music(null);return}const context=audio();if(context.state!=='running')context.resume().catch(e=>console.error('Không thể bật âm thanh:',e));if(mu)toggleMute();music('end')}
 function fbStart(kind){fbStop();const S0=SONGS[kind];if(!S0)return;try{const a=audio(),ev=[];let b=0;
  S0.mel.forEach(([n,d])=>{if(n)ev.push({b,k:'m',n:n+S0.o,d});b+=d});
  S0.ch.forEach((c,i)=>{const N=CD[c],b0=i*4;ev.push({b:b0,k:'p',N});ev.push({b:b0,k:'bs',n:N[0]});ev.push({b:b0+2,k:'bs',n:N[1]});
@@ -2552,7 +2557,7 @@ function fbStart(kind){fbStop();const S0=SONGS[kind];if(!S0)return;try{const a=a
   if(S0.arp===2)for(let j=0;j<8;j++)ev.push({b:b0+j*.5,k:'a',n:N[1+j%3]+12});
   if(S0.perc){ev.push({b:b0,k:'kk'});ev.push({b:b0+1,k:'tk'});ev.push({b:b0+2,k:'kk'});ev.push({b:b0+3,k:'tk'})}});
  ev.sort((x,y)=>x.b-y.b);const g=a.createGain();g.gain.setValueAtTime(0,a.currentTime);g.gain.linearRampToValueAtTime(1,a.currentTime+1.2);g.connect(MUSB);
- SQ={S0,ev,L:b,spb:60/S0.bpm,t0:a.currentTime+.15,i:0,g};SQ.tm=setInterval(seqTick,40);seqTick()}catch(e){}}
+ SQ={S0,ev,L:b,spb:60/S0.bpm,t0:a.currentTime+.15,i:0,g};SQ.tm=setInterval(seqTick,40);seqTick();updateCanyonButton()}catch(e){console.error('Không thể phát nhạc nền thay thế:',e)}}
 function seqTick(){const q=SQ;if(!q||!AC)return;const a=AC,now=a.currentTime;if(q.t0+q.L*q.spb<now-1){q.t0=now+.1;q.i=0}
  while(1){if(q.i>=q.ev.length){q.i=0;q.t0+=q.L*q.spb}const e=q.ev[q.i],tt=q.t0+e.b*q.spb;if(tt>now+.3)break;if(tt>=now-.05)seqPlay(e,tt,q);q.i++}}
 function seqPlay(e,t,q){const S0=q.S0,o=q.g,sp=q.spb;
@@ -2561,33 +2566,35 @@ function seqPlay(e,t,q){const S0=q.S0,o=q.g,sp=q.spb;
  else if(e.k==='bs')pluck(t,mf(e.n),sp*1.8,.1,o);
  else if(e.k==='a')pluck(t,mf(e.n),sp*.9,.045,o);
  else if(e.k==='kk')kick(t,.16,o);else if(e.k==='tk')noise(t,.04,.05,o,'highpass',7000)}
-function fbStop(immediate){if(SQ){clearInterval(SQ.tm);const g=SQ.g;try{const t=AC.currentTime;g.gain.cancelScheduledValues(t);if(immediate){g.gain.setValueAtTime(0,t);g.disconnect()}else{g.gain.setValueAtTime(g.gain.value,t);g.gain.linearRampToValueAtTime(0,t+.8);setTimeout(()=>{try{g.disconnect()}catch(e){}},5200)}}catch(e){}SQ=null}}
+function fbStop(immediate){if(SQ){clearInterval(SQ.tm);const g=SQ.g;try{const t=AC.currentTime;g.gain.cancelScheduledValues(t);if(immediate){g.gain.setValueAtTime(0,t);g.disconnect()}else{g.gain.setValueAtTime(g.gain.value,t);g.gain.linearRampToValueAtTime(0,t+.8);setTimeout(()=>{try{g.disconnect()}catch(e){}},5200)}}catch(e){}SQ=null}updateCanyonButton()}
 function fade(a,to,done){if(!a)return done&&done();const id=a._fid=(a._fid||0)+1,st=a.volume,t0=performance.now();
 const step=()=>{if(a._fid!==id)return;const k=Math.min(1,(performance.now()-t0)/700);a.volume=Math.max(0,Math.min(1,st+(to-st)*k));if(k<1)requestAnimationFrame(step);else done&&done()};step()}
-function music(kind){if(pianoMusicActive&&kind!==null)return;if(kind===null){cur=null;fbStop(true);Object.values(tracks).forEach(a=>{a.pause();a.volume=0;try{a.currentTime=0}catch(e){}});return}if(cur===kind)return;const old=tracks[cur],a=tracks[kind];if(old&&a&&old!==a&&old.src===a.src&&!old.broken){cur=kind;return}cur=kind;fbStop();
+function music(kind){if(pianoMusicActive&&kind!==null){updateCanyonButton();return}if(kind===null){cur=null;fbStop(true);Object.values(tracks).forEach(a=>{a.pause();a.volume=0;try{a.currentTime=0}catch(e){}});updateCanyonButton();return}if(cur===kind){updateCanyonButton();return}const old=tracks[cur],a=tracks[kind];if(old&&a&&old!==a&&old.src===a.src&&!old.broken){cur=kind;updateCanyonButton();return}cur=kind;fbStop();
 if(old)fade(old,0,()=>old.pause());
 setTimeout(()=>{const keep=tracks[cur];Object.values(tracks).forEach(t=>{if(t!==keep&&!(keep&&t.src===keep.src)&&!t.paused){t._fid=(t._fid||0)+1;t.pause();t.volume=0}})},800);
-if(mu||!kind)return;
-if(!a||a.broken)return fbStart(kind);
+if(mu||!kind){updateCanyonButton();return}
+if(!a||a.broken){fbStart(kind);updateCanyonButton();return}
 const fallback=()=>{if(cur===kind&&!mu&&(!SQ||SQ.S0!==SONGS[kind]))fbStart(kind)};
 const pr=a.play();if(pr&&pr.catch)pr.catch(fallback);
 setTimeout(()=>{if(a.broken||(a.readyState===0&&a.networkState===3))fallback()},900);
-fade(a,mvol)}
+fade(a,mvol);updateCanyonButton()}
 function mapMusic(){if(pianoMusicActive){if(mu)toggleMute();return}const kind=cur||'map',context=audio(),suspended=context.state!=='running';if(suspended)context.resume().catch(e=>console.error('Không thể bật âm thanh:',e));
 if(mu){toggleMute();return}
 const a=tracks[kind],playing=!!(SQ&&SQ.S0===SONGS[kind])||!!(a&&!a.paused&&!a.broken);
 if(playing&&!suspended){toggleMute();return}
 if(!a||a.broken){if(!SQ)fbStart(kind);return}
-const pr=a.play();if(pr&&pr.catch)pr.catch(()=>{if(cur===kind&&!mu)fbStart(kind)})}
+const pr=a.play();if(pr&&pr.catch)pr.catch(()=>{if(cur===kind&&!mu)fbStart(kind)});updateCanyonButton()}
 function musVol(v){mvol=v;const a=tracks[cur];if(a&&!a.broken)a.volume=v;if(MUSB)MUSB.gain.value=v*.9}
 const vs=document.createElement('input');vs.type='range';vs.min=0;vs.max=1;vs.step=.05;vs.value=mvol;vs.id='vol';vs.setAttribute('aria-label','Âm lượng nhạc nền');
 vs.oninput=()=>musVol(+vs.value);
 const volBox=document.createElement('div');volBox.id='volbox';$('mu').setAttribute('aria-controls','volbox');$('mu').setAttribute('aria-expanded','false');
+const vc=document.createElement('button');vc.type='button';vc.id='canyonmusic';vc.className='vmute';vc.textContent='Phát Canyon Heart';vc.setAttribute('aria-label','Phát nhạc Canyon Heart');vc.setAttribute('aria-pressed','false');vc.onclick=toggleCanyonMusic;
 const vm=document.createElement('button');vm.type='button';vm.id='vmute';vm.className='vmute';vm.textContent='Tắt nhạc';vm.setAttribute('aria-label','Tắt nhạc nền');vm.onclick=toggleMute;
-volBox.append(vs,vm);$('mu').parentNode.insertBefore(volBox,$('mu').nextSibling);
+volBox.append(vs,vc,vm);$('mu').parentNode.insertBefore(volBox,$('mu').nextSibling);
+updateCanyonButton();
 document.addEventListener('pointerdown',e=>{if(!e.target.closest('#nav')){$('nav').classList.remove('vol-open');$('mu').setAttribute('aria-expanded','false')}});
 addEventListener('keydown',e=>{if(e.key==='Escape'){$('nav').classList.remove('vol-open');$('mu').setAttribute('aria-expanded','false')}});
-addEventListener('pointerdown',e=>{if(e.target.closest('#mmu'))return;const context=audio();if(context.state!=='running')context.resume().catch(()=>{});if(mu||pianoMusicActive||cutOwn)return;const kind=cur||'intro',a=tracks[kind];if(!a||a.broken){if(!SQ)fbStart(kind);return}if(a.paused){const pr=a.play();if(pr&&pr.then)pr.then(()=>{if(cur===kind)fbStop()}).catch(()=>{if(cur===kind&&!mu)fbStart(kind)});else fbStop()}},{passive:true});
+addEventListener('pointerdown',e=>{if(e.target.closest('#mmu,#canyonmusic,#vmute'))return;const context=audio();if(context.state!=='running')context.resume().catch(()=>{});if(mu||pianoMusicActive||cutOwn)return;const kind=cur||'intro',a=tracks[kind];if(!a||a.broken){if(!SQ)fbStart(kind);return}if(a.paused){const pr=a.play();if(pr&&pr.then)pr.then(()=>{if(cur===kind)fbStop()}).catch(()=>{if(cur===kind&&!mu)fbStart(kind)});else fbStop()}},{passive:true});
 
 /* ---------- Nhạc riêng cho cut-scene nhận quà màn 11 ---------- */
 function cutMusicStart(){cutOwn=1;if(!cutAudio){cutAudio=new Audio(CUT36_MUSIC.src);cutAudio.preload='auto';cutAudio.addEventListener('error',()=>{if(cutOwn){cutOwn=0;if(!mu)music('intro')}})}
@@ -2640,7 +2647,7 @@ function gachaStart(quick){mode='g';
  Gc={t:0,ph:quick?2:0,bg:scn(6),prize:pz,ui:0};$('pn').replaceChildren()}
 function gacha(dt,t){X=mc;const S=Gc;S.t+=dt;X.drawImage(S.bg,XL,0);sd=(t|0)%2147483647+1;
 if(S.cd){const w=gachaWait();if(w<=0){gachaStart();return}man(54,164,1,0,2);
- if(!S.ui){S.ui=1;const c=E('div','cd');c.style.margin='auto 0 0';S.tp=E('p','pity','');c.append(E('small','','GACHA ĐỘT PHÁ'),E('p','','Mỗi tiếng chỉ được quay một lần. Hộp quà đang nghỉ, đợi chút nữa nhé.'),S.tp,E('small','','CÓ PASSCODE? QUAY LIỀN 10 LẦN'),passBox());
+ if(!S.ui){S.ui=1;const c=E('div','cd');c.style.margin='auto 0 0';S.tp=E('p','pity','');c.append(E('small','','GACHA ĐỘT PHÁ'),E('p','','Mỗi tiếng chỉ được quay một lần. Hộp quà đang nghỉ, đợi chút nữa nhé.'),S.tp);if(!(gameContent.gachaPasscodeOnce&&gcLS('tt8passUsed')))c.append(E('small','','CÓ PASSCODE? QUAY LIỀN 10 LẦN'),passBox());
   if(S.lp){c.append(E('small','','PHIẾU LẦN QUAY TRƯỚC'),E('h2','gt',S.lp.name),E('p','',S.lp.desc))}
   const b=E('button','bt','Đọc thư');b.onclick=()=>go({t:'e',n:2});c.append(b);$('pn').replaceChildren(c)}
  const m=Math.ceil(w/1000),txt='Còn '+String(m/60|0).padStart(2,'0')+':'+String(m%60).padStart(2,'0')+' nữa mới quay được.';if(S.tp.textContent!==txt)S.tp.textContent=txt;return}
