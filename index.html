@@ -354,6 +354,11 @@ html.land .lv-doodle #pn>.ct p{text-align:left;font-size:13px;background:rgba(16
 .rbn b{display:block;font:800 17px 'Be Vietnam Pro',sans-serif;color:#FFE27A}
 .rbn span{font:600 13px 'Be Vietnam Pro',sans-serif;color:#FFF3C4}
 @keyframes rbn{0%{opacity:0;transform:translate(-50%,-40%)}12%,75%{opacity:1;transform:translate(-50%,-50%)}100%{opacity:0;transform:translate(-50%,-56%)}}
+/* Piano: thông báo full combo */
+.mus{position:absolute;left:50%;top:64%;z-index:6;width:max-content;max-width:min(86%,520px);box-sizing:border-box;text-align:center;padding:14px 22px 16px;border-radius:14px;background:rgba(43,36,56,.94);border:2px solid #D9B25B;box-shadow:0 0 28px rgba(247,215,116,.55),0 8px 24px rgba(0,0,0,.45);pointer-events:none!important;animation:mus 5s ease both;transform:translate(-50%,-50%)}
+.mus small{display:block;margin-bottom:6px;font:800 11px 'Be Vietnam Pro',sans-serif;letter-spacing:3px;color:#F7D774}
+.mus b{display:block;font:400 22px/1.35 var(--brush);color:#FFF6E0;text-shadow:0 2px 0 #1A0E14}
+@keyframes mus{0%{opacity:0;transform:translate(-50%,-38%) scale(.9)}10%{opacity:1;transform:translate(-50%,-50%) scale(1.05)}16%,88%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-56%) scale(1)}}
 #app.lv-dhv #pn>.ob{position:absolute;left:12px;top:12px;width:min(168px,calc(100% - 210px));box-sizing:border-box;background:rgba(30,22,16,.82);border:2px solid #C9A65A;border-radius:10px}
 #app.lv-dhv #pn>.ob b{font-size:15px;color:#F7E3A6}
 #app.lv-dhv #pn>.ob .dhvtip{display:block;margin-top:6px;font-style:normal;font-size:12px;color:#F2EAD6}
@@ -395,23 +400,29 @@ addEventListener('resize',fit);fit()})();
 <script>
 /* ===== CẤU HÌNH: SỬA Ở ĐÂY ===== */
 const gameContent={
-recipientName:'Đạt nè',nickname:'Đạt nè',relationshipStartDate:'2026-01-01',birthdayDate:'18/11',
+recipientName:'Đạt nè',nickname:'Đạt nẼ',relationshipStartDate:'2026-01-01',birthdayDate:'18/11',
 /* nhạc nền: tải 2 bản từ Pixabay rồi để file cạnh file game, hoặc dán link mp3 trực tiếp vào đây.
    Nếu để trống / không tải được, game tự phát nhạc lo-fi nội bộ (WebAudio). */
 music:{intro:'turning_pages-new-adventure-in-new-bark-town-462735.mp3',map:'turning_pages-new-adventure-in-new-bark-town-462735.mp3',end:'turning_pages-canyon-hearth-at-twilight-601107.mp3',volume:.55},
-introDialogue:[
-['“CUỐI CÙNG CŨNG XONG RỒI”','( Nobita cậu nhìn nè )'],
-['“Đạo hữu Đạt né, từ ngày 1/1 đến nay chúng ta đã đi cùng nhau gần 11 tháng.”',''],
-['“Hôm nay 18/11, ta đã giấu cho người một món quà.”',''],
-['“Nhưng trước khi nhận được nó...”',''],
-['“Hãy vượt qua 11 cửa ải này đã.”','( chạm để lên đường )']],
-finalCutscene:['“Về lại đào hoa viên”','( cánh hoa bay chậm lại... )'],
+introDialogue: [
+  ['“Đạo hữu Đạt nẼ! ”', ''],
+  ['“Sau bao ngày luyện chế, cuối cùng cũng hoàn thành rồi...”', '( Đạo hữu, mau đến đây nào. )'],
+  ['“Ngày 1/1 năm ấy, chúng ta đã kết thành đạo lữ. Thấm thoắt, gần 11 tháng đã trôi qua.”', ''],
+  ['“Hôm nay, ngày 18/11, ta muốn dành tặng người một món lễ vật nhỏ.”', ''],
+  ['“Món quà ấy đã được cất giấu nơi cuối hành trình...”', ''],
+  ['“Chỉ cần vượt qua 11 cửa ải, người sẽ tìm được nó.”', '( Khởi hành thôi, đạo hữu của ta. )']
+],
+finalCutscene: [
+  ['“Ước hẹn tại Đào Hoa Viên”', '( Hoa đào vẫn nở, người thương cuối cùng cũng trở về... )']
+],
 finalLetter:[
-'Annh Đạt né, chúc mừng sinh nhật anh.',
-'Ngày 1/1 mình bắt đầu, và tới hôm nay là gần 11 tháng. Em vẫn nhớ hồi đó em còn không nghĩ mình sẽ ngồi cặm cụi code một cái game chỉ để tặng một người.',
+'✮⋆˙₊·°₊Anh Đạt nẼ, chúc mừng sinh nhật anh.(๑>◡<๑)♡𝓐𝓰𝓷𝓰𝓷𝓰𝓷𝓰𝓷 ♡ ',
+'Ngày 1/1 mình bắt đầu, và tới hôm nay là gần 11 tháng. Em vẫn nhớ hồi đó em còn không nghĩ mình sẽ ngồi cặm cụi code một cái game chỉ để tặng một người đâu.',
 'Em thấy mình thật may mắn khi gặp được anh, và cũng thật hạnh phúc khi được đi cùng anh suốt gần một năm qua. Cảm ơn anh đã luôn kiên nhẫn với em, luôn nhường nhịn em, và luôn yêu thương em.',
-'Chuyến Phú Quốc mình hoãn vì công việc, em tiếc thiệt. Nhưng biển thì không chạy đi đâu, mình đi sau cũng được, miễn là đi cùng nhau.',
-'Chúc anh tuổi mới đột phá cảnh giới: đạt được mọi ước mơ, cười nhiều, yêu nhiều, và hạnh phúc thật nhiều. Và, dù thế nào, luôn có người chờ anh ở cuối ngày ( em!! ).'],
+'Tương lai dù có khó khăn hay trở ngại, em biết chồng em sẽ làm được, sẽ vượt qua được mọi thứ - vì anh siêuuu lắm ý. Và em hi vọng sẽ được đồng hành cùng anh trên một chặng đường thật dài.',
+'Chúc người đàn ông em iu tuổi 25 mãi khoẻ mạnh, đạt được mọi ước mơ, cười nhiều, yêu nhiều, và hạnh phúc thật nhiều.',
+'Em yêu anh rất nhiều.',
+'⋆. 𐙚˚࿔ 𝐞𝐦 𝜗𝜚˚⋆'],
 /* gacha cuối: 4 tier, rate = tỉ lệ % (tổng 100). pity = sau bấy nhiêu lượt chưa ra Tiên Phẩm thì lượt đó chắc chắn Tiên Phẩm */
 gachaTiers:[
 {id:'dong',name:'Phàm Phẩm',rate:50},
@@ -485,7 +496,7 @@ levels:[
 {title:'Phường thị',mt:'Phường thị – Ghép lại kỷ niệm',place:'Trung tâm thương mại',description:'Những mảnh ký ức đang thất lạc. Hãy ghép chúng lại nhé!',howTo:'Chạm mảnh cạnh ô trống để trượt vào và ghép lại tấm ảnh photobooth. Giữ nút “Xem hình mẫu” nếu cần.',dialogue:'“Bốn tấm, không tấm nào nghiêm túc.”',rewardName:'Dải ảnh photobooth',rewardDescription:'Dải bốn tấm ảnh chụp trong máy photobooth.',memory:'Tấm thứ ba anh cười hỏng cả khung hình.',rewardImage:''},
 {title:'Thiên lâu',place:'Tòa nhà',description:'Gió trên cao mạnh, kiếm bay là cách duy nhất qua những cột đá.',howTo:'Chạm (hoặc nhấn Space) để bay lên. Vượt qua 5 cột đá. Có 3 mạng.',dialogue:'“Hoa hồng, nhưng phải là hồng phấn cơ.”',rewardName:'Bó hoa hồng phấn',rewardDescription:'Một bó hoa hồng phấn có giấy gói và ruy băng.',memory:'Bó hoa hồng trên tầng rooftop bên Hồ Gươm.',rewardImage:''},
 {title:'Hải vực',place:'Bãi biển',description:'Hải vực lạnh buốt mà vẫn còn ba ngọn lửa chưa tắt.',howTo:'Dùng nút điều hướng (hoặc chạm theo hướng muốn đi) để đẩy băng vào lửa. Dập hết lửa là qua.',dialogue:'“Ơ có gì trên cát này em.”',rewardName:'Soái ca bãi biển',rewardDescription:'Tám  anh chàng da nâu, cởi trần, cực kỳ tự tin.',memory:'Món quà sinh nhật hài hước nhất. You get me so well. ',rewardImage:''},
-{title:'Động phủ số 36',place:'Nhà số 36 / phòng ngủ',description:'Căn phòng cuối cùng. Có một khúc nhạc phải đánh cho xong.',howTo:'Căn phòng chuyển sang đêm. Mỗi phách có một nốt thuộc hợp âm rơi xuống, chạm đúng phím (hoặc chạm vào làn của nốt) khi nốt tới vạch sáng. Chạm sai không bị phạt, cứ thong thả chơi hết bài là qua. Trên máy tính dùng 9 phím A S D F G H J K L, tương ứng 9 phím trên màn hình. Bấm “Tạm dừng” (hoặc phím P / Esc) để dừng và xem lại hướng dẫn.',dialogue:'“Hai đứa nó ngồi đây đợi anh nãy giờ.”',rewardName:'Cặp gấu Cookie & Elmo',rewardDescription:'Một cặp gấu bông Cookie Monster và Elmo.',memory:'Một đứa mê ăn, một đứa lắm lời. Giống ai không?',rewardImage:''}]};
+{title:'Động phủ số 36',place:'Nhà số 36 / phòng ngủ',description:'Căn phòng cuối cùng. Có một khúc nhạc phải đánh cho xong.',howTo:'Căn phòng chuyển sang đêm. Mỗi phách có một nốt thuộc hợp âm rơi xuống, chạm đúng phím (hoặc chạm vào làn của nốt) khi nốt tới vạch sáng. Chạm sai không bị phạt, cứ thong thả chơi hết bài là qua. Trên máy tính dùng 7 phím A S D F G H J, tương ứng 7 phím trên màn hình. Trên điện thoại, chạm gần làn của nốt ở bất cứ đâu trên màn hình cũng được, game tự chọn nốt gần nhất. Bấm “Tạm dừng” (hoặc phím P / Esc) để dừng và xem lại hướng dẫn.',dialogue:'“Hai đứa nó ngồi đây đợi anh nãy giờ.”',rewardName:'Cặp gấu Cookie & Elmo',rewardDescription:'Một cặp gấu bông Cookie Monster và Elmo.',memory:'Một đứa mê ăn, một đứa lắm lời. Giống ai không?',rewardImage:''}]};
 const L=gameContent.introDialogue,LV=gameContent.levels,MEM=LV.map(l=>l.memory),LETTER=[].concat(gameContent.finalLetter);
 const $=id=>document.getElementById(id);
 const E=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x)e.textContent=x;return e};
@@ -2169,8 +2180,8 @@ p(){const x=14+p;if(x>46&&x<62){hit++;fl=.4;sfx(700,.08);if(hit>=5)setTimeout(w,
 const PIANO_CFG={
  bpm:71.78,beatsPerBar:3,barsPerChord:1,revealBars:0,
  introSec:3.4,          /* thời gian chuyển phòng ngày → đêm trước khi vào nhịp */
- travelBeats:2.4,       /* nốt rơi từ trên xuống vạch mất bao nhiêu phách (lớn = chậm, dễ nhìn) */
- hitWindow:.45,         /* sai số cho phép, tính bằng phách (±0,45 phách ≈ ±0,39 s) */
+ travelBeats:3,       /* nốt rơi từ trên xuống vạch mất bao nhiêu phách (lớn = chậm, dễ nhìn) */
+ hitWindow:.6,         /* sai số cho phép, tính bằng phách (±0,45 phách ≈ ±0,39 s) */
  passRatio:.45,         /* chạm trúng ≥ 45% số nốt là qua; chưa đủ thì chơi thêm một vòng Chorus */
  maxExtraLoops:1,       /* tối đa số vòng chơi thêm, sau đó luôn cho qua (game sinh nhật) */
  perfectRatio:.85,      /* trúng ≥ 85% một đoạn → khoảnh khắc "Hòa âm trọn vẹn" */
@@ -2213,9 +2224,9 @@ const AUDIO_HALF_BEATS=[0.09288,0.88236,1.71828,2.53098,3.32045,4.06349,4.84136,
 /* 11 Piano — Động phủ số 36 */
 function g11(w,lose,h){const C=PIANO_CFG,SPB=60/C.bpm,BB=C.beatsPerBar,BAR=SPB*BB,MR=Math.random,TR=C.travelBeats*SPB,WIN=C.hitWindow*SPB;
 pianoMusicActive=1;try{music(null)}catch(e){}
-const PCS=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'],LANES=['A','S','D','F','G','H','J','K','L'],LO=[0,0,1,2,2,3,4,5,6,7,8,8];/* 12 cao độ → 9 phím A..L (cao độ sát nhau dùng chung một phím) */
-const KX=5,WK=11,KY=144,KH=48,TOPY=28,HY=137;
-const LX=l=>KX+l*WK+5,keyX=pc=>LX(LO[pc]);
+const PCS=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'],LANES=['A','S','D','F','G','H','J','K','L'],NLN=7,LO=[0,0,1,1,2,3,3,4,4,5,5,6],NS=1.4;/* 7 làn như phím trắng C D E F G A B (nốt thăng/giáng dùng chung làn với phím trắng bên cạnh) *//* 12 cao độ → 9 phím A..L (cao độ sát nhau dùng chung một phím) */
+const KX=5,WK=14,KY=144,KH=48,TOPY=28,HY=137;
+const LX=l=>KX+l*WK+((WK-1)>>1),keyX=pc=>LX(LO[pc]);
 const rgb=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)),mix=(a,b,f)=>{f=Math.max(0,Math.min(1,f));const A=rgb(a),B=rgb(b);return'#'+A.map((v,i)=>Math.round(v+(B[i]-v)*f).toString(16).padStart(2,'0')).join('')};
 const cl=v=>Math.max(0,Math.min(1,v)),sm=v=>{v=cl(v);return v*v*(3-2*v)};
 const play=fn=>{if(mu||!PIANO_SFX.synth)return;try{const a=audio();fn(a.currentTime)}catch(e){}};
@@ -2248,8 +2259,8 @@ notes=notes.filter(n=>n.audioT<=TARGET_AUDIO_DURATION-.02);
 bars.forEach(b=>{b.nn=0;b.nh=0});runs.forEach(r=>{r.tot=0;r.hit=0});
 notes.forEach(n=>{bars[n.bi].nn++;runs[n.r].tot++});
 let endAudio=gameTimeToAudio(end);
-let tm=0,chartTm=-C.introSec,hits=0,combo=0,loops=0,fin=-1,done=0,cbi=-1,lastBeat=-1,beat=0,col='#C8C0F0',colT=col,fx=[],flow=[],sw=0;
-const kg=new Array(9).fill(0),kp=new Array(9).fill(0);
+let tm=0,chartTm=-C.introSec,hits=0,combo=0,bestCombo=0,score=0,pulse=0,loops=0,fin=-1,done=0,cbi=-1,lastBeat=-1,beat=0,col='#C8C0F0',colT=col,fx=[],flow=[],sw=0;
+const kg=new Array(NLN).fill(0),kp=new Array(NLN).fill(0);
 const curChord=()=>cbi>=0?bars[cbi].chord:'Dmaj7',chordNotes=()=>C.chords[curChord()].n.map(x=>PCS.indexOf(x));
 const strum=(ch,vol,gap)=>play(t=>C.chords[ch].n.forEach((x,k)=>pluck(t+k*gap,mf(62+((PCS.indexOf(x)-2+12)%12)),2.4,vol,SFXB,1)));
 const ring=(x,y,c,l,rm)=>fx.push({ty:'wave',x,y,c,t:0,l,rm});
@@ -2262,6 +2273,7 @@ const onBar=(bi,prev)=>{const B=bars[bi],P=prev>=0?bars[prev]:null;
 const onBeat=b=>{beat=b;if(b==0)fx.push({ty:'beat',t:0,l:.8});if(b==1)for(let k=0;k<5;k++)fx.push({ty:'spark',x:10+MR()*88,y:HY-6-MR()*60,vx:(MR()-.5)*6,vy:-6-MR()*8,t:0,l:1.2,c:colT})};
 const tryHit=ln=>{kp[ln]=1;let best=null;notes.forEach(n=>{if(n.st||LO[n.pc]!==ln)return;const d=Math.abs(n.audioT-chartTm);if(d<=WIN&&(!best||d<best.d))best={n,d}});
  if(!best){play(t=>pluck(t,mf(60+ln*2),.24,.045,SFXB,1));feedback('miss',ln,PIANO_SFX.vibrateMiss);return}const n=best.n;n.st=1;hits++;combo++;bars[n.bi].nh++;runs[n.r].hit++;kg[ln]=1;const pc=n.pc,x=LX(ln),c=C.chords[bars[n.bi].chord].c;
+ bestCombo=Math.max(bestCombo,combo);const pts=100+10*Math.min(combo-1,20);score+=pts;pulse=1;fx.push({ty:'pts',s:'+'+pts,x,y:HY-9,c,t:0,l:.8});if(combo%10===0)fx.push({ty:'lbl',s:combo+' combo!',x:54,y:HY-36,c:'#FFE6A8',t:0,l:1.2});
  ring(x,HY,c,.55,16);ring(x,KY+6,c,.7,24);for(let k=0;k<6;k++)fx.push({ty:'spark',x,y:HY,vx:(MR()-.5)*40,vy:-20-MR()*30,t:0,l:.6+MR()*.3,c:k%2?'#FFFFFF':c});
  flow.push({x,t:tm});if(flow.length>9)flow.shift();
  play(t=>{pluck(t,mf(62+((pc-2+12)%12)),1.8,.11,SFXB,1);if(bars[n.bi].nh>=bars[n.bi].nn)bell(t+.05,mf(86),1.4,.03,SFXB)});feedback('hit',ln,PIANO_SFX.vibrate)};
@@ -2290,11 +2302,12 @@ const panel=(t,yo)=>{X.globalAlpha=.78;R(3,1+yo,102,25,'#141030');X.globalAlpha=
  pxText('Nothing',7,1+yo,'#F6DFA8',1,'l','#0A0820');pxText('Bruno Major',7,11+yo,'#C8C0F0',1,'l','#0A0820');
  const ch=curChord(),cw=pxTextW(ch,1);pxText(ch,101-cw,1+yo,mix(col,'#FFFFFF',.2),1,'l','#0A0820');
  for(let b=0;b<3;b++){const on=chartTm>=AUDIO_HALF_BEATS[0]&&beat==b,x=82+b*7;pxText(''+(b+1),x,11+yo,on?(b==0?'#FFE6A0':'#F4E8FF'):'#5A5280',1,'l',on?'#0A0820':'')}
+ const cb='Combo '+combo;pxText('Điểm '+score,6,26+yo,mix('#F6DFA8','#FFFFFF',pulse*.7),1,'l','#0A0820');pxText(cb,102-pxTextW(cb,1),26+yo,mix(combo>0?'#E4DCFF':'#5A5280','#FFE6A8',pulse),1,'l','#0A0820');
  const pr=cl((tm-C.introSec)/(end-C.introSec));R(7,22+yo,94,1,'#2E2850');R(7,22+yo,Math.round(94*pr),1,'#F0D898');R(7+Math.round(94*pr)-1,21+yo,2,3,'#FFF4D0')};
 const GLY={A:['.###.','#...#','#...#','#####','#...#','#...#','#...#'],S:['.####','#....','#....','.###.','....#','....#','####.'],D:['####.','#...#','#...#','#...#','#...#','#...#','####.'],F:['#####','#....','#....','####.','#....','#....','#....'],G:['.####','#....','#....','#.###','#...#','#...#','.####'],H:['#...#','#...#','#...#','#####','#...#','#...#','#...#'],J:['..###','....#','....#','....#','....#','#...#','.###.'],K:['#...#','#..#.','#.#..','##...','#.#..','#..#.','#...#'],L:['#....','#....','#....','#....','#....','#....','#####']};
 const glyph=(ch,x,y,c)=>GLY[ch].forEach((row,j)=>{for(let i=0;i<5;i++)if(row[i]==='#')R(x+i,y+j,1,1,c)});
 const keyboard=(t,yo)=>{
- const soonW=new Array(9).fill(0),soonB=new Array(9).fill(0);
+ const soonW=new Array(NLN).fill(0),soonB=new Array(NLN).fill(0);
  notes.forEach(n=>{if(!n.st){const d=n.audioT-chartTm,l=LO[n.pc],v=d>0&&d<SPB?1-d/SPB:0;
   if(n.pc%12===1||n.pc%12===3||n.pc%12===6||n.pc%12===8||n.pc%12===10)soonB[l]=Math.max(soonB[l],v);
   else soonW[l]=Math.max(soonW[l],v);
@@ -2304,7 +2317,7 @@ const keyboard=(t,yo)=>{
  R(0,K-4,108,KH+4,'#111318');
  R(0,K-4,108,1,'#8A151D');R(0,K-3,108,1,'#E83B45');
  /* white keys */
- for(let l=0;l<9;l++){
+ for(let l=0;l<NLN;l++){
   const x=KX+l*WK,lit=Math.max(kg[l],kp[l]*.35,soonW[l]*.45,soonB[l]*.24);
   const dn=kp[l]>.6?2:0;
   R(x,whiteY+dn,kw,whiteH-dn,'#F8F8F6');
@@ -2313,13 +2326,13 @@ const keyboard=(t,yo)=>{
   R(x,whiteY+whiteH-2,kw,2,'#D9DADD');
   if(lit>.05){X.globalAlpha=Math.min(.78,lit*.8);R(x+1,whiteY+dn+1,kw-2,whiteH-dn-2,mix('#FFFFFF',col,lit));X.globalAlpha=1;
    R(x+1,whiteY+whiteH-3,kw-2,2,mix('#D8DDE0',col,lit))}
-  glyph(LANES[l],x+2,K+KH-16+dn,lit>.5?'#2A1F4A':'#6A5A9A');
+  glyph(LANES[l],x+((kw-5)>>1),K+KH-16+dn,lit>.5?'#2A1F4A':'#6A5A9A');
  }
  /* five black keys in the familiar 2 + 3 grouping */
- const blacks=[{gap:0,lane:0,pc:1},{gap:1,lane:2,pc:3},{gap:3,lane:4,pc:6},{gap:4,lane:6,pc:8},{gap:5,lane:8,pc:10}];
+ const blacks=[{gap:0,lane:0},{gap:1,lane:1},{gap:3,lane:3},{gap:4,lane:4},{gap:5,lane:5}];/* 5 phím đen, nhóm 2 + 3 như đàn thật */
  blacks.forEach((b,i)=>{
-  const x=KX+(b.gap+1)*WK-3.5,w=6,h=KH*.62;
-  const lit=Math.max(kp[b.lane]*.9,kg[b.lane]*.75,soonB[b.lane]*.8);
+  const x=KX+(b.gap+1)*WK-4,w=8,h=KH*.62;
+  const lit=0;
   /* soft side shadow */
   R(x-1,K+1,w+2,h+1,'#A5A6AA');
   R(x,K,w,h,'#08090B');
@@ -2341,17 +2354,20 @@ const resume=()=>{if(!paused)return;paused=0;G.paused=0;document.querySelectorAl
 const openPause=()=>{if(paused||done||stopped)return;paused=1;G.paused=1;if(au){au.pause();auOn=0;auPending=0;auAttempt++}const o=E('div','bdt pause'),c=E('div','cd'),q=LV[G.i];
  c.append(E('small','','TẠM DỪNG'),E('h2','gt',q.mt||q.title),E('p','',q.description),E('hr'),E('p','pt','Cách chơi: '+q.howTo));
  const a=E('button','bt','Tiếp tục'),r=E('button','bt ghost','Chơi lại'),m=E('button','bt ghost','Về bản đồ');a.onclick=resume;r.onclick=()=>begin();m.onclick=()=>go({t:'w'});c.append(a,r,m);o.append(c);$('app').append(o)};
+/* Full combo: không trượt nốt nào (nốt sát hết bài mà game đã kết thúc trước khi kịp chấm thì không tính là trượt) */
+const banner=()=>{const pn=$('pn');if(!pn||pn.querySelector('.mus'))return;const o=E('div','mus');o.append(E('small','','FULL COMBO'),E('b','','Congrats! You’re officially a musician now! 🎹'));pn.append(o)};
+const checkPerfect=()=>{const missed=notes.filter(n=>n.st===2).length,pend=notes.filter(n=>!n.st).length;if(hits>0&&missed===0&&pend<=2){banner();try{SND.gift()}catch(e){}}};
 const vis=()=>{if(document.hidden)openPause()};document.addEventListener('visibilitychange',vis);
 return{noOb:1,
-u(dt){if(done||paused)return;tm+=dt;if(au){au.muted=!!mu;if(!auOn&&!auPending&&!auTried&&tm>=MU.delaySec)auPlay();if(auPending&&tm-auPendingAt>2){auPending=0;auAttempt++;au.pause()}chartTm=auOn?au.currentTime:tm-MU.delaySec}else chartTm=tm-MU.delaySec;for(let k=0;k<9;k++){kg[k]=Math.max(0,kg[k]-dt*1.8);kp[k]=Math.max(0,kp[k]-dt*4)}
+u(dt){if(done||paused)return;tm+=dt;if(au){au.muted=!!mu;if(!auOn&&!auPending&&!auTried&&tm>=MU.delaySec)auPlay();if(auPending&&tm-auPendingAt>2){auPending=0;auAttempt++;au.pause()}chartTm=auOn?au.currentTime:tm-MU.delaySec}else chartTm=tm-MU.delaySec;for(let k=0;k<NLN;k++){kg[k]=Math.max(0,kg[k]-dt*1.8);kp[k]=Math.max(0,kp[k]-dt*4)}
  fx.forEach(e=>{e.t+=dt;if(e.vx!=null){e.x+=e.vx*dt;e.y+=e.vy*dt}});fx=fx.filter(e=>e.t<e.l);
- notes.forEach(n=>{if(!n.st&&chartTm-n.audioT>WIN){n.st=2;combo=0}});
+ pulse=Math.max(0,pulse-dt*4);notes.forEach(n=>{if(!n.st&&chartTm-n.audioT>WIN){n.st=2;combo=0}});
  if(chartTm>=AUDIO_HALF_BEATS[0]){let bi=0;while(bi+1<AUDIO_HALF_BEATS.length&&AUDIO_HALF_BEATS[bi+1]<=chartTm)bi++;const bt=bi;if(bt!==lastBeat){lastBeat=bt;onBeat(bt%BB)}}
  let bi=cbi;while(bi+1<bars.length&&bars[bi+1].audioT<=chartTm)bi++;if(bi!==cbi){const pv=cbi;cbi=bi;onBar(bi,pv)}
  /* End gameplay exactly when the audio ends (not when the generated chart runs out). */
  const audioEnded=chartTm>=TARGET_AUDIO_DURATION||(auOn&&au.ended);
- if(audioEnded&&fin<0){fin=0;strum('Dmaj7',.06,.14);play(t=>bell(t+.6,mf(86),3,.05,SFXB))}
- if(fin>=0){fin+=dt;sw+=dt;if(sw>.07){sw=0;const ln=MR()*9|0;fx.push({ty:'fly',x:LX(ln),y:KY-2,vx:(MR()-.5)*10,vy:-26-MR()*20,t:0,l:2.4,c:['#FFE3A0','#FFB6D6','#D6C2FA','#FFFFFF'][MR()*4|0]})}
+ if(audioEnded&&fin<0){fin=0;checkPerfect();strum('Dmaj7',.06,.14);play(t=>bell(t+.6,mf(86),3,.05,SFXB))}
+ if(fin>=0){fin+=dt;sw+=dt;if(sw>.07){sw=0;const ln=MR()*NLN|0;fx.push({ty:'fly',x:LX(ln),y:KY-2,vx:(MR()-.5)*10,vy:-26-MR()*20,t:0,l:2.4,c:['#FFE3A0','#FFB6D6','#D6C2FA','#FFFFFF'][MR()*4|0]})}
   if(fin>4.4&&!done){done=1;w()}}},
 d(t){const n=sm(tm/(C.introSec*.85)),lamp=sm((tm-1.3)/.6),lastB=cbi>=0&&bars[cbi].fin?cl((tm-bars[cbi].t)/BAR):0,warm=Math.max(lastB*.3,sm(fin/2.4));
  col=mix(col,colT,.06);night(n,warm,lamp,t);
@@ -2360,6 +2376,7 @@ d(t){const n=sm(tm/(C.introSec*.85)),lamp=sm((tm-1.3)/.6),lastB=cbi>=0&&bars[cbi
  if(chartTm>=AUDIO_HALF_BEATS[0]){const ph=((chartTm-AUDIO_HALF_BEATS[0])/SPB)%1,amp=[.13,.07,.04][beat]*(1-ph*.6);X.save();X.globalCompositeOperation='lighter';const g=X.createRadialGradient(54,HY,4,54,HY,120);const c=rgb(col);g.addColorStop(0,'rgba('+c+','+amp+')');g.addColorStop(1,'rgba('+c+',0)');X.fillStyle=g;X.fillRect(XL,0,LW,192);X.restore()}
  /* khu vực nốt rơi: dải tối trong suốt + làn của các nốt thuộc hợp âm */
  if(ua>0){X.globalAlpha=.24*ua;R(2,TOPY+yo*0,104,HY-TOPY+6,'#120E2C');X.globalAlpha=1;
+  for(let l=0;l<NLN;l++){const a=Math.max(kp[l]*.24,kg[l]*.16);if(a>.01){X.globalAlpha=a*ua;R(KX+l*WK,TOPY,WK-1,HY-TOPY,col)}}X.globalAlpha=1;
   if(chartTm>=AUDIO_HALF_BEATS[0])chordNotes().forEach(pc=>{X.globalAlpha=.13+(beat==0?.07:0);R(keyX(pc),TOPY,1,HY-TOPY,col);X.globalAlpha=1});
   const bp=chartTm>=AUDIO_HALF_BEATS[0]?1-(((chartTm-AUDIO_HALF_BEATS[0])/SPB)%1):0;X.globalAlpha=(.25+.35*bp*(beat==0?1:.5))*ua;R(3,HY-1,102,3,mix(col,'#FFFFFF',.4));X.globalAlpha=ua;R(3,HY,102,1,'#FFF0C8');X.globalAlpha=1;
   /* chỉ báo đúng chỗ cần chạm trên vạch */
@@ -2369,7 +2386,7 @@ d(t){const n=sm(tm/(C.introSec*.85)),lamp=sm((tm-1.3)/.6),lastB=cbi>=0&&bars[cbi
   for(let s2=0;s2<=1;s2+=.05){const x=a.x+(b.x-a.x)*s2,y=HY-3-Math.sin(s2*Math.PI)*amp-Math.sin(t/180+s2*6)*1.5;X.globalAlpha=al;R(x|0,y|0,1,1,mix('#FFE6A8','#FFB6D6',s2))}}X.globalAlpha=1}
  /* nốt rơi: viên sáng màu hợp âm, có vệt sáng */
  notes.forEach(q=>{if(q.st==1)return;const y=HY-(q.audioT-chartTm)/TR*(HY-TOPY);if(y<TOPY-6||y>HY+12)return;const x=keyX(q.pc),c=C.chords[bars[q.bi].chord].c,fa=q.st==2?cl(1-(chartTm-q.audioT-WIN)/.4):1;if(fa<=0)return;
-  X.globalAlpha=.25*fa;R(x,(y-10)|0,1,7,c);el(x,y|0,5,4,c,.22*fa);X.globalAlpha=fa;el(x,y|0,3,3,mix(c,'#3A2E6A',.25),fa);el(x,(y|0)-1,2,2,c,fa);X.globalAlpha=fa;R(x-1,(y|0)-2,2,1,'#FFFFFF');
+  X.globalAlpha=.25*fa;R(x,(y-10)|0,1,7,c);el(x,y|0,Math.round(5*NS),Math.round(4*NS),c,.22*fa);X.globalAlpha=fa;el(x,y|0,Math.round(3*NS),Math.round(3*NS),mix(c,'#3A2E6A',.25),fa);el(x,(y|0)-1,Math.round(2*NS),Math.round(2*NS),c,fa);X.globalAlpha=fa;R(x-1,(y|0)-2,2,1,'#FFFFFF');
   if(Math.abs(y-HY)<10){X.globalAlpha=.5*fa;R(x-5,y|0,1,1,c);R(x+5,y|0,1,1,c);R(x,(y|0)-5,1,1,c)}X.globalAlpha=1});
  keyboard(t,yo);
  /* hiệu ứng */
@@ -2378,6 +2395,7 @@ d(t){const n=sm(tm/(C.introSec*.85)),lamp=sm((tm-1.3)/.6),lastB=cbi>=0&&bars[cbi
   else if(e.ty=='beat'){const r=4+u*44;X.globalAlpha=(1-u)*.55;for(let k=0;k<28;k++){const a=k/28*6.283;R(Math.round(54+Math.cos(a)*r),Math.round(HY+Math.sin(a)*r*.3),1,1,'#FFF0C8')}}
   else if(e.ty=='spark'){X.globalAlpha=Math.sin(u*Math.PI);R(e.x|0,e.y|0,1,1,e.c);if(u<.4)R((e.x|0)-1,e.y|0,3,1,e.c)}
   else if(e.ty=='lbl'){X.globalAlpha=u<.75?1:1-(u-.75)/.25;pxText(e.s,e.x,Math.round(e.y-u*16),e.c,1,'c','#0A0820')}
+  else if(e.ty=='pts'){X.globalAlpha=u<.6?1:1-(u-.6)/.4;pxText(e.s,e.x,Math.round(e.y-u*14),e.c,1,'c','#0A0820')}
   else if(e.ty=='fly'){X.globalAlpha=Math.sin(u*Math.PI);noteSpr((e.x+Math.sin(e.t*4+e.vx)*3)|0,e.y|0,e.c)}
   else if(e.ty=='msg'){X.globalAlpha=u<.8?1:1-(u-.8)/.2;pxText(e.s,54,70,'#FFE6A8',1,'c','#0A0820')}
   else if(e.ty=='rev'){/* Chord Reveal: cụm sáng nhỏ bung ra thành tên hợp âm, các phím của hợp âm sáng dần theo phách */
@@ -2391,20 +2409,22 @@ d(t){const n=sm(tm/(C.introSec*.85)),lamp=sm((tm-1.3)/.6),lastB=cbi>=0&&bars[cbi
    if(k1>.9){X.globalAlpha=fa;pxText('Hòa âm trọn vẹn',54,90,'#FFE6A8',1,'c','#0A0820')}}
   X.globalAlpha=1});
  /* Emotional Finale: cả bàn phím sáng lần lượt, ánh vàng lan khắp phòng, hạt sáng xoay quanh */
- if(fin>=0){const k1=sm(fin/2.4);for(let i=0;i<9;i++){const pc=i;kg[pc]=Math.max(kg[pc],cl(fin*5-i*.35)*(.7+.3*Math.sin(t/200+i)))}
+ if(fin>=0){const k1=sm(fin/2.4);for(let i=0;i<NLN;i++){const pc=i;kg[pc]=Math.max(kg[pc],cl(fin*5-i*.35)*(.7+.3*Math.sin(t/200+i)))}
   X.save();X.globalCompositeOperation='lighter';const g=X.createRadialGradient(54,KY,4,54,KY,30+k1*160);g.addColorStop(0,'rgba(255,214,140,'+(.4*k1)+')');g.addColorStop(1,'rgba(255,190,110,0)');X.fillStyle=g;X.fillRect(XL,0,LW,192);X.restore();
   for(let k=0;k<18;k++){const an=k/18*6.283+fin*1.2,r=20+12*Math.sin(fin+k);X.globalAlpha=k1*(.5+.5*Math.sin(t/150+k));R(Math.round(54+Math.cos(an)*r*1.4),Math.round(100+Math.sin(an)*r*.7),1,1,k%2?'#FFE6A8':'#FFFFFF')}X.globalAlpha=1;
-  if(fin>.6){X.globalAlpha=cl((fin-.6)/.8);pxText('Dmaj7',54,64,'#FFE6A8',2,'c','#3A2010');X.globalAlpha=1}}
+  if(fin>.6){X.globalAlpha=cl((fin-.6)/.8);pxText('Dmaj7',54,64,'#FFE6A8',2,'c','#3A2010');X.globalAlpha=1}
+  if(fin>1.2){X.globalAlpha=cl((fin-1.2)/.8);pxText('Điểm '+score,54,81,'#F4E8FF',1,'c','#0A0820');pxText('Combo cao nhất '+bestCombo,54,90,'#C8C0F0',1,'c','#0A0820');X.globalAlpha=1}}
  panel(t,-yo);
  if(tm<C.introSec*.9&&n<.98){X.globalAlpha=cl(Math.sin(cl(tm/(C.introSec*.9))*Math.PI));pxText('Đêm xuống rồi...',54,96,'#F4E8FF',1,'c','#0A0820');X.globalAlpha=1}},
-p(x,y){if(paused||done||tm<C.introSec-.2||fin>=0)return;let ln=null;
- if(y>=KY-4){ln=Math.floor((x-KX)/WK);if(ln<0||ln>8)return}
- else{let best=null;notes.forEach(q=>{if(q.st||Math.abs(q.audioT-chartTm)>WIN)return;const d=Math.abs(keyX(q.pc)-x);if(d<10&&(!best||d<best.d))best={q,d}});
-  if(best)ln=LO[best.q.pc];else{let bd=99;for(let k=0;k<9;k++){const d=Math.abs(LX(k)-x);if(d<bd){bd=d;ln=k}}}}
+p(x,y){if(paused||done||tm<C.introSec-.2||fin>=0||x<0||x>108)return;let ln=null;
+ if(y>=KY-4){ln=Math.floor((x-KX)/WK);if(ln<0||ln>=NLN)return}
+ else{const col=Math.max(0,Math.min(NLN-1,Math.floor((x-KX)/WK))),ok=q=>!q.st&&Math.abs(q.audioT-chartTm)<=WIN;
+  if(notes.some(q=>ok(q)&&LO[q.pc]===col))ln=col;
+  else{let best=null;notes.forEach(q=>{if(!ok(q))return;const d=Math.abs(LX(LO[q.pc])-x);if(d>WK*1.2)return;const k=d+4*Math.abs(q.audioT-chartTm)/SPB;if(!best||k<best.k)best={q,k}});ln=best?LO[best.q.pc]:col}}
  tryHit(ln)},
-k(c){if(c==='p'||c==='Escape'){paused?resume():openPause();return}if(paused)return;const M={a:0,s:1,d:2,f:3,g:4,h:5,j:6,k:7,l:8};if(c in M&&!done&&fin<0&&tm>=C.introSec-.2)tryHit(M[c])},
+k(c){if(c==='p'||c==='Escape'){paused?resume():openPause();return}if(paused)return;const M={a:0,s:1,d:2,f:3,g:4,h:5,j:6,k:7,l:8};if(c in M&&M[c]<NLN&&!done&&fin<0&&tm>=C.introSec-.2)tryHit(M[c])},
 pause:openPause,
-stop(){if(stopped)return;stopped=1;pianoMusicActive=0;document.removeEventListener('visibilitychange',vis);if(au){au.pause();if(PIANO_AU===au)PIANO_AU=null}}}}
+stop(){if(stopped)return;stopped=1;pianoMusicActive=0;document.querySelectorAll('.mus').forEach(e=>e.remove());document.removeEventListener('visibilitychange',vis);if(au){au.pause();if(PIANO_AU===au)PIANO_AU=null}}}}
 const GM=[g1,g2,g3,g5,g14,g6,g9,g7,g4,g13,g11];
 function startLevel(i){$('app').classList.remove('level-play','lv-crane','lv-doodle','lv-tq','lv-pz','lv-piano');mode='l';const d=i<prog,q=LV[i],pn=$('pn'),c=E('div','cd');G={i,st:'intro',bg:scn(i)};pn.replaceChildren(c);
 c.append(E('small','','MÀN 0'+(i+1)+(d?' · ĐÃ HOÀN THÀNH':'')),E('h2','gt',q.mt||q.title),E('p','',q.description),E('hr'),E('p','pt','Cách chơi: '+q.howTo));
